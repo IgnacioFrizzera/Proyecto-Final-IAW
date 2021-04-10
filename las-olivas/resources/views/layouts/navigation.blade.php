@@ -16,6 +16,11 @@
                         {{ __('Panel de Control') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('clients-dashboard')" :active="request()->routeIs('clients-dashboard')">
+                        {{ __('Administración de Clientes') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
