@@ -10,15 +10,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <h1 style="text-align:center;">Listado de clientes</h1><br>
                     @if(isset($message))
-                        <div>
+                        <div class="container" style="text-align:center;">
                             {{ $message }}
                         </div>
                     @endif
+                    @if(isset($deleteMessage))
+                            <div class="container" style="text-align:center;">
+                                {{ $deleteMessage }}
+                            </div>
+                    @endif
                     @if(isset($clients))
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <h1 style="text-align:center;">Listado de clientes</h1>
-                        <div class="container" style="text-align:center;">Busqueda?</div>
                         <table class="table table-bordered table-striped text-center">
                                 <thead>
                                     <tr>
@@ -34,6 +38,7 @@
                                     <tr>
                                         <form action="{{route('clients-update')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
+                                            <input type="hidden" name="client_id" value="{{ $client->id }}">
                                             <input type="hidden" name="client_name" value="{{ $client->name }}"><th>{{ $client->name }}</th>
                                             <input type="hidden" name="client_last_name" value="{{ $client->last_name }}"><td> {{ $client->last_name }} </td>
                                             <input type="hidden" name="client_email" value="{{ $client->email }}"><td> {{ $client->email }} </td>

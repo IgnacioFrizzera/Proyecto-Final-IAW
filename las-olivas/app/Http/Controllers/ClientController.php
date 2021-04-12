@@ -19,4 +19,33 @@ class ClientController extends Controller
 
         return view('clients-dashboard')->withClients($clients);
     }
+
+    private function update_client_index(Request $request)
+    {
+        $client_current_info = [
+            'current_name' => $request->client_name,
+            'current_last_name' => $request->client_last_name,
+            'current_email' => $request->client_email,
+            'current_phone_number' => $request->client_phone_number
+        ];
+        return view('clients-update')->withClientCurrentInfo($client_current_info);
+    }
+
+    private function delete_client($request)
+    {
+        Client::where('id', $request->client_id)->delete();
+        return $this->index()->withDeleteMessage('Se ha eliminado al cliente correctamente.');
+    }
+
+    public function client_modification(Request $request)
+    {
+        if($request->action == 'update')
+        {
+            return $this->update_client_index($request);
+        }
+        else if ($request->action == 'delete')
+        {
+            return $this->delete_client($request);
+        }
+    }
 }
