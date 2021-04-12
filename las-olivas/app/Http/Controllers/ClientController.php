@@ -34,7 +34,7 @@ class ClientController extends Controller
     private function delete_client($request)
     {
         Client::where('id', $request->client_id)->delete();
-        return $this->index()->withDeleteMessage('Se ha eliminado al cliente correctamente.');
+        return $this->index()->withDeleteMessage('Se ha eliminado al cliente correctamente');
     }
 
     public function client_modification(Request $request)
@@ -47,5 +47,20 @@ class ClientController extends Controller
         {
             return $this->delete_client($request);
         }
+    }
+
+    public function client_search(Request $request)
+    {
+        $clients = 
+            Client::where('name', 'ilike', '%'.$request->search.'%')
+                ->orWhere('last_name', 'ilike', '%'.$request->search.'%')
+                ->select('id', 'name', 'last_name', 'email', 'phone_number')
+                ->paginate(15);
+        
+        if(count($clients) == 0)
+        {
+            return view('clients-dashboard')->withSearchMessage('No se han encontrado clientes');
+        }
+        return view('clients-dashboard')->withClients($clients); 
     }
 }

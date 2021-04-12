@@ -21,6 +21,18 @@
                                 {{ $deleteMessage }}
                             </div>
                     @endif
+                    <div class="container" style="text-align:center;">
+                        <form action="{{route('clients-search')}}" method="GET" enctype="multipart/form-data">
+                        @csrf
+                            <input type="text" name="search">
+                            <button type="sumbit">Buscar</button>
+                        </form>
+                    </div><br>
+                    @if(isset($searchMessage))
+                            <div class="container" style="text-align:center;">
+                                {{ $searchMessage }}
+                            </div>
+                    @endif
                     @if(isset($clients))
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <table class="table table-bordered table-striped text-center">
