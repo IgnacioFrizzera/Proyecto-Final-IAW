@@ -51,7 +51,7 @@
                                         <form action="{{route('clients-update')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
                                             <input type="hidden" name="client_id" value="{{ $client->id }}">
-                                            <input type="hidden" name="client_name" value="{{ $client->name }}"><th>{{ $client->name }}</th>
+                                            <input type="hidden" name="client_name" value="{{ $client->name }}"><td>{{ $client->name }}</td>
                                             <input type="hidden" name="client_last_name" value="{{ $client->last_name }}"><td> {{ $client->last_name }} </td>
                                             <input type="hidden" name="client_email" value="{{ $client->email }}"><td> {{ $client->email }} </td>
                                             <input type="hidden" name="client_phone_number" value="{{ $client->phone_number }}"><td> {{ $client->phone_number }} </td>
