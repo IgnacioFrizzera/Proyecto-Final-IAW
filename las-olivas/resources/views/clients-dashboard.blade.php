@@ -61,8 +61,8 @@
                                             </td>
                                             <input type="hidden" name="client_phone_number" value="{{ $client->phone_number }}"><td> {{ $client->phone_number }} </td>
                                             <td> $ Hacer </td>
-                                            <td><button type="sumbit" name="action" value="delete"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
-                                            <td><button type="sumbit" name="action" value="update"><i class="fa fa-pencil" aria-hidden="true" style="font-size:24px"></i></button></td>
+                                            <td><button type="sumbit" name="action" value="delete" title="Eliminar Cliente"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
+                                            <td><button type="sumbit" name="action" value="update" title="Modificar datos Cliente"><i class="fa fa-pencil" aria-hidden="true" style="font-size:24px"></i></button></td>
                                         </form>
                                     </tr>
                                     @endforeach
