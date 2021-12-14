@@ -53,7 +53,12 @@
                                             <input type="hidden" name="client_id" value="{{ $client->id }}">
                                             <input type="hidden" name="client_name" value="{{ $client->name }}"><td>{{ $client->name }}</td>
                                             <input type="hidden" name="client_last_name" value="{{ $client->last_name }}"><td> {{ $client->last_name }} </td>
-                                            <input type="hidden" name="client_email" value="{{ $client->email }}"><td> {{ $client->email }} </td>
+                                            <input type="hidden" name="client_email" value="{{ $client->email }}">
+                                            <td> 
+                                                <a href="mailto: {{ $client->email }}">
+                                                    {{ $client->email }} 
+                                                </a>    
+                                            </td>
                                             <input type="hidden" name="client_phone_number" value="{{ $client->phone_number }}"><td> {{ $client->phone_number }} </td>
                                             <td> $ Hacer </td>
                                             <td><button type="sumbit" name="action" value="delete"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
