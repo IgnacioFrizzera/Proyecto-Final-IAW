@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use Illuminate\Support\Facades\Validator;
 
 
 class ClientController extends Controller
@@ -20,7 +21,12 @@ class ClientController extends Controller
         return view('clients-dashboard')->withClients($clients);
     }
 
-    private function update_client_index(Request $request)
+    public function index_add_client()
+    {
+        return view('clients-add');
+    }
+
+    private function update_client(Request $request)
     {
         $client_current_info = [
             'current_name' => $request->client_name,
@@ -37,11 +43,39 @@ class ClientController extends Controller
         return $this->index()->withDeleteMessage('Se ha eliminado al cliente correctamente');
     }
 
+    private function validate_client(Request $request)
+    {
+        return Validator::make($request->all(), [
+            'client_name' => ['required', 'string', 'max:100'],
+            'client_last_name' => ['required', 'string', 'max:100'],
+            'phone_number' => ['unique:clients', 'max:20'],
+            'email' => ['email', 'unique:clients', 'max:100']
+        ]);
+    }
+
+    public function add_client(Request $request)
+    {
+        $validation = $this->validate_client($request);
+        
+        if($validation->fails()){
+            return $this->index_add_client()->withFailedToCreateMessage('Hubo un error a la hora de cargar al cliente, revise los datos ingresados');
+        }
+
+        Client::create([
+            'name' => $request->input('client_name'),
+            'last_name' => $request->input('client_last_name'),
+            'phone_number' => $request->input('phone_number'),
+            'email' => $request->input('email')
+        ]);
+
+        return $this->index();
+    }
+
     public function client_modification(Request $request)
     {
         if($request->action == 'update')
         {
-            return $this->update_client_index($request);
+            return $this->update_client($request);
         }
         else if ($request->action == 'delete')
         {
