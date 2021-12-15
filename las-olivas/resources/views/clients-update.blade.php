@@ -24,25 +24,32 @@
                                 @endif
                                 <hr>
                                 <div class="form-group row">
-                                    @foreach ($clientData as $client)    
+                                    @foreach ($clientData as $client)
+                                    <input type="hidden" name="id" name="id" value="{{ $client->id }}">
                                     <div class="col-4">
-                                            <h4 title="Requerido">Nombre (*)</h4>
-                                            <input type="hidden" name="id" name="id" value="{{ $client->id }}">
-                                            <input type="string" class="form-control" name="client_name" id="client_name" value="{{ $client->name }}" required maxlength="100">
-                                            <br>
-                                            <h4>Email</h4>
-                                            <input type="string" class="form-control" name="email" id="email" value="{{ $client->email }}" maxlength="100">
-                                            <br>
-                                            <h4>Teléfono</h4>
-                                            <input type="string" class="form-control" name="phone_number" id="phone_number" value="{{ $client->phone_number }}" maxlength="20">
-                                            <br>
+                                        <h4 title="Requerido">Nombre (*)</h4>
+                                        <input type="string" class="form-control" name="client_name" id="client_name" value="{{ $client->name }}" required maxlength="100">
+                                        <br>
+                                        <h4 title="Requerido">Apellido (*)</h4>
+                                        <input type="tel" class="form-control" name="client_last_name" id="client_last_name" value="{{ $client->last_name }}" required maxlength="100">
+                                        <br>
+                                        <h4>Cumpleaños (*)</h4>
+                                        <input type="date" class="form-control" name="client_birthday" id="client_birthday" value="{{ $client->birthday }}" min="1920-01-01" maxlength="100">
+                                        <br>
                                         <button type="sumbit" class="btn btn-dark">
                                             Actualizar datos
                                         </button>
                                     </div>
                                     <div class="col-4">
-                                        <h4 title="Requerido">Apellido (*)</h4>
-                                        <input type="tel" class="form-control" name="client_last_name" id="client_last_name" value="{{ $client->last_name }}" required maxlength="100">
+                                        <h4>Email</h4>
+                                        <input type="string" class="form-control" name="email" id="email" value="{{ $client->email }}" maxlength="100">
+                                        <br>
+                                        <h4>Teléfono</h4>
+                                        <input type="tel" class="form-control" name="phone_number" id="phone_number" value="{{ $client->phone_number }}" maxlength="20">
+                                    </div>
+                                    <div class="col-4">
+                                        <h4>Profesión</h4>
+                                        <input type="string" class="form-control" name="client_profession" id="client_profession" value="{{ $client->profession }}" maxlength="100">
                                     </div>
                                     @endforeach
                                 </div>

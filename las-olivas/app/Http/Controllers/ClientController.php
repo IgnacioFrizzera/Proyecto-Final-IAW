@@ -32,15 +32,15 @@ class ClientController extends Controller
         return Validator::make($request->all(), [
             'client_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/'],
             'client_last_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/'],
-            'client_profession' => ['string', 'max:100', 'regex:/^([^0-9]*)$/'],
+            'client_profession' => ['string', 'nullable', 'max:100', 'regex:/^([^0-9]*)$/']
         ]);
     }
 
     private function validate_client_contact_info(Request $request)
     {
         return Validator::make($request->all(), [
-            'phone_number' => ['unique:clients', 'max:20'],
-            'email' => ['email', 'unique:clients', 'max:100']
+            'phone_number' => ['unique:clients', 'max:20', 'nullable'],
+            'email' => ['email', 'unique:clients', 'max:100', 'nullable']
         ]);
     }
 
@@ -79,11 +79,11 @@ class ClientController extends Controller
             return $this->update_client_index($request)->withFailedToUpdate('El cliente dejó de existir.');
         }
 
-        $names_validation = $this->validate_client_names($request);
+        $personal_info_validation = $this->validate_client_personal_info($request);
         
-        if ($names_validation->fails())
+        if ($personal_info_validation->fails())
         {
-            $this->update_client_index($request)->withFailedToUpdate('El nombre o apellido ingresado son inválidos');
+            $this->update_client_index($request)->withFailedToUpdate('Revise el: nombre, apellido o profesión que intentó actualizar.');
         }
 
         try 
@@ -92,7 +92,9 @@ class ClientController extends Controller
                 'name' => $request->input('client_name'),
                 'last_name' => $request->input('client_last_name'),
                 'phone_number' => $request->input('phone_number'),
-                'email' => $request->input('email')
+                'email' => $request->input('email'),
+                'birthday' => $request->input('client_birthday'),
+                'profession' => $request->input('client_profession')
             ]);
         }
         catch (QueryException $e)
