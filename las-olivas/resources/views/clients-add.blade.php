@@ -27,19 +27,26 @@
                                     <h4 title="Requerido">Nombre (*)</h4>
                                     <input type="string" class="form-control" name="client_name" id="client_name" placeholder="Nombre" required maxlength="100">
                                     <br>
-                                    <h4>Email</h4>
-                                    <input type="string" class="form-control" name="email" id="email" placeholder="juandoe@gmail.com" maxlength="100">
+                                    <h4 title="Requerido">Apellido (*)</h4>
+                                    <input type="string" class="form-control" name="client_last_name" id="client_last_name" placeholder="Apellido" required maxlength="100">
                                     <br>
-                                    <h4>Teléfono</h4>
-                                    <input type="string" class="form-control" name="phone_number" id="phone_number" placeholder="2222444444" maxlength="20">
+                                    <h4 title="Requerido">Cumpleaños (*)</h4>
+                                    <input type="date" class="form-control" name="client_birthday" id="client_birthday" min="1920-01-01" required maxlength="100">
                                     <br>
                                     <button type="sumbit" class="btn btn-dark">
                                         Cargar cliente
                                     </button>
                                 </div>
                                 <div class="col-4">
-                                    <h4 title="Requerido">Apellido (*)</h4>
-                                    <input type="tel" class="form-control" name="client_last_name" id="client_last_name" placeholder="Apellido" required maxlength="100">
+                                    <h4>Email</h4>
+                                    <input type="string" class="form-control" name="email" id="email" placeholder="juandoe@gmail.com" maxlength="100">
+                                    <br>
+                                    <h4>Teléfono</h4>
+                                    <input type="tel" class="form-control" name="phone_number" id="phone_number" placeholder="2222444444" maxlength="20">
+                                </div>
+                                <div class="col-4">
+                                    <h4 title="Requerido">Profesión</h4>
+                                    <input type="string" class="form-control" name="client_profession" id="client_profession" placeholder="Maestro" required maxlength="100">
                                 </div>
                             </div>
                         </div>

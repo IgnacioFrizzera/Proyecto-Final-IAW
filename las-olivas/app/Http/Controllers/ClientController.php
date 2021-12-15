@@ -27,11 +27,12 @@ class ClientController extends Controller
         return view('clients-add');
     }
 
-    private function validate_client_names(Request $request)
+    private function validate_client_personal_info(Request $request)
     {
         return Validator::make($request->all(), [
             'client_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/'],
-            'client_last_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/']
+            'client_last_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/'],
+            'client_profession' => ['string', 'max:100', 'regex:/^([^0-9]*)$/'],
         ]);
     }
 
@@ -45,18 +46,26 @@ class ClientController extends Controller
 
     public function add_client(Request $request)
     {
-        $names_validation = $this->validate_client_names($request);
+        $personal_info_validation = $this->validate_client_personal_info($request);
         $contact_info_validation = $this->validate_client_contact_info($request);
         
-        if($names_validation->fails() or $contact_info_validation->fails()){
-            return $this->index_add_client()->withFailedToCreateMessage('Hubo un error a la hora de cargar al cliente, revise los datos ingresados');
+        if($personal_info_validation->fails())
+        {
+            return $this->index_add_client()->withFailedToCreateMessage('Revise el: nombre, apellido o profesión que intentó cargar.');
+        }
+
+        if($contact_info_validation->fails())
+        {
+            return $this->index_add_client()->withFailedToCreateMessage('Ya existe un usuario con el email o teléfono ingresados.');
         }
 
         Client::create([
             'name' => $request->input('client_name'),
             'last_name' => $request->input('client_last_name'),
             'phone_number' => $request->input('phone_number'),
-            'email' => $request->input('email')
+            'email' => $request->input('email'),
+            'birthday' => $request->input('client_birthday'),
+            'profession' => $request->input('client_profession')
         ]);
 
         return $this->index();

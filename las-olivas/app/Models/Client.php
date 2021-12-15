@@ -18,6 +18,8 @@ class Client extends Model
         'name',
         'last_name',
         'email',
-        'phone_number'
+        'phone_number',
+        'birthday',
+        'profession'
     ];
 }
