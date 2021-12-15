@@ -24,10 +24,11 @@ Route::get('/dashboard', function () {
 // Clients routes
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/clients-dashboard', 'App\Http\Controllers\ClientController@index')->name('clients-dashboard');
-    Route::get('/clients-modification', 'App\Http\Controllers\ClientController@client_modification')->name('clients-update');
     Route::get('/clients-search', 'App\Http\Controllers\ClientController@client_search')->name('clients-search');
     Route::get('/clients-add', 'App\Http\Controllers\ClientController@index_add_client')->name('clients-add');
     Route::post('/clients-add', 'App\Http\Controllers\ClientController@add_client')->name('clients-add');
+    Route::post('/clients-update', 'App\Http\Controllers\ClientController@update_client')->name('clients-update');
+    Route::get('/clients-update', 'App\Http\Controllers\ClientController@client_modification')->name('clients-update');
 });
 
 require __DIR__.'/auth.php';

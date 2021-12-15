@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use App\Models\Client;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,28 +27,17 @@ class ClientController extends Controller
         return view('clients-add');
     }
 
-    private function update_client(Request $request)
-    {
-        $client_current_info = [
-            'current_name' => $request->client_name,
-            'current_last_name' => $request->client_last_name,
-            'current_email' => $request->client_email,
-            'current_phone_number' => $request->client_phone_number
-        ];
-        return view('clients-update')->withClientCurrentInfo($client_current_info);
-    }
-
-    private function delete_client($request)
-    {
-        Client::where('id', $request->client_id)->delete();
-        return $this->index()->withDeleteMessage('Se ha eliminado al cliente correctamente');
-    }
-
-    private function validate_client(Request $request)
+    private function validate_client_names(Request $request)
     {
         return Validator::make($request->all(), [
-            'client_name' => ['required', 'string', 'max:100'],
-            'client_last_name' => ['required', 'string', 'max:100'],
+            'client_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/'],
+            'client_last_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/']
+        ]);
+    }
+
+    private function validate_client_contact_info(Request $request)
+    {
+        return Validator::make($request->all(), [
             'phone_number' => ['unique:clients', 'max:20'],
             'email' => ['email', 'unique:clients', 'max:100']
         ]);
@@ -55,9 +45,10 @@ class ClientController extends Controller
 
     public function add_client(Request $request)
     {
-        $validation = $this->validate_client($request);
+        $names_validation = $this->validate_client_names($request);
+        $contact_info_validation = $this->validate_client_contact_info($request);
         
-        if($validation->fails()){
+        if($names_validation->fails() or $contact_info_validation->fails()){
             return $this->index_add_client()->withFailedToCreateMessage('Hubo un error a la hora de cargar al cliente, revise los datos ingresados');
         }
 
@@ -71,11 +62,55 @@ class ClientController extends Controller
         return $this->index();
     }
 
+    public function update_client(Request $request)
+    {
+        $client = Client::where('id', $request->input('id'))->get();
+
+        if(count($client) == 0){
+            return $this->update_client_index($request)->withFailedToUpdate('El cliente dejó de existir.');
+        }
+
+        $names_validation = $this->validate_client_names($request);
+        
+        if ($names_validation->fails())
+        {
+            $this->update_client_index($request)->withFailedToUpdate('El nombre o apellido ingresado son inválidos');
+        }
+
+        try 
+        {
+            Client::where('id', $request->input('id'))->update([
+                'name' => $request->input('client_name'),
+                'last_name' => $request->input('client_last_name'),
+                'phone_number' => $request->input('phone_number'),
+                'email' => $request->input('email')
+            ]);
+        }
+        catch (QueryException $e)
+        {
+            return $this->update_client_index($request)->withFailedToUpdate('Ya existe algún usuario con el email o teléfono que intentó actualizar.');   
+        }
+
+        return $this->index()->withMessage('Se actualizaron correctamente los datos del cliente');
+    }
+
+    private function update_client_index(Request $request)
+    {
+        $clientData = Client::where('id', $request->id)->get();
+        return view('clients-update')->withClientData($clientData);
+    }
+
+    private function delete_client($request)
+    {
+        Client::where('id', $request->id)->delete();
+        return $this->index()->withMessage('Se ha eliminado al cliente correctamente');
+    }
+
     public function client_modification(Request $request)
     {
         if($request->action == 'update')
         {
-            return $this->update_client($request);
+            return $this->update_client_index($request);
         }
         else if ($request->action == 'delete')
         {
