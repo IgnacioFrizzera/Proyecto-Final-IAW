@@ -15,6 +15,8 @@ class Movement extends Model
         'due',
         'paid',
         'balance',
-        'user_id'
+        'client_id'
     ];
+
+    public $timestamps = false;
 }

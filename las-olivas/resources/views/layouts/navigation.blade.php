@@ -21,6 +21,11 @@
                         {{ __('Administración de Clientes') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('movements-dashboard')" :active="request()->routeIs('movements-dashboard')">
+                        {{ __('Movimientos') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('/auth/login');
 });
 
+// Main dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -29,6 +30,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/clients-add', 'App\Http\Controllers\ClientController@add_client')->name('clients-add');
     Route::post('/clients-update', 'App\Http\Controllers\ClientController@update_client')->name('clients-update');
     Route::get('/clients-update', 'App\Http\Controllers\ClientController@client_modification')->name('clients-update');
+});
+
+// Movements routes
+Route::group(['middleware' => 'auth'] , function () {
+    Route::get('/movements-dashboard', 'App\Http\Controllers\MovementController@index')->name('movements-dashboard');
+    Route::post('/movements-add', 'App\Http\Controllers\MovementController@add_movement')->name('movements-add');
 });
 
 require __DIR__.'/auth.php';

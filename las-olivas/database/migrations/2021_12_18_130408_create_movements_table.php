@@ -22,7 +22,7 @@ class CreateMovementsTable extends Migration
             $table->float('due', 10, 2)->nullabe(false);
             $table->float('paid', 10, 2)->nullabe(false);
             $table->float('balance', 10, 2)->nullabe(false);
-            $table->foreignId('client_id')->constrained('clients')->restrictOnDelete();
+            $table->foreignId('client_id')->constrained()->restrictOnDelete();
         });
     }
 
