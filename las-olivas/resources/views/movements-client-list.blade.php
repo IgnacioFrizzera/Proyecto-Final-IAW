@@ -34,7 +34,7 @@
                                         </div>
                                         <div class="col-4">
                                             <span style="font-size: 20px;">Hasta:</span>
-                                            <input type="date" name="to" required>
+                                            <input type="date" name="to" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>">
                                         </div>
                                         <button type="sumbit" class="btn btn-dark">
                                             Filtrar movimientos
