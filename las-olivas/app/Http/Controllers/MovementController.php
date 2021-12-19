@@ -24,12 +24,24 @@ class MovementController extends Controller
     {
         $client_id = $request->input('client_id');
         $client = Client::where('id', $client_id)->get();
-        $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'desc')->paginate(15);
 
-        if(count($movements) == 0)
+
+        $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'desc');
+
+        if (count($movements->get()) == 0)
         {
             return view('movements-client-list')->withClient($client)->withMessage('El cliente no tiene ningún movimiento aún.');
         }
+
+        $from = $request->input('from');
+        $to = $request->input('to');
+
+        if ($from != null and $to != null)
+        {
+            $movements = $movements->whereBetween('created_at', [$from, $to]);
+        }
+
+        $movements = $movements->paginate(15);
 
         return view('movements-client-list')->withClient($client)->withMovements($movements);
     }

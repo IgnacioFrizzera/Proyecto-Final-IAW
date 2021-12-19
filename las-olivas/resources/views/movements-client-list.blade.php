@@ -21,6 +21,28 @@
                         </h2>
                     @else
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <hr>    
+                            <div class="container-fluid">
+                                <form action="{{route('movements-client-list')}}" method="GET" enctype="multipart/form-data">
+                                    @foreach ($client as $client_data)
+                                        <input type="hidden" name="client_id" value="{{$client_data->id}}">
+                                    @endforeach
+                                    <div class="row justify-content-center">
+                                        <div class="col-4">
+                                            <span style="font-size: 20px;">Desde:</span>
+                                            <input type="date" name="from" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <span style="font-size: 20px;">Hasta:</span>
+                                            <input type="date" name="to" required>
+                                        </div>
+                                        <button type="sumbit" class="btn btn-dark">
+                                            Filtrar movimientos
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <br>
                             <table class="table table-bordered table-striped text-center">
                                     <thead>
                                         <tr>
