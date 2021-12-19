@@ -12,8 +12,8 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::all();
-
+        $clients = Client::select()->paginate(10);
+        
         if(count($clients) == 0)
         {
             return view('clients-dashboard')->withMessage('No hay clientes cargados en el sistema');
@@ -126,6 +126,13 @@ class ClientController extends Controller
         else if ($request->action == 'delete')
         {
             return $this->delete_client($request);
+        }
+        else if ($request->action == 'list-movements')
+        {
+            return redirect()->action(
+                [MovementController::class, 'list_client_movements'],
+                ['client_id' => $request->id]
+            );
         }
     }
 

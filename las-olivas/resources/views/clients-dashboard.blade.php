@@ -63,12 +63,18 @@
                                             <td> $ Hacer </td>
                                             <td><button type="sumbit" name="action" value="delete" title="Eliminar Cliente"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
                                             <td><button type="sumbit" name="action" value="update" title="Modificar datos Cliente"><i class="fa fa-pencil" aria-hidden="true" style="font-size:24px"></i></button></td>
+                                            <td><button type="sumbit" name="action" value="list-movements" title="Ver movimientos del cliente"><i class="fa fa-book" aria-hidden="true" style="font-size:24px"></i></button></td>
                                         </form>
                                     </tr>
                                     @endforeach
                                 </tbody>
                         </table>
                     </div>
+                    <div class="footer">
+                        <?php 
+                            echo $clients->appends(Request::all())->links();
+                        ?>
+                    </div> 
                     @endif
                 </div>
             </div>

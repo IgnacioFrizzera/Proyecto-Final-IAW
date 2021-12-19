@@ -20,6 +20,19 @@ class MovementController extends Controller
         return view('movements-dashboard');
     }
 
+    public function list_client_movements(Request $request)
+    {
+        $client = Client::where('id', $request->input('client_id'))->get();
+        $movements = Movement::where('client_id', $request->input('client_id'))->select()->paginate(15);
+        
+        if(count($movements) == 0)
+        {
+            return view('movements-client-list')->withClient($client)->withMessage('El cliente no tiene ningún movimiento aún.');
+        }
+
+        return view('movements-client-list')->withClient($client)->withMovements($movements);
+    }
+
     private function validate_new_movement(Request $request)
     {
         return Validator::make($request->all(), [
@@ -38,7 +51,7 @@ class MovementController extends Controller
 
         if ($movement_validation->fails())
         {
-            dd('Hello world');
+            return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
         }
 
         Movement::create([
@@ -50,8 +63,9 @@ class MovementController extends Controller
             'client_id' => $request->input('client_id')
         ]);
 
-        return view('dashboard');
+        return redirect()->action(
+            [MovementController::class, 'list_client_movements'],
+            ['client_id' => $request->input('client_id')]
+        );
     }
-
-
 }
