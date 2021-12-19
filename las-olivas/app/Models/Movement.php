@@ -18,5 +18,4 @@ class Movement extends Model
         'client_id'
     ];
 
-    public $timestamps = false;
 }

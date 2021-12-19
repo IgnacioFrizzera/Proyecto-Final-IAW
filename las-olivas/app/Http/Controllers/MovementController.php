@@ -22,9 +22,10 @@ class MovementController extends Controller
 
     public function list_client_movements(Request $request)
     {
-        $client = Client::where('id', $request->input('client_id'))->get();
-        $movements = Movement::where('client_id', $request->input('client_id'))->select()->paginate(15);
-        
+        $client_id = $request->input('client_id');
+        $client = Client::where('id', $client_id)->get();
+        $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'desc')->paginate(15);
+
         if(count($movements) == 0)
         {
             return view('movements-client-list')->withClient($client)->withMessage('El cliente no tiene ningún movimiento aún.');
