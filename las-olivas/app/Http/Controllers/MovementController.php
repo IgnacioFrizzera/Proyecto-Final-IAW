@@ -39,6 +39,11 @@ class MovementController extends Controller
         if ($from != null and $to != null)
         {
             $movements = $movements->whereBetween('created_at', [$from, $to]);
+
+            if (count($movements->get()) == 0)
+            {
+                return view('movements-client-list')->withClient($client)->withMessage('El cliente no tiene movimientos en las fechas seleccionadas.');
+            }
         }
 
         $movements = $movements->paginate(15);
