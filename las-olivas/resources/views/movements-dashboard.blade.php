@@ -43,7 +43,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col">Tipo de recibo</th>
+                                    <th scope="col">Tipo de comprobante</th>
                                     <th scope="col">Debe</th>
                                     <th scope="col">Haber</th>
                                     <th scope="col">Saldo</th>
