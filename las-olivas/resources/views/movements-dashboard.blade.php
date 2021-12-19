@@ -14,6 +14,12 @@
                         Cargar Movimiento
                     </h2>
                     <hr>
+                    @if(isset($message))
+                        <h4 style="color:red; text-decoration:underline">
+                            {{$message}}
+                        </h4>
+                        <hr>
+                    @endif
                     <form action="{{route('movements-add')}}" method="POST" enctype="multipart/form-data"> 
                     @csrf
                         <div class="row">
@@ -22,7 +28,7 @@
                             </div>  
                             <div class="col-3">
                                 @if(isset($clients))
-                                    <input class="form-control" list="clients-list" id="selected_client" placeholder="Busca un cliente..." required>
+                                    <input class="form-control" list="clients-list" name="selected_client" placeholder="Busca un cliente..." required>
                                     <datalist id="clients-list">
                                         @foreach($clients as $client)
                                             <input type="hidden" name="client_id" value="{{ $client->id }}">
