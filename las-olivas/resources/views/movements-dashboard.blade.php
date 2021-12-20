@@ -46,7 +46,6 @@
                                     <th scope="col">Tipo de comprobante</th>
                                     <th scope="col">Debe</th>
                                     <th scope="col">Haber</th>
-                                    <th scope="col">Saldo</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,7 +63,6 @@
                                         </th>
                                         <th><input required type="number" name="due" step=".01" value="0"></th>
                                         <th><input required type="number" name="paid" step=".01" value="0"></th>
-                                        <th><input required type="number" name="balance" step=".01" value="0"></th>
                                     </form>
                                 </tr>   
                             </tbody>

@@ -22,4 +22,10 @@ class Client extends Model
         'birthday',
         'profession'
     ];
+
+    public function calculate_new_balance(float $due, float $paid)
+    {
+        $difference = $due - $paid;
+        $this->current_balance = $this->current_balance + $difference;
+    }
 }

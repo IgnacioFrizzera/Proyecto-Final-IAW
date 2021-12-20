@@ -58,8 +58,7 @@ class MovementController extends Controller
             'description' => ['required', 'string', 'max:200'],
             'receipt_type' => ['required', 'string', 'max:50', 'regex:/^([^0-9]*)$/'],
             'due' => ['required', 'numeric'],
-            'paid' => ['required', 'numeric'],
-            'balance' => ['required', 'numeric']
+            'paid' => ['required', 'numeric']
         ]);
     }
 
@@ -72,12 +71,16 @@ class MovementController extends Controller
             return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
         }
 
+        $client = Client::where('id', $request->input('client_id'))->select()->first();
+        $client->calculate_new_balance($request->input('due'), $request->input('paid'));
+        $client->save();
+
         Movement::create([
             'description' => $request->input('description'),
             'receipt_type' => $request->input('receipt_type'),
             'due' => $request->input('due'),
             'paid' => $request->input('paid'),
-            'balance' => $request->input('balance'),
+            'balance' =>  $client->current_balance,
             'client_id' => $request->input('client_id')
         ]);
 
