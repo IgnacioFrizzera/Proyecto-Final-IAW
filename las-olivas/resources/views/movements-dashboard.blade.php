@@ -1,3 +1,4 @@
+<script src="{{ asset('js/addMovement.js') }}"></script>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -54,16 +55,15 @@
                                             <textarea required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                         </th>
                                         <th>
-                                            <select class="form-select" aria-label="Default select example" name="receipt_type">
+                                            <select class="form-select" aria-label="Default select example" name="receipt_type" id="receipt" onchange="disabledOnReceiptType(this.value)">
                                                 <option value="FACTURA">FACTURA</option>
                                                 <option value="EFECTIVO">EFECTIVO</option>
                                                 <option value="TARJETA C">TARJETA C</option>
                                                 <option value="TARJETA D">TARJETA D</option>
                                             </select>
                                         </th>
-                                        <th><input required type="number" name="due" step=".01" value="0"></th>
-                                        <th><input required type="number" name="paid" step=".01" value="0"></th>
-                                    </form>
+                                        <th><input required type="number" name="due" id="due_input" step=".01" value="0"></th>
+                                        <th><input required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
                                 </tr>   
                             </tbody>
                         </table>
