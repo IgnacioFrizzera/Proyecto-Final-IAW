@@ -84,9 +84,6 @@ class MovementController extends Controller
             'client_id' => $request->input('client_id')
         ]);
 
-        return redirect()->action(
-            [MovementController::class, 'list_client_movements'],
-            ['client_id' => $request->input('client_id')]
-        );
+        return $this->index()->withSuccessMessage('El movimiento se cargó correctamente.');
     }
 }

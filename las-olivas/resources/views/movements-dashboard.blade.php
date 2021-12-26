@@ -19,6 +19,12 @@
                         </h4>
                         <hr>
                     @endif
+                    @if(isset($successMessage))
+                        <h4>
+                            {{$successMessage}}
+                        </h4>
+                        <hr>
+                    @endif
                     <form action="{{route('movements-add')}}" method="POST" enctype="multipart/form-data"> 
                     @csrf
                         <div class="row">
