@@ -39,4 +39,9 @@ Route::group(['middleware' => 'auth'] , function () {
     Route::post('/movements-add', 'App\Http\Controllers\MovementController@add_movement')->name('movements-add');
 });
 
+// PDF routes
+Route::group(['middleware' => 'auth'] , function () {
+    Route::get('/download-client-movements', 'App\Http\Controllers\PDFController@download_pdf')->name('download-client-movements');
+});
+
 require __DIR__.'/auth.php';

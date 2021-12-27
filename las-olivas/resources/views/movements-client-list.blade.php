@@ -1,3 +1,5 @@
+<!-- Font Awesome Brand Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -13,6 +15,18 @@
                             Movimientos de {{$client_data->name}} {{$client_data->last_name}}
                         @endforeach
                     </h1>
+                    <form action="{{route('download-client-movements')}}" method="GET" enctype="multipart/form-data">
+                    @csrf
+                        @foreach ($client as $client_data)
+                            <input type="hidden" name="client_id" id="client_id" value="{{ $client_data->id }}">
+                        @endforeach
+                        @if(!isset($message))
+                            <button type="sumbit" title="Descargar PDF de movimientos" style="float:right;"> 
+                                <i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px"></i>
+                            </button>
+                        @endif
+                    </form>
+                    <br>
                     <br>
                     @if(isset($message))
                         <hr>
