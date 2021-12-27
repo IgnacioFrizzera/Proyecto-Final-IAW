@@ -41,6 +41,9 @@
                                     <br>
                                     <h4>Teléfono</h4>
                                     <input type="tel" class="form-control" name="phone_number" id="phone_number" placeholder="2222444444" maxlength="20">
+                                    <br>
+                                    <h4>Dirección</h4>
+                                    <input type="string" class="form-control" name="client_address" id="client_address" placeholder="Av. 25 de Mayo 101" maxlength="100">
                                 </div>
                                 <div class="col-4">
                                     <h4>Profesión</h4>

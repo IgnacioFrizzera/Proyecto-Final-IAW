@@ -20,6 +20,7 @@ class Client extends Model
         'email',
         'phone_number',
         'birthday',
+        'address',
         'profession'
     ];
 

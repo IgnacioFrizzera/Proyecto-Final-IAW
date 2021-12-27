@@ -32,6 +32,7 @@ class ClientController extends Controller
         return Validator::make($request->all(), [
             'client_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/'],
             'client_last_name' => ['required', 'string', 'max:100', 'regex:/^([^0-9]*)$/'],
+            'client_address' => ['string', 'nullable', 'max:100'],
             'client_profession' => ['string', 'nullable', 'max:100', 'regex:/^([^0-9]*)$/']
         ]);
     }
@@ -65,6 +66,7 @@ class ClientController extends Controller
             'phone_number' => $request->input('phone_number'),
             'email' => $request->input('email'),
             'birthday' => $request->input('client_birthday'),
+            'address' => $request->input('client_address'),
             'profession' => $request->input('client_profession')
         ]);
 
@@ -94,6 +96,7 @@ class ClientController extends Controller
                 'phone_number' => $request->input('phone_number'),
                 'email' => $request->input('email'),
                 'birthday' => $request->input('client_birthday'),
+                'address' => $request->input('client_address'),
                 'profession' => $request->input('client_profession')
             ]);
         }

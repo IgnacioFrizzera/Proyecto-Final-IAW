@@ -20,6 +20,7 @@ class CreateClientsTable extends Migration
             $table->string('email', 100)->nullable()->unique();
             $table->string('phone_number', 20)->nullable()->unique();
             $table->date('birthday')->nullable();
+            $table->string('address', 100)->nullable();
             $table->string('profession', 100)->nullable();
             $table->float('current_balance', 10, 2)->nullabe(false)->default('0.00');
             $table->timestamps();
