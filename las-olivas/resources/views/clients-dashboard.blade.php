@@ -41,7 +41,7 @@
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Apellido</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Numero de teléfono</th>
+                                        <th scope="col">Número de teléfono</th>
                                         <th scope="col">Saldo</th>
                                     </tr>
                                 </thead>
