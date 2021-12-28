@@ -63,10 +63,10 @@
                                     </th>
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="receipt_type" id="receipt" onchange="disabledOnReceiptType(this.value)">
-                                            <option value="FACTURA">FACTURA</option>
-                                            <option value="EFECTIVO">EFECTIVO</option>
-                                            <option value="TARJETA C">TARJETA C</option>
-                                            <option value="TARJETA D">TARJETA D</option>
+                                            <option value="FC">FACTURA</option>
+                                            <option value="EF">EFECTIVO</option>
+                                            <option value="TC">TARJETA C</option>
+                                            <option value="TD">TARJETA D</option>
                                         </select>
                                     </th>
                                     <th><input required type="number" name="due" id="due_input" step=".01" value="0"></th>
