@@ -26,7 +26,7 @@ class MovementController extends Controller
         $client = Client::where('id', $client_id)->get();
 
 
-        $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'desc');
+        $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'DESC');
 
         if (count($movements->get()) == 0)
         {

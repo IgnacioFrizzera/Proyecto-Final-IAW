@@ -12,7 +12,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::select()->paginate(10);
+        $clients = Client::select()->orderBy('current_balance', 'DESC')->paginate(10);
         
         if(count($clients) == 0)
         {
