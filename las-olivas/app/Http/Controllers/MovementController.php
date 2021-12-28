@@ -12,7 +12,7 @@ class MovementController extends Controller
  
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::select()->orderBy('name', 'ASC')->get();
         if (count($clients) > 0) 
         {
             return view('movements-dashboard')->withClients($clients);
