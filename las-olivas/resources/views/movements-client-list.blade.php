@@ -71,12 +71,12 @@
                                     <tbody>
                                         @foreach ($movements as $movement)
                                             <tr>
-                                                <td>{{$movement->created_at}}</td>
-                                                <td>{{$movement->description}}</td>
-                                                <td>{{$movement->receipt_type}}</td>
-                                                <td>{{$movement->due}}</td>
-                                                <td>{{$movement->paid}}</td>
-                                                <td>{{$movement->balance}}</td>
+                                                <td>{{ $movement->created_at->format('d/m/Y') }}</td>
+                                                <td>{{ $movement->description }}</td>
+                                                <td>{{ $movement->receipt_type }}</td>
+                                                <td>{{ $movement->due }}</td>
+                                                <td>{{ $movement->paid }}</td>
+                                                <td>{{ $movement->balance }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
