@@ -33,13 +33,14 @@
                             </div>  
                             <div class="col-3">
                                 @if(isset($clients))
-                                    <input class="form-control" list="clients-list" name="selected_client" placeholder="Busca un cliente..." required>
-                                    <datalist id="clients-list">
+                                    {{-- Funciona pero no se puede filtrar por texto --}}
+                                    <select class="form-select" aria-label="Default select example" name="client_id" id="receipt">
                                         @foreach($clients as $client)
-                                            <input type="hidden" name="client_id" value="{{ $client->id }}">
-                                            <option value="{{ $client->name }} {{ $client->last_name }}">
+                                            <option value="{{ $client->id }}">
+                                                {{ $client->name }} {{ $client->last_name}}
+                                            </option>
                                         @endforeach
-                                    </datalist>
+                                    </select>
                                 @else
                                     <h5>No hay clientes en el sistema.</h5>
                                 @endif
@@ -57,19 +58,19 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                        <th>
-                                            <textarea required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
-                                        </th>
-                                        <th>
-                                            <select class="form-select" aria-label="Default select example" name="receipt_type" id="receipt" onchange="disabledOnReceiptType(this.value)">
-                                                <option value="FACTURA">FACTURA</option>
-                                                <option value="EFECTIVO">EFECTIVO</option>
-                                                <option value="TARJETA C">TARJETA C</option>
-                                                <option value="TARJETA D">TARJETA D</option>
-                                            </select>
-                                        </th>
-                                        <th><input required type="number" name="due" id="due_input" step=".01" value="0"></th>
-                                        <th><input required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
+                                    <th>
+                                        <textarea required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
+                                    </th>
+                                    <th>
+                                        <select class="form-select" aria-label="Default select example" name="receipt_type" id="receipt" onchange="disabledOnReceiptType(this.value)">
+                                            <option value="FACTURA">FACTURA</option>
+                                            <option value="EFECTIVO">EFECTIVO</option>
+                                            <option value="TARJETA C">TARJETA C</option>
+                                            <option value="TARJETA D">TARJETA D</option>
+                                        </select>
+                                    </th>
+                                    <th><input required type="number" name="due" id="due_input" step=".01" value="0"></th>
+                                    <th><input required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
                                 </tr>   
                             </tbody>
                         </table>
