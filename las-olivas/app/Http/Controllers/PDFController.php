@@ -11,7 +11,7 @@ use PDF;
 class PDFController extends Controller
 {
     
-    private function create_pdf($client, $movements)
+    public function create_pdf($client, $movements)
     {
         $data = [
             'client_data' => $client,

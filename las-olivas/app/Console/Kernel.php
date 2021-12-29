@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\MonthlyClientMovementsEmail::class,
+        Commands\MonthlyClientMovementsWhatsapp::class,
     ];
 
     /**
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('monthly_movements:email')->hourly();
+        $schedule->command('monthly_movements:whatsapp')->hourly();
     }
 
     /**
