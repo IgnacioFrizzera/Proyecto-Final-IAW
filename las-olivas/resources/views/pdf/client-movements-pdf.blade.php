@@ -7,22 +7,24 @@
         <img src="{{ public_path().'/static/las-olivas-logo.png' }}" width="75" height="75">
         <p style="font-size: 32px"> {{ $client_data->name }} {{ $client_data->last_name }} </p>
         <hr>
-        @if(isset($client_data->address))
-            <li> Dirección: {{ $client_data->address }} </li>            
-        @endif
-        @if(isset($client_data->phone_number))
-            <li> Teléfono: {{ $client_data->phone_number }} </li>            
-        @endif
+        <div class="container-fluid">
+            @if(isset($client_data->address))
+                <li> Dirección: {{ $client_data->address }} </li>            
+            @endif
+            @if(isset($client_data->phone_number))
+                <li> Teléfono: {{ $client_data->phone_number }} </li>            
+            @endif
+        </div>
         <hr>
-        <table class="table">
+        <table class="table table-bordered table-striped text-left">
             <thead>
                 <tr>
-                    <th scope="col-1">Fecha</th>
-                    <th scope="col-3">Descripción</th>
-                    <th scope="col-1">Tipo de recibo</th>
-                    <th scope="col-2">Debe</th>
-                    <th scope="col-2">Haber</th>
-                    <th scope="col-2">Saldo</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Tipo de recibo</th>
+                    <th scope="col">Debe</th>
+                    <th scope="col">Haber</th>
+                    <th scope="col">Saldo</th>
                 </tr>
             </thead>
             <tbody>

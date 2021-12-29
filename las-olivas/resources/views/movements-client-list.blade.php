@@ -57,7 +57,7 @@
                                 </form>
                             </div>
                             <br>
-                            <table class="table table-bordered table-striped text-center">
+                            <table class="table table-bordered table-striped text-left">
                                     <thead>
                                         <tr>
                                             <th scope="col">Fecha</th>
