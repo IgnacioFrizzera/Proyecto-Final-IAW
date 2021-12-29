@@ -44,15 +44,24 @@ class MonthlyClientMovementsEmail extends Command
     public function handle()
     {
         $pdf_controller = new PDFController();
+        
+        $current_month = date('m');
+
         $clients = Client::all();
         foreach ($clients as $client)
         {
             if ($client->email != null)
             {
-                $movements = Movement::where('client_id', $client->id)->get();
-                $pdf = $pdf_controller->create_pdf($client, $movements);
-                // Mail::send();
-                echo 1;
+                $movements = Movement::
+                    where('client_id', $client->id)
+                    ->whereMonth('created_at', $current_month - 1)
+                    ->get();
+                
+                if (count($movements) != 0)
+                {
+                    $pdf = $pdf_controller->create_pdf($client, $movements);
+                    // email->send()
+                }
             }
         }
         $this->info('Monthly movements email sent to all clients');
