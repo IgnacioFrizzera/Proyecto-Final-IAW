@@ -67,6 +67,23 @@ class MonthlyClientMovementsEmail extends Command
             '<h3>Las Olivas Pringles</h3>';
     }
 
+    private function create_directories($previous_month, $year)
+    {
+        $files_path = public_path() . '/movements/' . $year;
+        if (!file_exists($files_path))
+        {
+            mkdir($files_path, 0777, true);
+        }
+
+        $files_path = $files_path . '/' . $this->months_translator[$previous_month];
+        if (!file_exists($files_path))
+        {
+            mkdir($files_path, 0777, true);
+        }
+
+        return $files_path . '/';
+    }
+
     /**
      * Execute the console command.
      *
@@ -74,13 +91,13 @@ class MonthlyClientMovementsEmail extends Command
      */
     public function handle()
     {
-        $files_path = public_path() . '/movements/';
+        $year = date('Y');
+        $previous_month = date('m'); // - 1; ADD AGAIN ON 1ST OF JANUARY.
+
+        $files_path = $this->create_directories($previous_month, $year);
 
         $pdf_controller = new PDFController();
         
-        $year = date('Y');
-        $previous_month = date('m');  // - 1;
-
         $clients = Client::all();
         foreach ($clients as $client)
         {
@@ -94,7 +111,7 @@ class MonthlyClientMovementsEmail extends Command
                 if (count($movements) != 0)
                 {
                     $pdf = $pdf_controller->create_pdf($client, $movements);
-                    $client_path = $files_path . $client->name . $client->last_name . $previous_month . '.pdf';
+                    $client_path = $files_path . $client->name . $client->last_name . $previous_month . '.' . $year . '.pdf';
                     
                     file_put_contents($client_path, $pdf->output());
 
