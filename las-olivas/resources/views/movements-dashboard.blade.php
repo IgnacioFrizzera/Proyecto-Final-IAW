@@ -28,12 +28,11 @@
                     <form action="{{route('movements-add')}}" method="POST" enctype="multipart/form-data"> 
                     @csrf
                         <div class="row">
-                            <div class="col-1">
-                                <h3>Cliente: </h3>
-                            </div>  
-                            <div class="col-3">
-                                @if(isset($clients))
-                                    {{-- Funciona pero no se puede filtrar por texto --}}
+                            @if(isset($clients))
+                                <div class="col-1">
+                                    <h3>Cliente: </h3>
+                                </div>  
+                                <div class="col-3">
                                     <select class="form-select" aria-label="Default select example" name="client_id" id="receipt">
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">
@@ -41,10 +40,12 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                @else
-                                    <h5>No hay clientes en el sistema.</h5>
-                                @endif
-                            </div>
+                                </div>
+                            @else
+                                <div class="col-6">
+                                    <h3>No hay clientes en el sistema.</h3>
+                                </div>
+                            @endif
                         </div>
                         <hr>
                         <table class="table table-bordered table-striped text-center">
