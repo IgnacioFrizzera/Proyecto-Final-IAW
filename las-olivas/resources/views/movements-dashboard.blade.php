@@ -50,6 +50,7 @@
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                                 <tr>
+                                    <th scope="col">Fecha</th>
                                     <th scope="col">Descripción</th>
                                     <th scope="col">Tipo de comprobante</th>
                                     <th scope="col">Debe</th>
@@ -58,6 +59,7 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <th><input type="date" name="date" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>"></th>
                                     <th>
                                         <textarea required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>

@@ -92,7 +92,7 @@ class MonthlyClientMovementsEmail extends Command
     public function handle()
     {
         $year = date('Y');
-        $previous_month = date('m'); // - 1; ADD AGAIN ON 1ST OF JANUARY.
+        $previous_month = date('m') - 1;
 
         $files_path = $this->create_directories($previous_month, $year);
 

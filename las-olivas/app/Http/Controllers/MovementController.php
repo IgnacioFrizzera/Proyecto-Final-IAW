@@ -57,6 +57,7 @@ class MovementController extends Controller
             'client_id' => ['required', 'bail', 'exists:clients,id'],
             'description' => ['required', 'string', 'max:200'],
             'receipt_type' => ['required', 'string', 'max:50', 'regex:/^([^0-9]*)$/'],
+            'date' => ['required'],
             'due' => ['required', 'numeric'],
             'paid' => ['required', 'numeric']
         ]);
@@ -81,7 +82,8 @@ class MovementController extends Controller
             'due' => $request->input('due'),
             'paid' => $request->input('paid'),
             'balance' =>  $client->current_balance,
-            'client_id' => $request->input('client_id')
+            'client_id' => $request->input('client_id'),
+            'created_at' => $request->input('date')
         ]);
 
         return $this->index()->withSuccessMessage('El movimiento se cargó correctamente.');

@@ -21,7 +21,7 @@ class CreateMovementsTable extends Migration
             $table->float('paid', 10, 2)->nullabe(false);
             $table->float('balance', 10, 2)->nullabe(false);
             $table->foreignId('client_id')->constrained()->restrictOnDelete();
-            $table->timestamps();
+            $table->date('created_at')->nullabe(false);
         });
     }
 

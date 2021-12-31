@@ -9,13 +9,18 @@ class Movement extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $dates = ['created_at'];
+
     protected $fillable = [
         'description',
         'receipt_type',
         'due',
         'paid',
         'balance',
-        'client_id'
+        'client_id',
+        'created_at'
     ];
 
 }
