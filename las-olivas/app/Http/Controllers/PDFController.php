@@ -11,11 +11,12 @@ use PDF;
 class PDFController extends Controller
 {
     
-    public function create_pdf($client, $movements)
+    public function create_pdf($client, $movements, $last_month_balance=null)
     {
         $data = [
             'client_data' => $client,
-            'client_movements' => $movements
+            'client_movements' => $movements,
+            'last_month_balance' => $last_month_balance,
         ];
         
         $pdf = PDF::loadView('/pdf/client-movements-pdf', $data);

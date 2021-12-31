@@ -40,5 +40,10 @@
                 @endforeach
             </tbody>
         </table>
+        @if(isset($last_month_balance))
+            <p style="font-size: 24px">
+                Saldo anterior: ${{ $last_month_balance }} 
+            </p>
+        @endif
     </body>
 </html>

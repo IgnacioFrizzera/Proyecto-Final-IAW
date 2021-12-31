@@ -84,6 +84,19 @@ class MonthlyClientMovementsEmail extends Command
         return $files_path . '/';
     }
 
+    private function get_previous_month_balance($previous_month, $client)
+    {
+        $movement = Movement::
+            where('client_id', $client->id)
+            ->whereMonth('created_at', $previous_month - 1)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+        
+        if ($movement == null) return 0;
+        
+        return $movement->balance;
+    }
+
     /**
      * Execute the console command.
      *
@@ -110,9 +123,10 @@ class MonthlyClientMovementsEmail extends Command
                 
                 if (count($movements) != 0)
                 {
-                    $pdf = $pdf_controller->create_pdf($client, $movements);
+                    $previous_month_balance = $this->get_previous_month_balance($previous_month, $client);
+                    $pdf = $pdf_controller->create_pdf($client, $movements, $previous_month_balance);
+
                     $client_path = $files_path . $client->name . $client->last_name . $previous_month . '.' . $year . '.pdf';
-                    
                     file_put_contents($client_path, $pdf->output());
 
                     $subject = $this->create_subject($client, $previous_month, $year);
