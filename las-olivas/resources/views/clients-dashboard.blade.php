@@ -11,7 +11,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="button" style="text-align: right">
-                        <a href=" {{ route('clients-add') }}">Cargar un cliente</a>
+                        <form action="{{route('clients-add')}}" method="GET" enctype="multipart/form-data">
+                            <button type="sumbit" class="btn btn-dark">
+                                Cargar un cliente
+                            </button>
+                        </form>
                     </div>
                     <h1 style="text-align:center;">Listado de clientes</h1>
                     <br>
@@ -22,7 +26,6 @@
                             <button type="sumbit">Buscar</button>
                         </form>
                     </div>
-                    <br>
                     @if(isset($message))
                     <hr>
                     <div class="container" style="text-align:center;">
