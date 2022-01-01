@@ -40,6 +40,7 @@ class Client extends Model
         $movement = $this->movements()
                          ->whereMonth('created_at', $current_month - 1)
                          ->orderBy('created_at', 'DESC')
+                         ->orderBy('id', 'DESC')
                          ->first();
 
         if ($movement == null) return 0;
