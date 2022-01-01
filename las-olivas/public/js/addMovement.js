@@ -9,7 +9,7 @@ function setBackgroundAndDisable(disableElement, enableElement) {
 function disabledOnReceiptType(valueType) {
     const paid = document.getElementById("paid_input");
     const due = document.getElementById("due_input");
-    if (valueType == "FC") {
+    if (valueType == "FC" || valueType == "FCC") {
         setBackgroundAndDisable(paid, due);
     }
     else {

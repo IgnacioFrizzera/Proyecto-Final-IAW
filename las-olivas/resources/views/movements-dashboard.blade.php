@@ -67,6 +67,7 @@
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="receipt_type" id="receipt" onchange="disabledOnReceiptType(this.value)">
                                             <option value="FC">FACTURA</option>
+                                            <option value="FCC">F. CUENTA CORRIENTE</option>
                                             <option value="EF">EFECTIVO</option>
                                             <option value="TC">TARJETA C</option>
                                             <option value="TD">TARJETA D</option>
