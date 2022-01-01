@@ -58,8 +58,8 @@ class MovementController extends Controller
             'description' => ['required', 'string', 'max:200'],
             'receipt_type' => ['required', 'string', 'max:50', 'regex:/^([^0-9]*)$/'],
             'date' => ['required'],
-            'due' => ['required', 'numeric', 'gt:0'],
-            'paid' => ['required', 'numeric', 'gt:0']
+            'due' => ['required', 'numeric'],
+            'paid' => ['required', 'numeric']
         ]);
     }
 
