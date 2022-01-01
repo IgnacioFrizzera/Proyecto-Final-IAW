@@ -18,6 +18,16 @@ class Kernel extends ConsoleKernel
     ];
 
     /**
+     * Get the timezone that should be used by default for scheduled events.
+     *
+     * @return \DateTimeZone|string|null
+     */
+    protected function scheduleTimezone()
+    {
+        return 'America/Argentina/Buenos_Aires';
+    }
+
+    /**
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
@@ -25,8 +35,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('monthly_movements:email')->monthlyOn(3, '12:00');
-        $schedule->command('monthly_movements:whatsapp')->monthlyOn(3, '12:00');
+        $schedule->command('monthly_movements:email')->monthlyOn(1, '16:00');
+        $schedule->command('monthly_movements:whatsapp')->monthlyOn(1, '16:00');
     }
 
     /**
