@@ -16,7 +16,7 @@
             @endif
         </div>
         <hr>
-        <table class="table table-bordered table-striped text-left">
+        <table class="table table-bordered text-left">
             <thead>
                 <tr>
                     <th scope="col">Fecha</th>
@@ -28,6 +28,18 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td></td>
+                    <td style="font-size: 20px">Saldo anterior</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="font-size: 20px">
+                        @if(isset($last_month_balance))
+                            ${{ $last_month_balance }} 
+                        @endif
+                    </td>
+                </tr>
                 @foreach ($client_movements as $movement)
                     <tr>
                         <td> {{ $movement->created_at->format('d/m/Y') }} </td>
@@ -38,12 +50,19 @@
                         <td> {{ $movement->balance }} </td>
                     </tr>
                 @endforeach
+                <tr>
+                    <td></td>
+                    <td style="font-size: 20px">Saldo</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="font-size: 20px">
+                        @if(isset($current_balance))
+                            ${{ $current_balance }} 
+                        @endif
+                    </td>
+                </tr>
             </tbody>
         </table>
-        @if(isset($last_month_balance))
-            <p style="font-size: 24px">
-                Saldo anterior: ${{ $last_month_balance }} 
-            </p>
-        @endif
     </body>
 </html>
