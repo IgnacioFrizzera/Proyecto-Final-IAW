@@ -10,16 +10,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="button" style="text-align: center">
-                            <a href=" {{ route('clients-add') }}">Cargar un cliente</a>
+                    <div class="button" style="text-align: right">
+                        <a href=" {{ route('clients-add') }}">Cargar un cliente</a>
                     </div>
                     <h1 style="text-align:center;">Listado de clientes</h1>
                     <br>
-                    @if(isset($message))
-                        <div class="container" style="text-align:center;">
-                            {{ $message }}
-                        </div>
-                    @endif
                     <div class="container" style="text-align:center;">
                         <form action="{{route('clients-search')}}" method="GET" enctype="multipart/form-data">
                         @csrf
@@ -28,12 +23,14 @@
                         </form>
                     </div>
                     <br>
-                    @if(isset($searchMessage))
-                            <div class="container" style="text-align:center;">
-                                {{ $searchMessage }}
-                            </div>
+                    @if(isset($message))
+                    <hr>
+                    <div class="container" style="text-align:center;">
+                        <h4> {{ $message }} </h4>
+                    </div>
                     @endif
                     @if(isset($clients))
+                    <hr>
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <table class="table table-bordered table-striped text-center">
                                 <thead>
@@ -61,7 +58,7 @@
                                             </td>
                                             <input type="hidden" name="client_phone_number" value="{{ $client->phone_number }}"><td> {{ $client->phone_number }} </td>
                                             <td> $ {{ $client->current_balance }}  </td>
-                                            <td><button type="sumbit" name="action" value="delete" title="Eliminar Cliente"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
+                                            <td><button type="sumbit" name="action" value="delete" title="Eliminar Cliente" onclick="return confirm('¿Estas seguro que deseas eliminar al cliente?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
                                             <td><button type="sumbit" name="action" value="update" title="Modificar datos Cliente"><i class="fa fa-pencil" aria-hidden="true" style="font-size:24px"></i></button></td>
                                             <td><button type="sumbit" name="action" value="list-movements" title="Ver movimientos del cliente"><i class="fa fa-book" aria-hidden="true" style="font-size:24px"></i></button></td>
                                         </form>
