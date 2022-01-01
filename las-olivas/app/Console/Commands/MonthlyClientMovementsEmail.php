@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\PDFController;
 
 use App\Models\Client;
-use App\Models\Movement;
 
 class MonthlyClientMovementsEmail extends Command
 {
@@ -84,18 +83,6 @@ class MonthlyClientMovementsEmail extends Command
         return $files_path . '/';
     }
 
-    private function get_previous_month_balance($previous_month, $client)
-    {
-        $movement = Movement::
-            where('client_id', $client->id)
-            ->whereMonth('created_at', $previous_month - 1)
-            ->orderBy('created_at', 'DESC')
-            ->first();
-        
-        if ($movement == null) return 0;
-        
-        return $movement->balance;
-    }
 
     /**
      * Execute the console command.
@@ -106,6 +93,11 @@ class MonthlyClientMovementsEmail extends Command
     {
         $year = date('Y');
         $previous_month = date('m') - 1;
+        if ($previous_month == '0')
+        {
+            $year = $year - 1;
+            $previous_month = '12';
+        }
 
         $files_path = $this->create_directories($previous_month, $year);
 
@@ -116,14 +108,11 @@ class MonthlyClientMovementsEmail extends Command
         {
             if ($client->email != null)
             {
-                $movements = Movement::
-                    where('client_id', $client->id)
-                    ->whereMonth('created_at', $previous_month)
-                    ->get();
+                $movements = $client->get_month_movements($previous_month);
                 
                 if (count($movements) != 0)
                 {
-                    $previous_month_balance = $this->get_previous_month_balance($previous_month, $client);
+                    $previous_month_balance = $client->get_previous_month_balance($previous_month);
                     $pdf = $pdf_controller->create_pdf($client, $movements, $previous_month_balance);
 
                     $client_path = $files_path . $client->name . $client->last_name . $previous_month . '.' . $year . '.pdf';
@@ -139,7 +128,7 @@ class MonthlyClientMovementsEmail extends Command
                           ->setBody($body, 'text/html')
                           ->attach(\Swift_Attachment::fromPath($client_path));
                     });
-                }   
+                }
             }
         }
         $this->info('Monthly movements email sent to all clients');
