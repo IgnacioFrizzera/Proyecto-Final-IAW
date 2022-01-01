@@ -17,11 +17,6 @@ Route::get('/', function () {
     return view('/auth/login');
 });
 
-// Main dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 // Clients routes
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/clients-dashboard', 'App\Http\Controllers\ClientController@index')->name('clients-dashboard');
@@ -42,6 +37,11 @@ Route::group(['middleware' => 'auth'] , function () {
 // PDF routes
 Route::group(['middleware' => 'auth'] , function () {
     Route::get('/download-client-movements', 'App\Http\Controllers\PDFController@download_pdf')->name('download-client-movements');
+});
+
+// Statistics and charts routes
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', 'App\Http\Controllers\StatisticsController@index')->name('dashboard');
 });
 
 require __DIR__.'/auth.php';
