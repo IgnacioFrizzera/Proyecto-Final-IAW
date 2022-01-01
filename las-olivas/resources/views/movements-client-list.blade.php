@@ -28,66 +28,66 @@
                     </form>
                     <br>
                     <br>
-                    @if(isset($message))
-                        <hr>
-                        <h2 style="text-align:center;">
-                            {{$message}}
-                        </h2>
-                    @else
-                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                            <hr>    
-                            <div class="container-fluid">
-                                <form action="{{route('movements-client-list')}}" method="GET" enctype="multipart/form-data">
-                                    @foreach ($client as $client_data)
-                                        <input type="hidden" name="client_id" value="{{$client_data->id}}">
-                                    @endforeach
-                                    <div class="row justify-content-center">
-                                        <div class="col-4">
-                                            <span style="font-size: 20px;">Desde:</span>
-                                            <input type="date" name="from" required>
-                                        </div>
-                                        <div class="col-4">
-                                            <span style="font-size: 20px;">Hasta:</span>
-                                            <input type="date" name="to" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>">
-                                        </div>
-                                        <button type="sumbit" class="btn btn-dark">
-                                            Filtrar movimientos
-                                        </button>
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <hr>    
+                        <div class="container-fluid">
+                            <form action="{{route('movements-client-list')}}" method="GET" enctype="multipart/form-data">
+                                @foreach ($client as $client_data)
+                                    <input type="hidden" name="client_id" value="{{$client_data->id}}">
+                                @endforeach
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <span style="font-size: 20px;">Desde:</span>
+                                        <input type="date" name="from" required>
                                     </div>
-                                </form>
-                            </div>
-                            <br>
+                                    <div class="col-4">
+                                        <span style="font-size: 20px;">Hasta:</span>
+                                        <input type="date" name="to" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>">
+                                    </div>
+                                    <button type="sumbit" class="btn btn-dark">
+                                        Filtrar movimientos
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <br>
+                        @if(isset($message))
+                            <hr>
+                            <h2 style="text-align:center;">
+                                {{$message}}
+                            </h2>
+                        @else
                             <table class="table table-bordered table-striped text-left">
-                                    <thead>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Tipo de recibo</th>
+                                        <th scope="col">Debe</th>
+                                        <th scope="col">Haber</th>
+                                        <th scope="col">Saldo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($movements as $movement)
                                         <tr>
-                                            <th scope="col">Fecha</th>
-                                            <th scope="col">Descripción</th>
-                                            <th scope="col">Tipo de recibo</th>
-                                            <th scope="col">Debe</th>
-                                            <th scope="col">Haber</th>
-                                            <th scope="col">Saldo</th>
+                                            <td>{{ $movement->created_at->format('d/m/Y') }}</td>
+                                            <td>{{ $movement->description }}</td>
+                                            <td>{{ $movement->receipt_type }}</td>
+                                            <td>{{ $movement->due }}</td>
+                                            <td>{{ $movement->paid }}</td>
+                                            <td>{{ $movement->balance }}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($movements as $movement)
-                                            <tr>
-                                                <td>{{ $movement->created_at->format('d/m/Y') }}</td>
-                                                <td>{{ $movement->description }}</td>
-                                                <td>{{ $movement->receipt_type }}</td>
-                                                <td>{{ $movement->due }}</td>
-                                                <td>{{ $movement->paid }}</td>
-                                                <td>{{ $movement->balance }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
+                                    @endforeach
+                                </tbody>
                             </table>
                             <div class="footer">
                                 <?php 
                                     echo $movements->appends(Request::all())->links();
                                 ?>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
