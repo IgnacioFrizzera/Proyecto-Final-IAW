@@ -14,7 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\MonthlyClientMovementsEmail::class,
-        Commands\MonthlyClientMovementsWhatsapp::class,
     ];
 
     /**
@@ -35,8 +34,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('monthly_movements:email')->monthlyOn(1, '16:00');
-        $schedule->command('monthly_movements:whatsapp')->monthlyOn(1, '16:00');
+        $schedule->command('monthly_movements:email')->monthlyOn(3, '12:00');
     }
 
     /**
