@@ -108,11 +108,11 @@ class MonthlyClientMovementsEmail extends Command
         {
             if ($client->email != null)
             {
-                $movements = $client->get_month_movements($previous_month);
+                $movements = $client->get_month_movements($previous_month, $year);
                 
                 if (count($movements) != 0)
                 {
-                    $previous_month_balance = $client->get_previous_month_balance($previous_month);
+                    $previous_month_balance = $client->get_previous_month_balance($previous_month, $year);
                     $pdf = $pdf_controller->create_pdf($client, $movements, $previous_month_balance);
 
                     $client_path = $files_path . $client->name . $client->last_name . $previous_month . '.' . $year . '.pdf';

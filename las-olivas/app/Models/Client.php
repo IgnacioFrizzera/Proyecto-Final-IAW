@@ -35,10 +35,11 @@ class Client extends Model
         $this->current_balance = $this->current_balance + $difference;
     }
 
-    public function get_previous_month_balance(string $current_month)
+    public function get_previous_month_balance(string $current_month, string $year)
     {
         $movement = $this->movements()
                          ->whereMonth('created_at', $current_month - 1)
+                         ->whereYear('created_at', $year)
                          ->orderBy('created_at', 'DESC')
                          ->orderBy('id', 'DESC')
                          ->first();
@@ -48,10 +49,11 @@ class Client extends Model
         return $movement->balance;
     }
 
-    public function get_month_movements(string $month)
+    public function get_month_movements(string $month, string $year)
     {
         return $this->movements()
                     ->whereMonth('created_at', $month)
+                    ->whereYear('created_at', $year)
                     ->get();
     }
 

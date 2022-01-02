@@ -46,14 +46,14 @@ class PDFController extends Controller
             $year = $year - 1;
             $previous_month = '12';
         }
-        $pdf = $this->create_monthly_movements_pdf($client, $previous_month);
+        $pdf = $this->create_monthly_movements_pdf($client, $previous_month, $year);
         return $pdf->download($client->name . $client->last_name . $previous_month . '.' . $year . '.pdf');
     }
 
-    public function create_monthly_movements_pdf(Client $client, string $previous_month)
+    public function create_monthly_movements_pdf(Client $client, string $previous_month, string $year)
     {
-        $movements = $client->get_month_movements($previous_month);
-        $previous_month_balance = $client->get_previous_month_balance($previous_month);
+        $movements = $client->get_month_movements($previous_month, $year);
+        $previous_month_balance = $client->get_previous_month_balance($previous_month, $year);
         $current_balance = $movements->sortByDesc('id')->first()->balance;
 
         return $this->create_pdf($client, $movements, $previous_month_balance, $current_balance);
