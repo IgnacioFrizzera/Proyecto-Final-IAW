@@ -36,11 +36,11 @@
                                 <div class="row justify-content-center">
                                     <div class="col-4">
                                         <span style="font-size: 20px;">Desde:</span>
-                                        <input type="date" name="from" required>
+                                        <input type="date" name="from">
                                     </div>
                                     <div class="col-4">
                                         <span style="font-size: 20px;">Hasta:</span>
-                                        <input type="date" name="to" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>">
+                                        <input type="date" name="to" value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>">
                                     </div>
                                     <button name="action" value="list" type="sumbit" class="btn btn-dark">
                                         Filtrar movimientos
