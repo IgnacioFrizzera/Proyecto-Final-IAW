@@ -16,6 +16,12 @@
             @endif
         </div>
         <hr>
+        <div class="container-fluid">
+            @if(isset($from))
+                <li> Mostrando movimientos desde: {{ $from }} hasta: {{ $to }} </li>
+            @endif
+        </div>
+        <hr>
         <table class="table table-bordered text-left">
             <thead>
                 <tr>

@@ -54,4 +54,9 @@ class Client extends Model
                     ->whereMonth('created_at', $month)
                     ->get();
     }
+
+    public function get_between_movements(string $from, string $to)
+    {
+        return $this->movements()->whereBetween('created_at', [$from, $to])->get();
+    }
 }

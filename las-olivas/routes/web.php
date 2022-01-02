@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Movements routes
 Route::group(['middleware' => 'auth'] , function () {
+    Route::get('/filter-or-download', 'App\Http\Controllers\MovementController@decider')->name('filter-or-download');
     Route::get('/movements-dashboard', 'App\Http\Controllers\MovementController@index')->name('movements-dashboard');
     Route::get('/movements-by-client', 'App\Http\Controllers\MovementController@list_client_movements')->name('movements-client-list');
     Route::post('/movements-add', 'App\Http\Controllers\MovementController@add_movement')->name('movements-add');

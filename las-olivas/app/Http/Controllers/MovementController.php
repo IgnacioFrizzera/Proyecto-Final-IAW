@@ -20,6 +20,25 @@ class MovementController extends Controller
         return view('movements-dashboard');
     }
 
+    public function decider(Request $request)
+    {
+        if ($request->action == 'list')
+        {
+            return $this->list_client_movements($request);
+        }
+        if ($request->action == 'download')
+        {
+            return redirect()->action(
+                [PDFController::class, 'download_pdf'],
+                [
+                    'client_id' => $request->client_id,
+                    'from' => $request->from,
+                    'to' => $request->to
+                ]
+            );
+        }
+    }
+
     public function list_client_movements(Request $request)
     {
         $client_id = $request->input('client_id');
