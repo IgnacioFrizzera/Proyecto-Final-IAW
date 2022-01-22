@@ -16,14 +16,11 @@ class MonthlySalesController extends Controller
     private function validate_date($month, $year)
     {
         $current_year = date('Y');
-        if ($current_year != $year) {
-            return true;
-        }
+        if ($current_year != $year) return true;
 
         $current_month = date('m');
-        if ($current_month <= $month) {
-            return false;
-        }
+        if ($current_month <= $month) return false;
+        
         return true;
     }
 
@@ -32,7 +29,8 @@ class MonthlySalesController extends Controller
         $given_month = $request->input('month');
         $given_year = $request->input('year');
 
-        if (!$this->validate_date($given_month, $given_year)) {
+        if (!$this->validate_date($given_month, $given_year)) 
+        {
             return $this->index()->withInvalidDate('No se pueden cargar ventas del actual mes o meses futuros.');
         }
 
