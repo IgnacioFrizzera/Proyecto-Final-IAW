@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Movement;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,12 +15,17 @@ class MovementController extends Controller
  
     public function index()
     {
+        $brands = Brand::all();
+        $categories = Category::all();
+        $sizes = Size::all();
+
         $clients = Client::select()->orderBy('name', 'ASC')->get();
-        if (count($clients) > 0) 
+        if (count($clients) > 0)
         {
-            return view('movements-dashboard')->withClients($clients);
+            return view('movements-dashboard', compact('clients', 'brands', 'categories', 'sizes'));
         }
-        return view('movements-dashboard');
+
+        return view('movements-dashboard', compact('brands', 'categories', 'sizes'));
     }
 
     public function decider(Request $request)
@@ -84,6 +92,7 @@ class MovementController extends Controller
 
     public function add_movement(Request $request)
     {
+        dd($request);
         $movement_validation = $this->validate_new_movement($request);
 
         if ($movement_validation->fails())

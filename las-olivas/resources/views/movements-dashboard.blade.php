@@ -48,14 +48,16 @@
                             @endif
                         </div>
                         <hr>
+                        <h3>Información del movimiento</h3>
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                                 <tr>
                                     <th scope="col">Fecha</th>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col">Tipo de comprobante</th>
-                                    <th scope="col">Debe</th>
-                                    <th scope="col">Haber</th>
+                                    <th scope="col">Categoría</th>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Talle</th>
+                                    <th scope="col">Comentario interno</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,6 +66,52 @@
                                     <th>
                                         <textarea required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
+                                    <th>
+                                        <select class="form-select" aria-label="Default select example" name="category" id="category">
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}">
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select class="form-select" aria-label="Default select example" name="brand" id="brand">
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}">
+                                                    {{ $brand->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select class="form-select" aria-label="Default select example" name="size" id="size">
+                                            @foreach($sizes as $size)
+                                                <option value="{{ $size->id }}">
+                                                    {{ $size->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <textarea name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
+                                    </th>
+                                </tr>   
+                            </tbody>
+                        </table>
+                        <hr>
+                        <h3>Información de pago</h3>
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo de comprobante</th>
+                                    <th scope="col">Debe</th>
+                                    <th scope="col">Haber</th>
+                                    <th scope="col">Venta por promoción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="receipt_type" id="receipt" onchange="disabledOnReceiptType(this.value)">
                                             <option value="FC">FACTURA</option>
@@ -75,6 +123,13 @@
                                     </th>
                                     <th><input required type="number" name="due" id="due_input" step=".01" value="0"></th>
                                     <th><input required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
+                                    <th>
+                                        <select class="form-select" aria-label="Default select example" name="promotion" id="promotion">
+                                            <option value="true">Si</option>
+                                            <option value="false">No</option>
+
+                                        </select>
+                                    </th>
                                 </tr>   
                             </tbody>
                         </table>

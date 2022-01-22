@@ -21,6 +21,11 @@ class CreateMovementsTable extends Migration
             $table->float('paid', 10, 2)->nullabe(false);
             $table->float('balance', 10, 2)->nullabe(false);
             $table->foreignId('client_id')->constrained()->restrictOnDelete();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('brand_id')->constrained();
+            $table->foreignId('size_id')->constrained();
+            $table->string('extra_comentary', 100)->nullable();
+            $table->boolean('paid_with_promotion');
             $table->date('created_at')->nullabe(false);
         });
     }

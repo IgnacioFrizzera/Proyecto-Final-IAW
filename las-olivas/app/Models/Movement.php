@@ -20,6 +20,11 @@ class Movement extends Model
         'paid',
         'balance',
         'client_id',
+        'category_id',
+        'brand_id',
+        'size_id',
+        'extra_comentary',
+        'paid_with_promotion',
         'created_at'
     ];
 
