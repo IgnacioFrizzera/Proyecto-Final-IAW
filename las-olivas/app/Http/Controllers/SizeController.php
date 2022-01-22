@@ -17,7 +17,7 @@ class SizeController extends Controller
     private function validate_name($name)
     {
         return Validator::make(['name' => $name], [
-            'name' => ['required', 'string', 'max:50', 'unique:sizes']
+            'name' => ['required', 'string', 'max:10', 'unique:sizes']
         ]);
     }
 

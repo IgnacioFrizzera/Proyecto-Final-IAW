@@ -69,7 +69,7 @@
                             @csrf
                             <div class="row">
                                 <div class="col-4">
-                                    <input required type="string" class="form-control" name="size_name" placeholder="Talle" maxlength="50">
+                                    <input required type="string" class="form-control" name="size_name" placeholder="Talle" maxlength="10">
                                 </div>
                                 <div class="col-4">
                                     <button type="sumbit" class="btn btn-dark">Cargar talle</button>
