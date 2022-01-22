@@ -40,6 +40,12 @@ Route::group(['middleware' => 'auth'] , function () {
     Route::get('/download-client-movements', 'App\Http\Controllers\PDFController@download_pdf')->name('download-client-movements');
 });
 
+// Sales routes
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/add-previous-monthly-sale', 'App\Http\Controllers\MonthlySalesController@index')->name('monthly-sales-index');
+    Route::post('/monthly-sales-add', 'App\Http\Controllers\MonthlySalesController@add_monthly_sale')->name('monthly-sales-add');
+});
+
 // Statistics and charts routes
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'App\Http\Controllers\StatisticsController@index')->name('dashboard');
