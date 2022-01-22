@@ -51,4 +51,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'App\Http\Controllers\StatisticsController@index')->name('dashboard');
 });
 
+// Labels routes: categories, brands and sizes.
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/labels', 'App\Http\Controllers\CategoryController@index')->name('labels-index');
+    Route::post('/labels-add-category', 'App\Http\Controllers\CategoryController@add')->name('labels-add-category');
+    Route::post('/labels-add-brand', 'App\Http\Controllers\BrandController@add')->name('labels-add-brand');
+    Route::post('/labels-add-size', 'App\Http\Controllers\SizeController@add')->name('labels-add-size');
+});
+
 require __DIR__.'/auth.php';
