@@ -53,8 +53,16 @@ class PDFController extends Controller
     public function create_monthly_movements_pdf(Client $client, string $previous_month, string $year)
     {
         $movements = $client->get_month_movements($previous_month, $year);
+        if (count($movements) == 0)
+        {
+            $current_balance = 0;
+        }
+        else
+        {
+            $current_balance = $movements->sortByDesc('id')->first()->balance;
+        }
+        
         $previous_month_balance = $client->get_previous_month_balance($previous_month, $year);
-        $current_balance = $movements->sortByDesc('id')->first()->balance;
 
         return $this->create_pdf($client, $movements, $previous_month_balance, $current_balance);
     }
