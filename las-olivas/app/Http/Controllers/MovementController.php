@@ -86,13 +86,17 @@ class MovementController extends Controller
             'receipt_type' => ['required', 'string', 'max:50', 'regex:/^([^0-9]*)$/'],
             'date' => ['required'],
             'due' => ['required', 'numeric'],
-            'paid' => ['required', 'numeric']
+            'paid' => ['required', 'numeric'],
+            'category' => ['required', 'exists:categories,id'],
+            'brand' => ['required', 'exists:brands,id'],
+            'size' => ['required', 'exists:sizes,id'],
+            'extra_commentary' => ['string', 'max:100'],
+            'promotion' => ['required', 'string']
         ]);
     }
 
     public function add_movement(Request $request)
     {
-        dd($request);
         $movement_validation = $this->validate_new_movement($request);
 
         if ($movement_validation->fails())
@@ -111,6 +115,11 @@ class MovementController extends Controller
             'paid' => $request->input('paid'),
             'balance' =>  $client->current_balance,
             'client_id' => $request->input('client_id'),
+            'category_id' => $request->input('category'),
+            'brand_id' => $request->input('brand'),
+            'size_id' => $request->input('size'),
+            'extra_comentary' => $request->input('extra_comentary'),
+            'paid_with_promotion' => $request->input('promotion'),
             'created_at' => $request->input('date')
         ]);
 
