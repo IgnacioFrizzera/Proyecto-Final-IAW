@@ -21,7 +21,6 @@
                     <br>
                     <div class="container" style="text-align:center;">
                         <form action="{{route('clients-search')}}" method="GET" enctype="multipart/form-data">
-                        @csrf
                             <input type="text" name="search">
                             <button type="sumbit">Buscar</button>
                         </form>
@@ -49,7 +48,6 @@
                                     @foreach($clients as $client)
                                     <tr>
                                         <form action="{{route('clients-update')}}" method="GET" enctype="multipart/form-data">
-                                        @csrf
                                             <input type="hidden" name="id" value="{{ $client->id }}">
                                             <input type="hidden" name="client_name" value="{{ $client->name }}"><td>{{ $client->name }}</td>
                                             <input type="hidden" name="client_last_name" value="{{ $client->last_name }}"><td> {{ $client->last_name }} </td>

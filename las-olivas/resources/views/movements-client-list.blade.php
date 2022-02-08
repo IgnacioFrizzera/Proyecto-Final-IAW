@@ -16,7 +16,6 @@
                         @endforeach
                     </h1>
                     <form action="{{route('filter-or-download')}}" method="GET" enctype="multipart/form-data">
-                    @csrf
                         @foreach ($client as $client_data)
                             <input type="hidden" name="client_id" id="client_id" value="{{ $client_data->id }}">
                         @endforeach
