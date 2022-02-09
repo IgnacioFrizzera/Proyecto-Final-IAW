@@ -49,9 +49,8 @@ class MovementController extends Controller
 
     public function list_client_movements(Request $request)
     {
-        $client_id = $request->input('client_id');
+        $client_id = $request->id;
         $client = Client::where('id', $client_id)->get();
-
 
         $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'DESC')->orderBy('id', 'DESC');
 

@@ -108,35 +108,16 @@ class ClientController extends Controller
         return $this->index()->withMessage('Se actualizaron correctamente los datos del cliente');
     }
 
-    private function update_client_index(Request $request)
+    public function update_client_index(Request $request)
     {
         $clientData = Client::where('id', $request->id)->get();
         return view('clients-update')->withClientData($clientData);
     }
 
-    private function delete_client($request)
+    public function delete_client(Request $request)
     {
         Client::where('id', $request->id)->delete();
         return $this->index()->withMessage('Se ha eliminado al cliente correctamente');
-    }
-
-    public function client_modification(Request $request)
-    {
-        if($request->action == 'update')
-        {
-            return $this->update_client_index($request);
-        }
-        else if ($request->action == 'delete')
-        {
-            return $this->delete_client($request);
-        }
-        else if ($request->action == 'list-movements')
-        {
-            return redirect()->action(
-                [MovementController::class, 'list_client_movements'],
-                ['client_id' => $request->id]
-            );
-        }
     }
 
     public function client_search(Request $request)

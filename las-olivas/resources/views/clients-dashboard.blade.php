@@ -20,7 +20,8 @@
                     <h1 style="text-align:center;">Listado de clientes</h1>
                     <br>
                     <div class="container" style="text-align:center;">
-                        <form action="{{route('clients-search')}}" method="GET" enctype="multipart/form-data">
+                        <form action="{{route('clients-search')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <input type="text" name="search">
                             <button type="sumbit">Buscar</button>
                         </form>
@@ -47,21 +48,29 @@
                                 <tbody>
                                     @foreach($clients as $client)
                                     <tr>
-                                        <form action="{{route('clients-update')}}" method="GET" enctype="multipart/form-data">
+                                        <td>{{ $client->name }}</td>
+                                        <td>{{ $client->last_name }}</td>
+                                        <td> 
+                                            <a href="mailto: {{ $client->email }}">
+                                                {{ $client->email }} 
+                                            </a>    
+                                        </td>
+                                        <td>{{ $client->phone_number }}</td>
+                                        <td>${{ $client->current_balance }}</td>
+                                        <form action="{{route('delete-client')}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
                                             <input type="hidden" name="id" value="{{ $client->id }}">
-                                            <input type="hidden" name="client_name" value="{{ $client->name }}"><td>{{ $client->name }}</td>
-                                            <input type="hidden" name="client_last_name" value="{{ $client->last_name }}"><td> {{ $client->last_name }} </td>
-                                            <input type="hidden" name="client_email" value="{{ $client->email }}">
-                                            <td> 
-                                                <a href="mailto: {{ $client->email }}">
-                                                    {{ $client->email }} 
-                                                </a>    
-                                            </td>
-                                            <input type="hidden" name="client_phone_number" value="{{ $client->phone_number }}"><td> {{ $client->phone_number }} </td>
-                                            <td> $ {{ $client->current_balance }}  </td>
-                                            <td><button type="sumbit" name="action" value="delete" title="Eliminar Cliente" onclick="return confirm('¿Estas seguro que deseas eliminar al cliente?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
-                                            <td><button type="sumbit" name="action" value="update" title="Modificar datos Cliente"><i class="fa fa-pencil" aria-hidden="true" style="font-size:24px"></i></button></td>
-                                            <td><button type="sumbit" name="action" value="list-movements" title="Ver movimientos del cliente"><i class="fa fa-book" aria-hidden="true" style="font-size:24px"></i></button></td>
+                                            <td><button type="sumbit" title="Eliminar Cliente" onclick="return confirm('¿Estas seguro que deseas eliminar al cliente?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
+                                        </form>
+                                        <form action="{{route('clients-data-for-update')}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $client->id }}">
+                                            <td><button type="sumbit" title="Modificar datos Cliente"><i class="fa fa-pencil" aria-hidden="true" style="font-size:24px"></i></button></td>
+                                        </form>
+                                        <form action="{{route('movements-client-list')}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $client->id }}">
+                                            <td><button type="sumbit" title="Ver movimientos del cliente"><i class="fa fa-book" aria-hidden="true" style="font-size:24px"></i></button></td>
                                         </form>
                                     </tr>
                                     @endforeach
