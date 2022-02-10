@@ -81,7 +81,7 @@
                     </div>
                     <br>
                     <hr>
-                    <h2>Etiquetas cargadas en el sistema</h2>
+                    <h1>Etiquetas cargadas en el sistema</h1>
                     <div class="form-group row">
                         <div class="col-4">
                             <table class="table table-bordered table-striped text-center">
