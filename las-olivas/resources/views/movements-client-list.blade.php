@@ -15,20 +15,24 @@
                             Movimientos de {{$client_data->name}} {{$client_data->last_name}}
                         @endforeach
                     </h1>
-                    <form action="{{route('filter-or-download')}}" method="GET" enctype="multipart/form-data">
+                    <form action="{{route('download-client-movements')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         @foreach ($client as $client_data)
                             <input type="hidden" name="client_id" id="client_id" value="{{ $client_data->id }}">
                         @endforeach
                         @if(!isset($message))
-                            <button name="action" value="download" type="sumbit" title="Descargar PDF de movimientos" style="float:right;"> 
+                            <button type="sumbit" title="Descargar PDF de movimientos" style="float:right;"> 
                                 <i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px"></i>
                             </button>
                         @endif
+                    </form>
                     <br>
                     <br>
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <hr>    
                         <div class="container-fluid">
+                            <form action="{{route('movements-client-list')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 @foreach ($client as $client_data)
                                     <input type="hidden" name="client_id" value="{{$client_data->id}}">
                                 @endforeach
@@ -41,7 +45,7 @@
                                         <span style="font-size: 20px;">Hasta:</span>
                                         <input type="date" name="to" value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>">
                                     </div>
-                                    <button name="action" value="list" type="sumbit" class="btn btn-dark">
+                                    <button type="sumbit" class="btn btn-dark">
                                         Filtrar movimientos
                                     </button>
                                 </div>

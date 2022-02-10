@@ -29,9 +29,9 @@ class PDFController extends Controller
 
     public function download_pdf(Request $request)
     {
-        $client = Client::where('id', $request->input('client_id'))->select()->first();
-        $from = $request->input('from');
-        $to = $request->input('to');
+        $client = Client::where('id', $request->client_id)->select()->first();
+        $from = $request->from;
+        $to = $request->to;
 
         if ($from != null and $to != null)
         {

@@ -27,29 +27,10 @@ class MovementController extends Controller
 
         return view('movements-dashboard', compact('brands', 'categories', 'sizes'));
     }
-
-    public function decider(Request $request)
-    {
-        if ($request->action == 'list')
-        {
-            return $this->list_client_movements($request);
-        }
-        if ($request->action == 'download')
-        {
-            return redirect()->action(
-                [PDFController::class, 'download_pdf'],
-                [
-                    'client_id' => $request->client_id,
-                    'from' => $request->from,
-                    'to' => $request->to
-                ]
-            );
-        }
-    }
-
+    
     public function list_client_movements(Request $request)
     {
-        $client_id = $request->id;
+        $client_id = $request->client_id;
         $client = Client::where('id', $client_id)->get();
 
         $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'DESC')->orderBy('id', 'DESC');
@@ -59,8 +40,8 @@ class MovementController extends Controller
             return view('movements-client-list')->withClient($client)->withMessage('El cliente no tiene ningún movimiento aún.');
         }
 
-        $from = $request->input('from');
-        $to = $request->input('to');
+        $from = $request->from;
+        $to = $request->to;
 
         if ($from != null and $to != null)
         {

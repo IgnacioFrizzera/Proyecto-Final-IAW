@@ -69,7 +69,7 @@
                                         </form>
                                         <form action="{{route('movements-client-list')}}" method="POST" enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $client->id }}">
+                                            <input type="hidden" name="client_id" value="{{ $client->id }}">
                                             <td><button type="sumbit" title="Ver movimientos del cliente"><i class="fa fa-book" aria-hidden="true" style="font-size:24px"></i></button></td>
                                         </form>
                                     </tr>

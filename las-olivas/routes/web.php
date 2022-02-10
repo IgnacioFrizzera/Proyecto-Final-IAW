@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Movements routes
 Route::group(['middleware' => 'auth'] , function () {
-    Route::get('/filter-or-download', 'App\Http\Controllers\MovementController@decider')->name('filter-or-download');
     Route::get('/movements-dashboard', 'App\Http\Controllers\MovementController@index')->name('movements-dashboard');
     Route::post('/movements-by-client', 'App\Http\Controllers\MovementController@list_client_movements')->name('movements-client-list');
     Route::post('/movements-add', 'App\Http\Controllers\MovementController@add_movement')->name('movements-add');
@@ -38,7 +37,7 @@ Route::group(['middleware' => 'auth'] , function () {
 
 // PDF routes
 Route::group(['middleware' => 'auth'] , function () {
-    Route::get('/download-client-movements', 'App\Http\Controllers\PDFController@download_pdf')->name('download-client-movements');
+    Route::post('/download-client-movements', 'App\Http\Controllers\PDFController@download_pdf')->name('download-client-movements');
 });
 
 // Sales routes
