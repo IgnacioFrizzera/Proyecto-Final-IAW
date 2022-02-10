@@ -1,3 +1,5 @@
+<!-- Font Awesome Brand Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -25,7 +27,7 @@
                                 {{$categoryError}}
                             </h4>
                         @endif                            
-                        <form action="{{route('labels-add-category')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('add-category')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-4">
@@ -45,7 +47,7 @@
                                 {{$brandError}}
                             </h4>
                         @endif  
-                        <form action="{{route('labels-add-brand')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('add-brand')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-4">
@@ -65,7 +67,7 @@
                                 {{$sizeError}}
                             </h4>
                         @endif
-                        <form action="{{route('labels-add-size')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('add-size')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-4">
@@ -76,6 +78,74 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <br>
+                    <hr>
+                    <h2>Etiquetas cargadas en el sistema</h2>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <table class="table table-bordered table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="font-size:24px;">Categorías</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($categories as $category)
+                                        <tr>
+                                            <form action="{{route('delete-category')}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$category->id}}">
+                                                    <th>{{$category->name}}</th>
+                                                    <th><button type="sumbit" title="Eliminar categoría" onclick="return confirm('¿Estas seguro que deseas eliminar la categoría?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
+                                            </form>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <table class="table table-bordered table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="font-size:24px;">Marcas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($brands as $brand)
+                                        <tr>
+                                            <form action="{{route('delete-brand')}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$brand->id}}">
+                                                    <th>{{$brand->name}}</th>
+                                                    <th><button type="sumbit" title="Eliminar marca" onclick="return confirm('¿Estas seguro que deseas eliminar la marca?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
+                                            </form>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <table class="table table-bordered table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="font-size:24px;">Talles</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($sizes as $size)
+                                        <tr>
+                                            <form action="{{route('delete-size')}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$size->id}}">
+                                                    <th>{{$size->name}}</th>
+                                                    <th><button type="sumbit" title="Eliminar talle" onclick="return confirm('¿Estas seguro que deseas eliminar el talle?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
+                                            </form>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
         </div>

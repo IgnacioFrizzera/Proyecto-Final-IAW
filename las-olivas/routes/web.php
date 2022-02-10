@@ -53,10 +53,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Labels routes: categories, brands and sizes.
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/labels', 'App\Http\Controllers\CategoryController@index')->name('labels-index');
-    Route::post('/labels-add-category', 'App\Http\Controllers\CategoryController@add')->name('labels-add-category');
-    Route::post('/labels-add-brand', 'App\Http\Controllers\BrandController@add')->name('labels-add-brand');
-    Route::post('/labels-add-size', 'App\Http\Controllers\SizeController@add')->name('labels-add-size');
+    Route::get('/labels', 'App\Http\Controllers\LabelsController@index')->name('labels-index');
+    Route::post('/add-category', 'App\Http\Controllers\LabelsController@add_category')->name('add-category');
+    Route::post('delete-category', 'App\Http\Controllers\LabelsController@delete_category')->name('delete-category');
+    Route::post('/add-brand', 'App\Http\Controllers\LabelsController@add_brand')->name('add-brand');
+    Route::post('delete-brand', 'App\Http\Controllers\LabelsController@delete_brand')->name('delete-brand');
+    Route::post('/add-size', 'App\Http\Controllers\LabelsController@add_size')->name('add-size');
+    Route::post('delete-size', 'App\Http\Controllers\LabelsController@delete_size')->name('delete-size');
+
 });
 
 require __DIR__.'/auth.php';
