@@ -126,6 +126,7 @@ class ClientController extends Controller
             Client::where('name', 'ilike', '%'.$request->search.'%')
                 ->orWhere('last_name', 'ilike', '%'.$request->search.'%')
                 ->select('id', 'name', 'last_name', 'email', 'phone_number', 'current_balance')
+                ->orderBy('current_balance', 'DESC')
                 ->paginate(15);
         
         if(count($clients) == 0)
