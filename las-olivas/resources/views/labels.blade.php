@@ -46,7 +46,7 @@
                             <h4 style="color:red; text-decoration:underline">
                                 {{$brandError}}
                             </h4>
-                        @endif  
+                        @endif
                         <form action="{{route('add-brand')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -82,6 +82,11 @@
                     <br>
                     <hr>
                     <h1>Etiquetas cargadas en el sistema</h1>
+                    @if(isset($deleteError))
+                        <h4 style="color:red; text-decoration:underline">
+                            {{$deleteError}}
+                        </h4>
+                    @endif  
                     <div class="form-group row">
                         <div class="col-4">
                             <table class="table table-bordered table-striped text-center">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Brand;
 use App\Models\Size;
@@ -53,8 +54,15 @@ class LabelsController extends Controller
 
     public function delete_brand(Request $request)
     {
-        Brand::where('id', $request->id)->delete();
-        return $this->index();
+        try
+        {
+            Brand::where('id', $request->id)->delete();
+            return $this->index();
+        }
+        catch (QueryException $e)
+        {
+            return $this->index()->withDeleteError('La marca tiene movimientos asociados, no se puede eliminar. Intente modificando el nombre.');
+        }
     }
 
     public function add_size(Request $request)
@@ -76,8 +84,15 @@ class LabelsController extends Controller
 
     public function delete_size(Request $request)
     {
-        Size::where('id', $request->id)->delete();
-        return $this->index();
+        try
+        {
+            Size::where('id', $request->id)->delete();
+            return $this->index();
+        }
+        catch (QueryException $e)
+        {
+            return $this->index()->withDeleteError('El talle tiene movimientos asociados, no se puede eliminar. Intente modificando el nombre.');
+        }
     }
 
     public function add_category(Request $request)
@@ -99,8 +114,15 @@ class LabelsController extends Controller
 
     public function delete_category(Request $request)
     {
-        Category::where('id', $request->id)->delete();
-        return $this->index();
+        try
+        {
+            Category::where('id', $request->id)->delete();
+            return $this->index();
+        }
+        catch (QueryException $e)
+        {
+            return $this->index()->withDeleteError('La categoría tiene movimientos asociados, no se puede eliminar. Intente modificando el nombre.');
+        }
     }
 
 }
