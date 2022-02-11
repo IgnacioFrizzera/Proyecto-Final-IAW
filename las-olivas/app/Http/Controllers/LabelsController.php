@@ -28,6 +28,67 @@ class LabelsController extends Controller
         return view('labels');
     }
 
+    public function update_index(Request $request)
+    {
+        if ($request->label_type == 'brand')
+        {
+            $brand = Brand::where('id', $request->id)->get();
+            return view('labels-update')->withTitle('marca')->withLabel($brand)->withType('brand');
+        }
+
+        if ($request->label_type == 'category')
+        {
+            $category = Category::where('id', $request->id)->get();
+            return view('labels-update')->withTitle('categoría')->withLabel($category)->withType('category');
+        }
+
+        if ($request->label_type == 'size')
+        {
+            $size = Size::where('id', $request->id)->get();
+            return view('labels-update')->withTitle('talle')->withLabel($size)->withType('size');
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $new_name = strtoupper($request->new_name);
+        $label_id = $request->id;
+
+        if ($request->old_name == $new_name)
+        {
+            return $this->update_index($request)->withErrorMessage('El nombre nuevo debe ser distinto al actual.');
+        }
+
+        if ($request->label_type == 'brand')
+        {
+            if ($this->validate_label($new_name, 'unique:brands')->fails())
+            {
+                return $this->update_index($request)->withErrorMessage('Ya existe una marca con ese nombre');
+            }
+            $this->update_brand($label_id, $new_name);
+        }
+        
+        if ($request->label_type == 'category')
+        {
+            if ($this->validate_label($new_name, 'unique:categories')->fails())
+            {
+                return $this->update_index($request)->withErrorMessage('Ya existe una categoría con ese nombre');
+            }
+            $this->update_category($label_id, $new_name);
+        }
+
+        if ($request->label_type == 'size')
+        {
+            if ($this->validate_label($new_name, 'unique:sizes')->fails())
+            {
+                return $this->update_index($request)->withErrorMessage('Ya existe un talle con ese nombre');
+            }
+            $this->update_size($label_id, $new_name);
+        }
+
+        return view('labels-update')->withMessage('La etiqueta se actualizó correctamente.');
+    }
+
     private function validate_label($name, $key_rule)
     {
         return Validator::make(['name' => $name], [
@@ -52,9 +113,11 @@ class LabelsController extends Controller
         return $this->index()->withSuccessMessage('Marca creada');
     }
 
-    public function modify_brand(Request $request)
+    private function update_brand($id, $new_name)
     {
-        dd('1');
+        Brand::where('id', $id)->update([
+            'name' => $new_name
+        ]);
     }
 
     public function delete_brand(Request $request)
@@ -87,9 +150,11 @@ class LabelsController extends Controller
         return $this->index()->withSuccessMessage('Talle creado');
     }
 
-    public function modify_size(Request $request)
+    private function update_size($id, $new_name)
     {
-        dd('2');
+        Size::where('id', $id)->update([
+            'name' => $new_name
+        ]);
     }
 
     public function delete_size(Request $request)
@@ -122,9 +187,11 @@ class LabelsController extends Controller
         return $this->index()->withSuccessMessage('Categoría creada');
     }
 
-    public function modify_category(Request $request)
+    private function update_category($id, $new_name)
     {
-        dd($request);
+        Category::where('id', $id)->update([
+            'name' => $new_name
+        ]);
     }
 
     public function delete_category(Request $request)
