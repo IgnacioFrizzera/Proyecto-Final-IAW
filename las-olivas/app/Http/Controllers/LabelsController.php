@@ -52,6 +52,11 @@ class LabelsController extends Controller
         return $this->index()->withSuccessMessage('Marca creada');
     }
 
+    public function modify_brand(Request $request)
+    {
+        dd('1');
+    }
+
     public function delete_brand(Request $request)
     {
         try
@@ -82,6 +87,11 @@ class LabelsController extends Controller
         return $this->index()->withSuccessMessage('Talle creado');
     }
 
+    public function modify_size(Request $request)
+    {
+        dd('2');
+    }
+
     public function delete_size(Request $request)
     {
         try
@@ -110,6 +120,11 @@ class LabelsController extends Controller
         ]);
 
         return $this->index()->withSuccessMessage('Categoría creada');
+    }
+
+    public function modify_category(Request $request)
+    {
+        dd($request);
     }
 
     public function delete_category(Request $request)

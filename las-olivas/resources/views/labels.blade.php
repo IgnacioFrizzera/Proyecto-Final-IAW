@@ -104,6 +104,11 @@
                                                     <th>{{$category->name}}</th>
                                                     <th><button type="sumbit" title="Eliminar categoría" onclick="return confirm('¿Estas seguro que deseas eliminar la categoría?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
                                             </form>
+                                            <form action="{{route('modify-category')}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{$category->id}}">
+                                                <th><button type="sumbit" title="Modificar categoría"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
+                                            </form>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -125,6 +130,11 @@
                                                     <th>{{$brand->name}}</th>
                                                     <th><button type="sumbit" title="Eliminar marca" onclick="return confirm('¿Estas seguro que deseas eliminar la marca?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
                                             </form>
+                                            <form action="{{route('modify-brand')}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{$brand->id}}">
+                                                <th><button type="sumbit" title="Modificar marca"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
+                                            </form>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -145,6 +155,11 @@
                                                     <input type="hidden" name="id" value="{{$size->id}}">
                                                     <th>{{$size->name}}</th>
                                                     <th><button type="sumbit" title="Eliminar talle" onclick="return confirm('¿Estas seguro que deseas eliminar el talle?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
+                                            </form>
+                                            <form action="{{route('modify-size')}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{$size->id}}">
+                                                <th><button type="sumbit" title="Modificar talle"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
                                             </form>
                                         </tr>
                                     @endforeach

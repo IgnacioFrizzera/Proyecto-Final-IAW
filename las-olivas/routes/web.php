@@ -55,10 +55,13 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/labels', 'App\Http\Controllers\LabelsController@index')->name('labels-index');
     Route::post('/add-category', 'App\Http\Controllers\LabelsController@add_category')->name('add-category');
+    Route::post('/modify-category', 'App\Http\Controllers\LabelsController@modify_category')->name('modify-category');
     Route::post('delete-category', 'App\Http\Controllers\LabelsController@delete_category')->name('delete-category');
     Route::post('/add-brand', 'App\Http\Controllers\LabelsController@add_brand')->name('add-brand');
+    Route::post('/modify-brand', 'App\Http\Controllers\LabelsController@modify_brand')->name('modify-brand');
     Route::post('delete-brand', 'App\Http\Controllers\LabelsController@delete_brand')->name('delete-brand');
     Route::post('/add-size', 'App\Http\Controllers\LabelsController@add_size')->name('add-size');
+    Route::post('/modify-size', 'App\Http\Controllers\LabelsController@modify_size')->name('modify-size');
     Route::post('delete-size', 'App\Http\Controllers\LabelsController@delete_size')->name('delete-size');
 
 });
