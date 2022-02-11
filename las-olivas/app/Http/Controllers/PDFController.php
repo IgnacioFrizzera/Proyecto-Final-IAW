@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Models\Movement;
 use Illuminate\Http\Request;
 
 use PDF;
