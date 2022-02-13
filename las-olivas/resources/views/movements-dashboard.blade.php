@@ -62,9 +62,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th><input type="date" name="date" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>"></th>
+                                    <th><input type="date" class="form-control" name="date" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>"></th>
                                     <th>
-                                        <textarea required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
+                                        <textarea class="form-control" required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="category" id="category">
@@ -94,7 +94,7 @@
                                         </select>
                                     </th>
                                     <th>
-                                        <textarea name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
+                                        <textarea class="form-control" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
                                 </tr>   
                             </tbody>
@@ -121,13 +121,12 @@
                                             <option value="TD">TARJETA D</option>
                                         </select>
                                     </th>
-                                    <th><input required type="number" name="due" id="due_input" step=".01" value="0"></th>
-                                    <th><input required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
+                                    <th><input class="form-control"required type="number" name="due" id="due_input" step=".01" value="0"></th>
+                                    <th><input class="form-control" required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="promotion" id="promotion">
                                             <option value="true">Si</option>
                                             <option value="false">No</option>
-
                                         </select>
                                     </th>
                                 </tr>   

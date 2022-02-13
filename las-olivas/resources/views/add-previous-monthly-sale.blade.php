@@ -69,11 +69,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input required type="number" min="0" name="fc_sales" id="fc_sales" step=".01" value="0"></td>
-                                    <td><input required type="number" min="0" name="fcc_sales" id="fcc_sales" step=".01" value="0"></td>
-                                    <td><input required type="number" min="0" name="ef_sales" id="ef_sales" step=".01" value="0"></td>
-                                    <td><input required type="number" min="0" name="tc_sales" id="tc_sales" step=".01" value="0"></td>
-                                    <td><input required type="number" min="0" name="td_sales" id="td_sales" step=".01" value="0"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="fc_sales" id="fc_sales" step=".01" value="0"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="fcc_sales" id="fcc_sales" step=".01" value="0"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="ef_sales" id="ef_sales" step=".01" value="0"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="tc_sales" id="tc_sales" step=".01" value="0"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="td_sales" id="td_sales" step=".01" value="0"></td>
                                 </tr>
                             </tbody>
                         </table>
