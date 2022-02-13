@@ -19,11 +19,24 @@
                     </div>
                     <h1 style="text-align:center;">Listado de clientes</h1>
                     <br>
-                    <div class="container" style="text-align:center;">
+                    <div class="container-fluid">
                         <form action="{{route('clients-search')}}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="text" name="search">
-                            <button type="sumbit">Buscar</button>
+                            <div class="form-group row">
+                                <div class="col-4">
+                                    {{-- Filler for centering --}}
+                                </div>
+                                <div class="col-4">
+                                    <div class="container-fluid">
+                                        <input class="form-control" type="text" name="search" style="border: 2px solid black;">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="container-fluid" id="brandsPieChart">
+                                        <button type="sumbit" class="btn btn-dark" title="Buscar un cliente">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     @if(isset($message))

@@ -131,7 +131,7 @@ class ClientController extends Controller
         
         if(count($clients) == 0)
         {
-            return view('clients-dashboard')->withMessage('No se han encontrado clientes');
+            return $this->index()->withMessage('No se han encontrado clientes que coincidan con su búsqueda: '.$request->search);
         }
         return view('clients-dashboard')->withClients($clients); 
     }
