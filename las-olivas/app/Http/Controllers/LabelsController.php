@@ -86,7 +86,7 @@ class LabelsController extends Controller
             $this->update_size($label_id, $new_name);
         }
 
-        return view('labels-update')->withMessage('La etiqueta se actualizó correctamente.');
+        return $this->index()->withSuccessMessage('Los datos se actualizaron correctamente');
     }
 
     private function validate_label($name, $key_rule)
