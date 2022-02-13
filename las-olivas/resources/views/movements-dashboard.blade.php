@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h2>
-                        Cargar Movimiento
+                        Cargar un movimiento
                     </h2>
                     <hr>
                     @if(isset($message))
@@ -48,15 +48,12 @@
                             @endif
                         </div>
                         <hr>
-                        <h3>Información del movimiento</h3>
+                        <h4>Información general</h4>
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                                 <tr>
                                     <th scope="col">Fecha</th>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col">Categoría</th>
-                                    <th scope="col">Marca</th>
-                                    <th scope="col">Talle</th>
                                     <th scope="col">Comentario interno</th>
                                 </tr>
                             </thead>
@@ -66,6 +63,23 @@
                                     <th>
                                         <textarea class="form-control" required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
+                                    <th>
+                                        <textarea class="form-control" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
+                                    </th>
+                                </tr>   
+                            </tbody>
+                        </table>
+                        <h4>Información de etiquetas</h4>
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Categoría</th>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Talle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="category" id="category">
                                             @foreach($categories as $category)
@@ -93,14 +107,10 @@
                                             @endforeach
                                         </select>
                                     </th>
-                                    <th>
-                                        <textarea class="form-control" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
-                                    </th>
-                                </tr>   
+                                </tr>
                             </tbody>
                         </table>
-                        <hr>
-                        <h3>Información de pago</h3>
+                        <h4>Información de pago</h4>
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                                 <tr>
