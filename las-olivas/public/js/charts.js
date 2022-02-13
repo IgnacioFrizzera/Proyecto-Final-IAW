@@ -1,5 +1,19 @@
-const receiptTpes = ['Factura', 'Factura C.C', 'Efectivo', 'Tarjeta Crédito', 'Tarjeta Débito'];
+const receiptShortNameValues = ['FC', 'FCC', 'EF', 'TC', 'TD'];
+const receiptLongNameTypes = ['Factura', 'Factura C.C', 'Efectivo', 'Tarjeta Crédito', 'Tarjeta Débito'];
 const receiptColors = ['rgb(60, 179, 113)', 'rgb(255, 0, 0)', 'rgb(0, 0, 255)', 'rgb(255, 165, 0)', 'rgb(0, 0, 70)'];
+
+// Only takes FC and FCC movements. Dict: <BrandName, AmountOfMovementsWithBrandName>
+const brandsDict = {};
+const categoriesDict = {};
+
+// Sales
+const fcMovements = [];
+const fccMovements = [];
+
+// Payments
+const efMovements = [];
+const tcMovements = [];
+const tdMovements = [];
 
 const receiptTypeTranslation = {
     'FC': 'Factura',
@@ -10,46 +24,38 @@ const receiptTypeTranslation = {
 };
 
 
+function separateMovements(movements) {
+    for (let movement of movements) {
+        if (movement.receipt_type == 'FC') {
+            fcMovements.push(movement);
+        }
+        if (movement.receipt_type == 'FCC') {
+            fccMovements.push(movement);
+        }
+        if (movement.receipt_type == 'EF') {
+            efMovements.push(movement);
+        }
+        if (movement.receipt_type == 'TC') {
+            tcMovements.push(movement);
+        }
+        if (movement.receipt_type == 'TD') {
+            tdMovements.push(movement);
+        }
+    }
+}
 
-function makeMovementsChart(movements) {
+function makeMovementsChart(totalMovements) {
     const movementsBarChart = document.getElementById('movementsBarChart');
     const movementsPieChart = document.getElementById('movementsPieChart');
 
-    const totalMovements = movements.length;
-    var facturaAmount = 0;
-    var facturaCCAmount = 0;
-    var efectivoAmount = 0;
-    var tarjetaCAmount = 0;
-    var tarjetaDAmount = 0;
-
-    for(let movement of movements) {
-        if (movement.receipt_type == 'FC') {
-            facturaAmount += 1;
-        }
-        if (movement.receipt_type == 'FCC') {
-            facturaCCAmount += 1;
-        }
-        if (movement.receipt_type == 'EF') {
-            efectivoAmount += 1;
-        }
-        if (movement.receipt_type == 'TC') {
-            tarjetaCAmount += 1;
-        }
-        if (movement.receipt_type == 'TD') {
-            tarjetaDAmount += 1;
-        }
-    }
-
-    const movementsAmountData = [facturaAmount, facturaCCAmount, efectivoAmount, tarjetaCAmount, tarjetaDAmount]
+    const movementsAmountData = [fcMovements.length, fccMovements.length, efMovements.length, tcMovements.length, tdMovements.length];
 
     const barChartData = [
         {
-            title: 'Hola :)',
-            x: receiptTpes,
+            x: receiptLongNameTypes,
             y: movementsAmountData,
             marker:{
                 color: receiptColors
-                // color: ['rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)']
             },
             type: 'bar'
         }
@@ -69,7 +75,7 @@ function makeMovementsChart(movements) {
     const pieChartData = [
         {
             values: movementsPercentagesData,
-            labels: receiptTpes,
+            labels: receiptLongNameTypes,
             type: 'pie',
             textinfo: "label+percent",
             textposition: "inside",
@@ -82,8 +88,96 @@ function makeMovementsChart(movements) {
         width: 500
     };
 
-    Plotly.newPlot(movementsPieChart, pieChartData, pieChartLayout);
+    Plotly.newPlot(movementsPieChart, pieChartData, pieChartLayout, {staticPlot: true});
+}
+
+function makeLabelChart(label, totalMovements, data) {
+    var barChart = null;
+    var pieChart = null;
+    var titleEnding = null;
+
+    if (label == 'categories') {
+        barChart = document.getElementById("categoriesBarChart");
+        pieChart = document.getElementById("categoriesPieChart");
+        titleEnding = 'categoría';
+    }
+    else if (label == 'brands') {
+        barChart = document.getElementById("brandsBarChart");
+        pieChart = document.getElementById("brandsPieChart");
+        titleEnding = 'marca';
+    }
+    
+    const barChartData = [
+        {
+            x: Object.keys(data),
+            y: Object.values(data),
+            type: 'bar'
+        }
+    ];
+
+    const barChartLayout = {
+        title: 'Cantidad de movimientos por ' + titleEnding,
+    };
+
+    Plotly.newPlot(barChart, barChartData, barChartLayout);
+
+    const pieChartDataPercentages = [];
+    for (let value of Object.values(data)) {
+        pieChartDataPercentages.push(value / totalMovements);
+    }
+
+    const pieChartData = [
+        {
+            values: pieChartDataPercentages,
+            labels: Object.keys(data),
+            type: 'pie',
+            textinfo: "label+percent",
+            textposition: "inside",
+        }
+    ];
+
+    const pieChartLayout = {
+        title: 'Porcentaje de movimientos por ' + titleEnding,
+        heigh: 400,
+        width: 500
+    };
+
+    Plotly.newPlot(pieChart, pieChartData, pieChartLayout, {staticPlot: true});
+}
+
+function makeLabelsChart() {
+    const salesMovements = fcMovements.concat(fccMovements);
+    const totalSalesMovements = salesMovements.length;
+
+    for (let saleMovement of salesMovements) {
+        if (brandsDict[saleMovement.brand_name]) {
+            brandsDict[saleMovement.brand_name] += 1;
+        } else {
+            brandsDict[saleMovement.brand_name] = 1;
+        }
+
+        if (categoriesDict[saleMovement.category_name]) {
+            categoriesDict[saleMovement.category_name] += 1;
+        } else {
+            categoriesDict[saleMovement.category_name] = 1;
+        }
+    }
+
+    makeLabelChart('brands', totalSalesMovements, brandsDict);
+    makeLabelChart('categories', totalSalesMovements, categoriesDict);
 }
 
 
-makeMovementsChart(ChartNamespace.movements);
+// {
+//     "receipt_type": "FC",
+//     "due": "1500",
+//     "paid": "0",
+//     "category_name": "SWEATERS",
+//     "brand_name": "PERRAMUS",
+//     "paid_with_promotion": true,
+//     "created_at": "2022-01-23T00:00:00.000000Z"
+// }
+
+separateMovements(ChartNamespace.movements);
+makeMovementsChart(ChartNamespace.movements.length);
+makeLabelsChart(ChartNamespace.movements);

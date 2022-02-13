@@ -24,6 +24,11 @@
                         <h3>
                             Análisis de ventas
                         </h3>
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <div class="container-fluid" id="currentMonthSalesBarChart"></div>
+                            </div>
+                        </div>
                     </div>
                     <hr>
                     <div class="container-fluid">
@@ -43,9 +48,27 @@
                     <div class="container-fluid">
                     <div class="container-fluid">
                         <h3>
-                            Filtros por etiquetas
+                            Análisis de movimientos por etiquetas
                         </h3>
-                        <h4>Insertar gráfico</h4>
+                        <div>
+                            <h5><strong>Importante:</strong> solo se consideraron los movimientos de Factura (FC) y Factura Cuenta Corriente (FCC)</h5>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <div class="container-fluid" id="brandsBarChart"></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="container-fluid" id="brandsPieChart"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <div class="container-fluid" id="categoriesBarChart"></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="container-fluid" id="categoriesPieChart"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

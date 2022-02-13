@@ -15,7 +15,11 @@ class StatisticsController extends Controller
     {
         $total_balance = $this->calculate_total_balance();
         $total_clients = $this->total_clients();
-        $movements = Movement::select('receipt_type', 'due', 'paid', 'size_id', 'paid_with_promotion')->get();
+
+        $movements = Movement::join('categories', 'movements.category_id', '=', 'categories.id')
+            ->join('brands', 'movements.brand_id', '=', 'brands.id')
+            ->select('movements.receipt_type', 'movements.due', 'movements.paid', 'categories.name as category_name', 
+                    'brands.name as brand_name', 'movements.paid_with_promotion', 'movements.created_at')->get();
 
         JavaScript::put([
             'movements' => $movements,
