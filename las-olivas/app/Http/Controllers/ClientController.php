@@ -61,13 +61,13 @@ class ClientController extends Controller
         }
 
         Client::create([
-            'name' => $request->input('client_name'),
-            'last_name' => $request->input('client_last_name'),
-            'phone_number' => $request->input('phone_number'),
-            'email' => $request->input('email'),
-            'birthday' => $request->input('client_birthday'),
-            'address' => $request->input('client_address'),
-            'profession' => $request->input('client_profession')
+            'name' => $request->client_name,
+            'last_name' => $request->client_last_name,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'birthday' => $request->client_birthday,
+            'address' => $request->client_address,
+            'profession' => $request->client_profession
         ]);
 
         return $this->index();
@@ -75,7 +75,7 @@ class ClientController extends Controller
 
     public function update_client(Request $request)
     {
-        $client = Client::where('id', $request->input('id'))->get();
+        $client = Client::where('id', $request->id)->get();
 
         if(count($client) == 0){
             return $this->update_client_index($request)->withFailedToUpdate('El cliente dejó de existir.');
@@ -90,14 +90,14 @@ class ClientController extends Controller
 
         try 
         {
-            Client::where('id', $request->input('id'))->update([
-                'name' => $request->input('client_name'),
-                'last_name' => $request->input('client_last_name'),
-                'phone_number' => $request->input('phone_number'),
-                'email' => $request->input('email'),
-                'birthday' => $request->input('client_birthday'),
-                'address' => $request->input('client_address'),
-                'profession' => $request->input('client_profession')
+            Client::where('id', $request->id)->update([
+                'name' => $request->client_name,
+                'last_name' => $request->client_last_name,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'birthday' => $request->client_birthday,
+                'address' => $request->client_address,
+                'profession' => $request->client_profession
             ]);
         }
         catch (QueryException $e)

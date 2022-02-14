@@ -98,7 +98,7 @@ class LabelsController extends Controller
 
     public function add_brand(Request $request)
     {
-        $normalized_name = strtoupper($request->input('brand_name'));
+        $normalized_name = strtoupper($request->brand_name);
         $validated_brand = $this->validate_label($normalized_name, 'unique:brands');
 
         if ($validated_brand->fails())
@@ -135,7 +135,7 @@ class LabelsController extends Controller
 
     public function add_size(Request $request)
     {
-        $normalized_name = strtoupper($request->input('size_name'));
+        $normalized_name = strtoupper($request->size_name);
         $validated_size = $this->validate_label($normalized_name, 'unique:sizes');
 
         if ($validated_size->fails())
@@ -172,7 +172,7 @@ class LabelsController extends Controller
 
     public function add_category(Request $request)
     {
-        $normalized_name = strtoupper($request->input('category_name'));
+        $normalized_name = strtoupper($request->category_name);
         $validated_category = $this->validate_label($normalized_name, 'unique:categories');
 
         if ($validated_category->fails())
