@@ -1,9 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+            <img src="{{ asset('static/las-olivas-page-logo.jpg') }}" width="225" height="225">
         </x-slot>
 
         <!-- Session Status -->
@@ -53,4 +51,5 @@
             </div>
         </form>
     </x-auth-card>
+    <h3>:))</h3>
 </x-guest-layout>
