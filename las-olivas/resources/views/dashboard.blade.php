@@ -24,9 +24,16 @@
                         <h3>
                             Análisis de ventas
                         </h3>
+                        <div class="container-fluid">
+                            <li style="font-size: 22px">Pagos con tarjeta de crédito en el mes actual: ${{$current_month_tc_sales}}</li>
+                        </div>
+                        <hr>
                         <div class="form-group row">
                             <div class="col-6">
-                                <div class="container-fluid" id="currentMonthSalesBarChart"></div>
+                                <div class="container-fluid" id="soldVsPaidBarChart"></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="container-fluid" id="soldWithPromotionPieChart"></div>
                             </div>
                         </div>
                     </div>

@@ -44,6 +44,65 @@ function separateMovements(movements) {
     }
 }
 
+function makeSalesChart(currentMonthMovements) {
+    const soldVsPaidBarChart = document.getElementById('soldVsPaidBarChart');
+    const soldWithPromotionPieChart = document.getElementById('soldWithPromotionPieChart'); 
+    
+    const totalMovements = currentMonthMovements.length;
+    var sold = 0;
+    var paid = 0;
+    var soldWithPromotion = 0;
+    var salesMovements = 0;
+
+    for (let movement of currentMonthMovements) {
+        sold += parseFloat(movement.due);
+        paid += parseFloat(movement.paid);
+        if (movement.receipt_type == "FC" || movement.receipt_type == "FCC") {
+            salesMovements += 1;
+            if (movement.paid_with_promotion) {
+                soldWithPromotion += 1;
+            }
+        }
+    }
+
+    const soldVsPaidBarChartData = [sold, paid];
+    const soldVsPaidBarChartAxesData = [
+        {
+            x: ['Vendido', 'Pagado'],
+            y: soldVsPaidBarChartData,
+            marker:{
+                color: receiptColors
+            },
+            type: 'bar'
+        }
+    ];
+
+    const soldVsPaidBarChartLayout = {
+        title: 'Vendido vs Pagado del mes actual'
+    };
+
+    Plotly.newPlot(soldVsPaidBarChart, soldVsPaidBarChartAxesData, soldVsPaidBarChartLayout);
+
+    const soldWithPromotionPercentagesData = [soldWithPromotion/totalMovements, (totalMovements-soldWithPromotion) / totalMovements];
+    const pieChartData = [
+        {
+            values: soldWithPromotionPercentagesData,
+            labels: ['Venta con promoción', 'Venta sin promoción'],
+            type: 'pie',
+            textinfo: "label+percent",
+            textposition: "inside",
+        }
+    ];
+
+    const pieChartLayout = {
+        title: 'Porcentaje de ventas por promoción del mes actual',
+        heigh: 400,
+        width: 500
+    };
+
+    Plotly.newPlot(soldWithPromotionPieChart, pieChartData, pieChartLayout, {staticPlot: true});
+}
+
 function makeMovementsChart(totalMovements) {
     const movementsBarChart = document.getElementById('movementsBarChart');
     const movementsPieChart = document.getElementById('movementsPieChart');
@@ -179,5 +238,6 @@ function makeLabelsChart() {
 // }
 
 separateMovements(ChartNamespace.movements);
+makeSalesChart(ChartNamespace.currentMonthMovements)
 makeMovementsChart(ChartNamespace.movements.length);
 makeLabelsChart(ChartNamespace.movements);
