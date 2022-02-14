@@ -73,7 +73,7 @@
                                         <form action="{{route('delete-client')}}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $client->id }}">
-                                            <td><button type="sumbit" title="Eliminar Cliente" onclick="return confirm('¿Estas seguro que deseas eliminar al cliente?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
+                                            <td><button type="sumbit" title="Eliminar Cliente" onclick="return confirm('¿Estas seguro que deseas eliminar al cliente? Esto eliminará al cliente y todo su registro de movimientos.')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
                                         </form>
                                         <form action="{{route('clients-data-for-update')}}" method="POST" enctype="multipart/form-data">
                                             @csrf

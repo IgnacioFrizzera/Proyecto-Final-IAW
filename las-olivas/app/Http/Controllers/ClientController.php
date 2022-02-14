@@ -115,9 +115,18 @@ class ClientController extends Controller
     }
 
     public function delete_client(Request $request)
-    {
-        Client::where('id', $request->id)->delete();
-        return $this->index()->withMessage('Se ha eliminado al cliente correctamente');
+    {   
+        $client = Client::where('id', $request->id)->select()->first();
+        if ($client->current_balance == 0)
+        {
+            $client->delete_movements();
+            $client->delete();
+            return $this->index()->withMessage('Se ha eliminado al cliente correctamente');
+        }
+        else
+        {
+            return $this->index()->withMessage('El cliente posee movimientos y un saldo pendiente. Solamente clientes con saldos en $0 se pueden eliminar.');
+        }
     }
 
     public function client_search(Request $request)

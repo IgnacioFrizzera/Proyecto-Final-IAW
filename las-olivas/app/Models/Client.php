@@ -61,4 +61,9 @@ class Client extends Model
     {
         return $this->movements()->whereBetween('created_at', [$from, $to])->get();
     }
+
+    public function delete_movements()
+    {
+        $this->movements()->delete();
+    }
 }
