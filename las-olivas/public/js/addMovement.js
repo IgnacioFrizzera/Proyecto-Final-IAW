@@ -11,8 +11,15 @@ function disabledOnReceiptType(valueType) {
     const due = document.getElementById("due_input");
     if (valueType == "FC" || valueType == "FCC") {
         setBackgroundAndDisable(paid, due);
+        if (valueType == "FC") {
+            document.getElementById("payment_type").disabled = false;
+        }
+        else {
+            document.getElementById("payment_type").disabled = true;
+        }
     }
     else {
+        document.getElementById("payment_type").disabled = true;
         setBackgroundAndDisable(due, paid);
     }
 }

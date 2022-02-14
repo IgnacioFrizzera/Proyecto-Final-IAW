@@ -142,6 +142,13 @@
                                 </tr>   
                             </tbody>
                         </table>
+                        <h4>Método de pago (solo en caso de facturas)</h4>
+                        <select class="form-select" aria-label="Default select example" name="payment_type" id="payment_type">
+                            <option value="EF">EFECTIVO</option>
+                            <option value="TC">TARJETA C</option>
+                            <option value="TD">TARJETA D</option>
+                        </select>
+                        <br><br>
                         <button type="sumbit" class="btn btn-dark">
                             Cargar movimiento
                         </button>
