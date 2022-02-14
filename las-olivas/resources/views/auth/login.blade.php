@@ -51,5 +51,4 @@
             </div>
         </form>
     </x-auth-card>
-    <h3>:))</h3>
 </x-guest-layout>
