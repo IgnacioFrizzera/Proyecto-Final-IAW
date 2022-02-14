@@ -81,7 +81,7 @@
                     </div>
                     <br>
                     <hr>
-                    <h1>Etiquetas cargadas en el sistema</h1>
+                    <h2>Etiquetas cargadas en el sistema</h2>
                     @if(isset($deleteError))
                         <h4 style="color:red; text-decoration:underline">
                             {{$deleteError}}
