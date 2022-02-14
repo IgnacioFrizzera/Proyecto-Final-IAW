@@ -44,6 +44,9 @@ Route::group(['middleware' => 'auth'] , function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/add-previous-monthly-sale', 'App\Http\Controllers\MonthlySalesController@index')->name('monthly-sales-index');
     Route::post('/monthly-sales-add', 'App\Http\Controllers\MonthlySalesController@add_monthly_sale')->name('monthly-sales-add');
+    Route::post('/monthly-sales-delete', 'App\Http\Controllers\MonthlySalesController@delete_monthly_sale')->name('monthly-sales-delete');
+    Route::post('/monthly-sales-update-index', 'App\Http\Controllers\MonthlySalesController@update_monthly_sale_index')->name('monthly-sales-update-index');
+    Route::post('/monthly-sales-update', 'App\Http\Controllers\MonthlySalesController@update_monthly_sale')->name('monthly-sales-update');
 });
 
 // Statistics and charts routes

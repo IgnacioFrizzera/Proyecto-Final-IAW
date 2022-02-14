@@ -1,3 +1,5 @@
+<!-- Font Awesome Brand Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -36,23 +38,10 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <select class="form-select" aria-label="Default select example" name="month" id="month">
-                                            <option value="1">Enero</option>
-                                            <option value="2">Febrero</option>
-                                            <option value="3">Marzo</option>
-                                            <option value="4">Abril</option>
-                                            <option value="5">Mayo</option>
-                                            <option value="6">Junio</option>
-                                            <option value="7">Julio</option>
-                                            <option value="8">Agosto</option>
-                                            <option value="9">Septiembre</option>
-                                            <option value="10">Octubre</option>
-                                            <option value="11">Noviembre</option>
-                                            <option value="12">Diciembre</option>
-                                        </select>
+                                        <input type="number" class="form-control" name="month" id="month" min="1" max="12" value="1" required>
                                     </td>
                                     <td>
-                                        <input required type="number" min="2010" max="<?php echo date('Y');?>" name="year" value="2010">
+                                        <input class="form-control" required type="number" min="2010" max="<?php echo date('Y');?>" name="year" value="2010">
                                     </td>
                                 </tr>
                             </tbody>
@@ -69,11 +58,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input class="form-control" required type="number" min="0" name="fc_sales" id="fc_sales" step=".01" value="0"></td>
-                                    <td><input class="form-control" required type="number" min="0" name="fcc_sales" id="fcc_sales" step=".01" value="0"></td>
-                                    <td><input class="form-control" required type="number" min="0" name="ef_sales" id="ef_sales" step=".01" value="0"></td>
-                                    <td><input class="form-control" required type="number" min="0" name="tc_sales" id="tc_sales" step=".01" value="0"></td>
-                                    <td><input class="form-control" required type="number" min="0" name="td_sales" id="td_sales" step=".01" value="0"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="fc_sales" id="fc_sales" step=".01"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="fcc_sales" id="fcc_sales" step=".01"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="ef_sales" id="ef_sales" step=".01"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="tc_sales" id="tc_sales" step=".01"></td>
+                                    <td><input class="form-control" required type="number" min="0" name="td_sales" id="td_sales" step=".01"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -81,6 +70,48 @@
                             Cargar ventas
                         </button>
                     </form>
+                    @if(isset($sales))
+                        <hr>
+                        <h2>
+                            Ventas mensuales cargadas en el sistema
+                        </h2>
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mes</th>
+                                    <th scope="col">Año</th>
+                                    <th scope="col">Factura</th>
+                                    <th scope="col">Factura CC</th>
+                                    <th scope="col">Efectivo</th>
+                                    <th scope="col">Tarjeta C</th>
+                                    <th scope="col">Tarjeta D</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($sales as $sale)
+                                    <tr>
+                                        <td>{{ $sale->month }}</td>
+                                        <td>{{ $sale->year }}</td>
+                                        <td>{{ $sale->fc }}</td>
+                                        <td>{{ $sale->fcc }}</td>
+                                        <td>{{ $sale->ef }}</td>
+                                        <td>{{ $sale->tc }}</td>
+                                        <td>{{ $sale->td }}</td>
+                                        <form action="{{route('monthly-sales-delete')}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $sale->id }}">
+                                            <td><button type="sumbit" title="Eliminar venta" onclick="return confirm('¿Estas seguro que deseas eliminar la venta mensual?')"><i class="fa fa-minus-circle" aria-hidden="true" style="font-size:24px"></i></button></td>
+                                        </form>
+                                        <form action="{{route('monthly-sales-update-index')}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $sale->id }}">
+                                            <td><button type="sumbit" title="Modificar datos de la venta"><i class="fa fa-pencil" aria-hidden="true" style="font-size:24px"></i></button></td>
+                                        </form>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
             </div>
         </div>
