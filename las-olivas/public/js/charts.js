@@ -137,7 +137,7 @@ function makeSalesChart(currentMonthMovements, lastYearSales, currentYearSales) 
 
     const yearComparisonLayout = {title:'Comparación ventas años: ' + lastYear + '-' + currentYear, barmode: 'group'};
       
-    Plotly.newPlot(lastYearSalesComparisonBarChart, yearComparisonData, yearComparisonLayout, {staticPlot: true});
+    Plotly.newPlot(lastYearSalesComparisonBarChart, yearComparisonData, yearComparisonLayout, {displayModeBar: false});
 }
 
 function makeMovementsChart(totalMovements) {
