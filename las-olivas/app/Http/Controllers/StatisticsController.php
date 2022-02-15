@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Movement;
+use App\Models\MonthlySale;
 
 use JavaScript;
 
@@ -29,9 +30,14 @@ class StatisticsController extends Controller
 
         $current_month_tc_sales = $current_month_movements->where('receipt_type', 'TC')->sum('paid');
 
+        $last_year_sales = MonthlySale::where('year', date('Y')-1)->orderBy('month', 'ASC')->get();
+        $current_year_sales = MonthlySale::where('year', date('Y'))->orderBy('month', 'ASC')->get();
+
         JavaScript::put([
             'movements' => $movements,
-            'currentMonthMovements' => $current_month_movements
+            'currentMonthMovements' => $current_month_movements,
+            'lastYearSales' => $last_year_sales,
+            'currentYearSales' => $current_year_sales
         ]);
 
         return view('dashboard', compact('total_balance', 'total_clients', 'current_month_tc_sales'));

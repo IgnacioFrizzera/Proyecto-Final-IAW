@@ -36,6 +36,9 @@
                                 <div class="container-fluid" id="soldWithPromotionPieChart"></div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="container-fluid" id="lastYearSalesComparisonBarChart"></div>
+                        </div>
                     </div>
                     <hr>
                     <div class="container-fluid">

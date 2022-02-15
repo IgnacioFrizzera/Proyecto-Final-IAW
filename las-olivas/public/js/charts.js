@@ -1,6 +1,6 @@
-const receiptShortNameValues = ['FC', 'FCC', 'EF', 'TC', 'TD'];
 const receiptLongNameTypes = ['Factura', 'Factura C.C', 'Efectivo', 'Tarjeta Crédito', 'Tarjeta Débito'];
 const receiptColors = ['rgb(60, 179, 113)', 'rgb(255, 0, 0)', 'rgb(0, 0, 255)', 'rgb(255, 165, 0)', 'rgb(0, 0, 70)'];
+const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 // Only takes FC and FCC movements. Dict: <BrandName, AmountOfMovementsWithBrandName>
 const brandsDict = {};
@@ -14,14 +14,6 @@ const fccMovements = [];
 const efMovements = [];
 const tcMovements = [];
 const tdMovements = [];
-
-const receiptTypeTranslation = {
-    'FC': 'Factura',
-    'FCC': 'Factura Cuenta Corriente',
-    'EF': 'Efectivo',
-    'TC': 'Tarjeta de crédito',
-    'TD': 'Tarjeta de débito'
-};
 
 
 function separateMovements(movements) {
@@ -44,10 +36,15 @@ function separateMovements(movements) {
     }
 }
 
-function makeSalesChart(currentMonthMovements) {
+function makeSalesChart(currentMonthMovements, lastYearSales, currentYearSales) {
     const soldVsPaidBarChart = document.getElementById('soldVsPaidBarChart');
-    const soldWithPromotionPieChart = document.getElementById('soldWithPromotionPieChart'); 
+    const soldWithPromotionPieChart = document.getElementById('soldWithPromotionPieChart');
+    const lastYearSalesComparisonBarChart = document.getElementById('lastYearSalesComparisonBarChart');
     
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const lastYear = currentYear - 1;
+
     const totalMovements = currentMonthMovements.length;
     var sold = 0;
     var paid = 0;
@@ -101,6 +98,38 @@ function makeSalesChart(currentMonthMovements) {
     };
 
     Plotly.newPlot(soldWithPromotionPieChart, pieChartData, pieChartLayout, {staticPlot: true});
+
+    const lastYearSalesPerMonth = [];
+    for (let sale of lastYearSales) {
+        lastYearSalesPerMonth.push(parseFloat(sale.fc) + parseFloat(sale.fcc));
+    }
+    
+    const currentYearSalesPerMonth = [];
+    for (let sale of currentYearSales) {
+        currentYearSalesPerMonth.push(parseFloat(sale.fc) + parseFloat(sale.fcc))
+    }
+    currentYearSalesPerMonth.push(sold); // actual month
+
+    console.log(lastYearSalesPerMonth);
+    const lastYearData = {
+        x: months,
+        y: lastYearSalesPerMonth,
+        name: lastYear,
+        type: 'bar'
+    };
+
+    const currentYearData = {
+        x: months,
+        y: currentYearSalesPerMonth,
+        name: currentYear,
+        type: 'bar'
+    }
+
+    const yearComparisonData = [lastYearData, currentYearData];
+
+    const yearComparisonLayout = {title:'Comparación ventas años: ' + lastYear + '-' + currentYear, barmode: 'group'};
+      
+    Plotly.newPlot(lastYearSalesComparisonBarChart, yearComparisonData, yearComparisonLayout);
 }
 
 function makeMovementsChart(totalMovements) {
@@ -226,18 +255,7 @@ function makeLabelsChart() {
     makeLabelChart('categories', totalSalesMovements, categoriesDict);
 }
 
-
-// {
-//     "receipt_type": "FC",
-//     "due": "1500",
-//     "paid": "0",
-//     "category_name": "SWEATERS",
-//     "brand_name": "PERRAMUS",
-//     "paid_with_promotion": true,
-//     "created_at": "2022-01-23T00:00:00.000000Z"
-// }
-
 separateMovements(ChartNamespace.movements);
-makeSalesChart(ChartNamespace.currentMonthMovements)
+makeSalesChart(ChartNamespace.currentMonthMovements, ChartNamespace.lastYearSales, ChartNamespace.currentYearSales);
 makeMovementsChart(ChartNamespace.movements.length);
 makeLabelsChart(ChartNamespace.movements);
