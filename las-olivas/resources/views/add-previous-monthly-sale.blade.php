@@ -111,11 +111,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="footer">
-                            <?php 
-                                echo $sales->appends(Request::all())->links();
-                            ?>
-                        </div> 
                     @endif
                 </div>
             </div>
