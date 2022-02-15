@@ -81,94 +81,102 @@
                     </div>
                     <br>
                     <hr>
-                    <h2>Etiquetas cargadas en el sistema</h2>
+                    @if(isset($categories))
+                        <h2>Etiquetas cargadas en el sistema</h2>
+                    @endif
                     @if(isset($deleteError))
                         <h4 style="color:red; text-decoration:underline">
                             {{$deleteError}}
                         </h4>
                     @endif  
                     <div class="form-group row">
-                        <div class="col-4">
-                            <table class="table table-bordered table-striped text-center">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="font-size:24px;">Categorías</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($categories as $category)
+                        @if(isset($categories))
+                            <div class="col-4">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead>
                                         <tr>
-                                            <form action="{{route('delete-category')}}" method="POST" enctype="multipart/form-data">
+                                            <th scope="col" style="font-size:24px;">Categorías</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($categories as $category)
+                                            <tr>
+                                                <form action="{{route('delete-category')}}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{$category->id}}">
+                                                        <th>{{$category->name}}</th>
+                                                        <th><button type="sumbit" title="Eliminar categoría" onclick="return confirm('¿Estas seguro que deseas eliminar la categoría?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
+                                                </form>
+                                                <form action="{{route('update-index')}}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{$category->id}}">
-                                                    <th>{{$category->name}}</th>
-                                                    <th><button type="sumbit" title="Eliminar categoría" onclick="return confirm('¿Estas seguro que deseas eliminar la categoría?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
-                                            </form>
-                                            <form action="{{route('update-index')}}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{$category->id}}">
-                                                <input type="hidden" name="label_type" value="category">
-                                                <th><button type="sumbit" title="Modificar categoría"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
-                                            </form>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-4">
-                            <table class="table table-bordered table-striped text-center">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="font-size:24px;">Marcas</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($brands as $brand)
+                                                    <input type="hidden" name="label_type" value="category">
+                                                    <th><button type="sumbit" title="Modificar categoría"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
+                                                </form>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                        @if(isset($brands))
+                            <div class="col-4">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead>
                                         <tr>
-                                            <form action="{{route('delete-brand')}}" method="POST" enctype="multipart/form-data">
+                                            <th scope="col" style="font-size:24px;">Marcas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($brands as $brand)
+                                            <tr>
+                                                <form action="{{route('delete-brand')}}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{$brand->id}}">
+                                                        <th>{{$brand->name}}</th>
+                                                        <th><button type="sumbit" title="Eliminar marca" onclick="return confirm('¿Estas seguro que deseas eliminar la marca?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
+                                                </form>
+                                                <form action="{{route('update-index')}}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{$brand->id}}">
-                                                    <th>{{$brand->name}}</th>
-                                                    <th><button type="sumbit" title="Eliminar marca" onclick="return confirm('¿Estas seguro que deseas eliminar la marca?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
-                                            </form>
-                                            <form action="{{route('update-index')}}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{$brand->id}}">
-                                                <input type="hidden" name="label_type" value="brand">
-                                                <th><button type="sumbit" title="Modificar marca"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
-                                            </form>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-4">
-                            <table class="table table-bordered table-striped text-center">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="font-size:24px;">Talles</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($sizes as $size)
+                                                    <input type="hidden" name="label_type" value="brand">
+                                                    <th><button type="sumbit" title="Modificar marca"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
+                                                </form>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                        @if(isset($sizes))
+                            <div class="col-4">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead>
                                         <tr>
-                                            <form action="{{route('delete-size')}}" method="POST" enctype="multipart/form-data">
+                                            <th scope="col" style="font-size:24px;">Talles</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($sizes as $size)
+                                            <tr>
+                                                <form action="{{route('delete-size')}}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{$size->id}}">
+                                                        <th>{{$size->name}}</th>
+                                                        <th><button type="sumbit" title="Eliminar talle" onclick="return confirm('¿Estas seguro que deseas eliminar el talle?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
+                                                </form>
+                                                <form action="{{route('update-index')}}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{$size->id}}">
-                                                    <th>{{$size->name}}</th>
-                                                    <th><button type="sumbit" title="Eliminar talle" onclick="return confirm('¿Estas seguro que deseas eliminar el talle?')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></th>
-                                            </form>
-                                            <form action="{{route('update-index')}}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{$size->id}}">
-                                                <input type="hidden" name="label_type" value="size">
-                                                <th><button type="sumbit" title="Modificar talle"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
-                                            </form>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                                    <input type="hidden" name="label_type" value="size">
+                                                    <th><button type="sumbit" title="Modificar talle"><i class="fa fa-pencil" style="font-size:24px"></i></button></th>
+                                                </form>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
                     </div>
                 </div>
         </div>

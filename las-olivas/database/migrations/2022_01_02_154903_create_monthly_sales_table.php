@@ -20,8 +20,8 @@ class CreateMonthlySalesTable extends Migration
             $table->float('ef', 10, 2)->nullable(false);
             $table->float('tc', 10, 2)->nullable(false);
             $table->float('td', 10, 2)->nullable(false);
-            $table->string('month', 2)->nullable(false);
-            $table->string('year', 10)->nullable(false);
+            $table->integer('month')->nullable(false);
+            $table->integer('year')->nullable(false);
         });
     }
 
