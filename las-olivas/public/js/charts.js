@@ -42,6 +42,7 @@ function makeSalesChart(currentMonthMovements, lastYearSales, currentYearSales) 
     const lastYearSalesComparisonBarChart = document.getElementById('lastYearSalesComparisonBarChart');
     
     const today = new Date();
+    const currentMonth = today.getMonth() + 1;
     const currentYear = today.getFullYear();
     const lastYear = currentYear - 1;
 
@@ -49,13 +50,11 @@ function makeSalesChart(currentMonthMovements, lastYearSales, currentYearSales) 
     var sold = 0;
     var paid = 0;
     var soldWithPromotion = 0;
-    var salesMovements = 0;
 
     for (let movement of currentMonthMovements) {
         sold += parseFloat(movement.due);
         paid += parseFloat(movement.paid);
         if (movement.receipt_type == "FC" || movement.receipt_type == "FCC") {
-            salesMovements += 1;
             if (movement.paid_with_promotion) {
                 soldWithPromotion += 1;
             }
@@ -78,7 +77,7 @@ function makeSalesChart(currentMonthMovements, lastYearSales, currentYearSales) 
         title: 'Vendido vs Pagado del mes actual'
     };
 
-    Plotly.newPlot(soldVsPaidBarChart, soldVsPaidBarChartAxesData, soldVsPaidBarChartLayout);
+    Plotly.newPlot(soldVsPaidBarChart, soldVsPaidBarChartAxesData, soldVsPaidBarChartLayout, {staticPlot: true});
 
     const soldWithPromotionPercentagesData = [soldWithPromotion/totalMovements, (totalMovements-soldWithPromotion) / totalMovements];
     const pieChartData = [
@@ -99,28 +98,37 @@ function makeSalesChart(currentMonthMovements, lastYearSales, currentYearSales) 
 
     Plotly.newPlot(soldWithPromotionPieChart, pieChartData, pieChartLayout, {staticPlot: true});
 
-    const lastYearSalesPerMonth = [];
-    for (let sale of lastYearSales) {
-        lastYearSalesPerMonth.push(parseFloat(sale.fc) + parseFloat(sale.fcc));
+
+    const lastYearSalesPerMonth = {}
+    const currentYearSalesPerMonth = {};
+    for (let i = 1; i < 13; i++) {
+        lastYearSalesPerMonth[i] = 0;
+        if (i == currentMonth) {
+            currentYearSalesPerMonth[i] = sold;
+        }
+        else {
+            currentYearSalesPerMonth[i] = 0;
+        }
     }
     
-    const currentYearSalesPerMonth = [];
-    for (let sale of currentYearSales) {
-        currentYearSalesPerMonth.push(parseFloat(sale.fc) + parseFloat(sale.fcc))
+    for (let sale of lastYearSales) {
+        lastYearSalesPerMonth[sale.month] = parseFloat(sale.fc) + parseFloat(sale.fcc);
     }
-    currentYearSalesPerMonth.push(sold); // actual month
+        
+    for (let sale of currentYearSales) {
+        currentYearSalesPerMonth[sale.month] = parseFloat(sale.fc) + parseFloat(sale.fcc);
+    }
 
-    console.log(lastYearSalesPerMonth);
     const lastYearData = {
         x: months,
-        y: lastYearSalesPerMonth,
+        y: Object.values(lastYearSalesPerMonth),
         name: lastYear,
         type: 'bar'
     };
 
     const currentYearData = {
         x: months,
-        y: currentYearSalesPerMonth,
+        y: Object.values(currentYearSalesPerMonth),
         name: currentYear,
         type: 'bar'
     }
@@ -129,7 +137,7 @@ function makeSalesChart(currentMonthMovements, lastYearSales, currentYearSales) 
 
     const yearComparisonLayout = {title:'Comparación ventas años: ' + lastYear + '-' + currentYear, barmode: 'group'};
       
-    Plotly.newPlot(lastYearSalesComparisonBarChart, yearComparisonData, yearComparisonLayout);
+    Plotly.newPlot(lastYearSalesComparisonBarChart, yearComparisonData, yearComparisonLayout, {staticPlot: true});
 }
 
 function makeMovementsChart(totalMovements) {
@@ -153,7 +161,7 @@ function makeMovementsChart(totalMovements) {
         title: 'Cantidad de movimientos por tipo de comprobante',
     };
 
-    Plotly.newPlot(movementsBarChart, barChartData, barChartLayout);
+    Plotly.newPlot(movementsBarChart, barChartData, barChartLayout, {staticPlot: true});
 
     const movementsPercentagesData = [];
     for (movementAmount of movementsAmountData) {
@@ -207,7 +215,7 @@ function makeLabelChart(label, totalMovements, data) {
         title: 'Cantidad de movimientos por ' + titleEnding,
     };
 
-    Plotly.newPlot(barChart, barChartData, barChartLayout);
+    Plotly.newPlot(barChart, barChartData, barChartLayout, {staticPlot: true});
 
     const pieChartDataPercentages = [];
     for (let value of Object.values(data)) {
