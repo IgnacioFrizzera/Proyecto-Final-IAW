@@ -82,11 +82,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="footer">
-                                <?php 
-                                    echo $movements->appends(Request::all())->links();
-                                ?>
-                            </div>
                         @endif
                     </div>
                 </div>

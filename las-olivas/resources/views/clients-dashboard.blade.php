@@ -90,11 +90,6 @@
                                 </tbody>
                         </table>
                     </div>
-                    <div class="footer">
-                        <?php 
-                            echo $clients->appends(Request::all())->links();
-                        ?>
-                    </div> 
                     @endif
                 </div>
             </div>

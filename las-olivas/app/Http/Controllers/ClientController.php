@@ -12,7 +12,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::select()->orderBy('current_balance', 'DESC')->paginate(10);
+        $clients = Client::select()->orderBy('current_balance', 'DESC')->get();
         
         if(count($clients) == 0)
         {
@@ -136,7 +136,7 @@ class ClientController extends Controller
                 ->orWhere('last_name', 'ilike', '%'.$request->search.'%')
                 ->select('id', 'name', 'last_name', 'email', 'phone_number', 'current_balance')
                 ->orderBy('current_balance', 'DESC')
-                ->paginate(15);
+                ->get();
         
         if(count($clients) == 0)
         {
