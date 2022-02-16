@@ -40,11 +40,13 @@ class PDFController extends Controller
 
         $year = date('Y');
         $previous_month = date('m') - 1;
+
         if ($previous_month == '0')
         {
             $year = $year - 1;
             $previous_month = '12';
         }
+
         $pdf = $this->create_monthly_movements_pdf($client, $previous_month, $year);
         return $pdf->download($client->name . $client->last_name . $previous_month . '.' . $year . '.pdf');
     }

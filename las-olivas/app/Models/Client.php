@@ -36,14 +36,21 @@ class Client extends Model
     }
 
     public function get_previous_month_balance(string $current_month, string $year)
-    {
+    {   
+        $previous_month = $current_month - 1;
+        if ($previous_month == '0')
+        {
+            $year = $year - 1;
+            $previous_month = '12';
+        }
+
         $movement = $this->movements()
-                         ->whereMonth('created_at', $current_month - 1)
+                         ->whereMonth('created_at', $previous_month)
                          ->whereYear('created_at', $year)
                          ->orderBy('created_at', 'DESC')
                          ->orderBy('id', 'DESC')
                          ->first();
-
+        
         if ($movement == null) return 0;
 
         return $movement->balance;
