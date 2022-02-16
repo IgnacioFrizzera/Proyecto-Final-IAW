@@ -51,6 +51,8 @@ class MovementController extends Controller
             {
                 return view('movements-client-list')->withClient($client)->withMessage('El cliente no tiene movimientos en las fechas seleccionadas.');
             }
+
+            return view('movements-client-list')->withClient($client)->withMovements($movements);
         }
 
         $movements = $movements->get();
