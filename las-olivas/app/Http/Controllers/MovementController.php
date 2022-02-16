@@ -53,6 +53,8 @@ class MovementController extends Controller
             }
         }
 
+        $movements = $movements->get();
+        
         return view('movements-client-list')->withClient($client)->withMovements($movements);
     }
 
