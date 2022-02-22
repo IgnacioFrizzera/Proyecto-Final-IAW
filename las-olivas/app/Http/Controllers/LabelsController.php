@@ -14,9 +14,9 @@ class LabelsController extends Controller
     
     public function index()
     {
-        $brands = Brand::all();
-        $categories = Category::all();
-        $sizes = Size::all();
+        $brands = Brand::select()->orderBy('name', 'ASC')->get();
+        $categories = Category::select()->orderBy('name', 'ASC')->get();
+        $sizes = Size::select()->orderBy('name', 'ASC')->get();
 
         $total = count($brands) + count($categories) + count($sizes);
         

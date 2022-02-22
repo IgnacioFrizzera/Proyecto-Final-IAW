@@ -64,6 +64,9 @@
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Descripción</th>
                                         <th scope="col">Tipo de comprobante</th>
+                                        <th scope="col">Categoría</th>
+                                        <th scope="col">Marca</th>
+                                        <th scope="col">Talle</th>
                                         <th scope="col">Debe</th>
                                         <th scope="col">Haber</th>
                                         <th scope="col">Saldo</th>
@@ -75,6 +78,9 @@
                                             <td>{{ $movement->created_at->format('d/m/Y') }}</td>
                                             <td>{{ $movement->description }}</td>
                                             <td>{{ $movement->receipt_type }}</td>
+                                            <td>{{ $movement->category_name }}</td>
+                                            <td>{{ $movement->brand_name }}</td>
+                                            <td>{{ $movement->size_name }}</td>
                                             <td>{{ $movement->due }}</td>
                                             <td>{{ $movement->paid }}</td>
                                             <td>{{ $movement->balance }}</td>

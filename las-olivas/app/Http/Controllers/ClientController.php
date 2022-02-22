@@ -12,7 +12,10 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::select()->orderBy('current_balance', 'DESC')->get();
+        $clients = Client::all()->sortBy([
+            'last_name', 'ASC',
+            'name', 'ASC'
+        ]);
         
         if(count($clients) == 0)
         {
@@ -87,7 +90,7 @@ class ClientController extends Controller
         {
             $this->update_client_index($request)->withFailedToUpdate('Revise el: nombre, apellido o profesión que intentó actualizar.');
         }
-
+ 
         try 
         {
             Client::where('id', $request->id)->update([
@@ -117,15 +120,16 @@ class ClientController extends Controller
     public function delete_client(Request $request)
     {   
         $client = Client::where('id', $request->id)->select()->first();
+        $client_name = $client->name . ' ' . $client->last_name;
         if ($client->current_balance == 0)
         {
             $client->delete_movements();
             $client->delete();
-            return $this->index()->withMessage('Se ha eliminado al cliente correctamente');
+            return $this->index()->withMessage('Se ha eliminado al cliente: "' . $client_name . '" correctamente');
         }
         else
         {
-            return $this->index()->withMessage('El cliente posee movimientos y un saldo pendiente. Solamente clientes con saldos en $0 se pueden eliminar.');
+            return $this->index()->withMessage('El cliente: "' . $client_name . '" posee movimientos y un saldo pendiente. Solamente clientes con saldos en $0 se pueden eliminar.');
         }
     }
 

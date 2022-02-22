@@ -15,11 +15,15 @@ class MovementController extends Controller
  
     public function index()
     {
-        $brands = Brand::all();
-        $categories = Category::all();
-        $sizes = Size::all();
+        $brands = Brand::select()->orderBy('name', 'ASC')->get();
+        $categories = Category::select()->orderBy('name', 'ASC')->get();
+        $sizes = Size::select()->orderBy('name', 'ASC')->get();
 
-        $clients = Client::select()->orderBy('name', 'ASC')->get();
+        $clients = Client::all()->sortBy([
+            'last_name', 'ASC',
+            'name', 'ASC'
+        ]);
+        
         if (count($clients) > 0)
         {
             return view('movements-dashboard', compact('clients', 'brands', 'categories', 'sizes'));
@@ -33,7 +37,15 @@ class MovementController extends Controller
         $client_id = $request->client_id;
         $client = Client::where('id', $client_id)->get();
 
-        $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'DESC')->orderBy('id', 'DESC');
+        $movements = Movement::where('client_id', $client_id)
+                        ->join('categories', 'movements.category_id', '=', 'categories.id')
+                        ->join('brands', 'movements.brand_id', '=', 'brands.id')
+                        ->join('sizes', 'movements.size_id', '=', 'sizes.id')
+                        ->select('movements.created_at', 'movements.description', 'movements.receipt_type', 
+                        'movements.due', 'movements.paid', 'movements.balance', 'categories.name as category_name', 
+                        'brands.name as brand_name', 'sizes.name as size_name')
+                        ->orderBy('movements.created_at', 'DESC')
+                        ->orderBy('movements.id', 'DESC');
 
         if (count($movements->get()) == 0)
         {
@@ -63,7 +75,7 @@ class MovementController extends Controller
     private function validate_new_movement(Request $request)
     {
         return Validator::make($request->all(), [
-            'client_id' => ['required', 'bail', 'exists:clients,id'],
+            'client_id' => ['bail', 'exists:clients,id'],
             'description' => ['required', 'string', 'max:200'],
             'receipt_type' => ['required', 'string', 'max:50', 'regex:/^([^0-9]*)$/'],
             'date' => ['required'],
@@ -86,7 +98,27 @@ class MovementController extends Controller
             return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
         }
 
-        $client = Client::where('id', $request->client_id)->select()->first();
+        if (($request->client_name != null || $request->client_last_name != null) and $request->client_id != null)
+        {   
+            return $this->index()->withMessage('No se puede seleccionar un cliente y cargar un cliente a la vez.');
+        }
+
+        if ($request->client_name != null and $request->client_last_name != null)
+        {
+            $client = Client::create([
+                'name' => $request->client_name,
+                'last_name' => $request->client_last_name
+            ]);
+        }
+        elseif ($request->client_id != null)
+        {
+            $client = Client::where('id', $request->client_id)->select()->first();
+        }
+        else
+        {
+            return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
+        }
+
         $client->calculate_new_balance($request->due, $request->paid);
         $client->save();
 
@@ -96,7 +128,7 @@ class MovementController extends Controller
             'due' => $request->due,
             'paid' => $request->paid,
             'balance' =>  $client->current_balance,
-            'client_id' => $request->client_id,
+            'client_id' => $client->id,
             'category_id' => $request->category,
             'brand_id' => $request->brand,
             'size_id' => $request->size,
@@ -117,7 +149,7 @@ class MovementController extends Controller
                 'due' => $request->paid,
                 'paid' => $request->due,
                 'balance' =>  $client->current_balance,
-                'client_id' => $request->client_id,
+                'client_id' => $client->id,
                 'category_id' => $request->category,
                 'brand_id' => $request->brand,
                 'size_id' => $request->size,

@@ -33,13 +33,27 @@
                                     <h3>Cliente: </h3>
                                 </div>  
                                 <div class="col-3">
-                                    <select class="form-select" aria-label="Default select example" name="client_id" id="receipt">
+                                    <select class="form-select" aria-label="Default select example" name="client_id" id="client_id" onchange="disableClientCreationOnClientSelect(this.value)">
+                                        <option value="" selected disabled hidden>Elija un cliente</option>
+                                        <option value="">Ninguno</option>
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">
                                                 {{ $client->name }} {{ $client->last_name}}
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group row">
+                                        <div class="col-6">
+                                            <h3>Nombre</h3>
+                                            <input type="string" class="form-control" name="client_name" id="client_name" placeholder="Nombre" maxlength="100" onchange="disableClientSelectionOnClientCreation()">
+                                        </div>
+                                        <div class="col-6">
+                                            <h3>Apellido</h3>
+                                            <input type="string" class="form-control" name="client_last_name" id="client_last_name" placeholder="Apellido" maxlength="100" onchange="disableClientSelectionOnClientCreation()">
+                                        </div>
+                                    </div>
                                 </div>
                             @else
                                 <div class="col-6">
@@ -135,8 +149,8 @@
                                     <th><input class="form-control" required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="promotion" id="promotion">
-                                            <option value="true">Si</option>
                                             <option value="false">No</option>
+                                            <option value="true">Si</option>
                                         </select>
                                     </th>
                                 </tr>   
