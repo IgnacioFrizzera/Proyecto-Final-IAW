@@ -63,7 +63,7 @@ class MovementController extends Controller
     private function validate_new_movement(Request $request)
     {
         return Validator::make($request->all(), [
-            'client_id' => ['required', 'bail', 'exists:clients,id'],
+            'client_id' => ['bail', 'exists:clients,id'],
             'description' => ['required', 'string', 'max:200'],
             'receipt_type' => ['required', 'string', 'max:50', 'regex:/^([^0-9]*)$/'],
             'date' => ['required'],
@@ -86,7 +86,28 @@ class MovementController extends Controller
             return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
         }
 
-        $client = Client::where('id', $request->client_id)->select()->first();
+        // add this logic/checking in the frontend
+        if (($request->client_name != null || $request->client_last_name != null) and $request->client_id != null)
+        {   
+            return $this->index()->withMessage('No se puede seleccionar un cliente y cargar un cliente a la vez.');
+        }
+
+        if ($request->client_name != null and $request->client_last_name != null)
+        {
+            $client = Client::create([
+                'name' => $request->client_name,
+                'last_name' => $request->client_last_name
+            ]);
+        }
+        elseif ($request->client_id != null)
+        {
+            $client = Client::where('id', $request->client_id)->select()->first();
+        }
+        else
+        {
+            return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
+        }
+
         $client->calculate_new_balance($request->due, $request->paid);
         $client->save();
 
@@ -96,7 +117,7 @@ class MovementController extends Controller
             'due' => $request->due,
             'paid' => $request->paid,
             'balance' =>  $client->current_balance,
-            'client_id' => $request->client_id,
+            'client_id' => $client->id,
             'category_id' => $request->category,
             'brand_id' => $request->brand,
             'size_id' => $request->size,
@@ -117,7 +138,7 @@ class MovementController extends Controller
                 'due' => $request->paid,
                 'paid' => $request->due,
                 'balance' =>  $client->current_balance,
-                'client_id' => $request->client_id,
+                'client_id' => $client->id,
                 'category_id' => $request->category,
                 'brand_id' => $request->brand,
                 'size_id' => $request->size,

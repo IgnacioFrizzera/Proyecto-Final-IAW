@@ -34,12 +34,25 @@
                                 </div>  
                                 <div class="col-3">
                                     <select class="form-select" aria-label="Default select example" name="client_id" id="receipt">
+                                        <option value="" selected disabled hidden>Elija un cliente</option>
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">
                                                 {{ $client->name }} {{ $client->last_name}}
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group row">
+                                        <div class="col-6">
+                                            <h3>Nombre</h3>
+                                            <input type="string" class="form-control" name="client_name" id="client_name" placeholder="Nombre" maxlength="100">
+                                        </div>
+                                        <div class="col-6">
+                                            <h3>Apellido</h3>
+                                            <input type="string" class="form-control" name="client_last_name" id="client_last_name" placeholder="Apellido" maxlength="100">
+                                        </div>
+                                    </div>
                                 </div>
                             @else
                                 <div class="col-6">
