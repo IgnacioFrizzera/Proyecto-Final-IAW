@@ -37,7 +37,15 @@ class MovementController extends Controller
         $client_id = $request->client_id;
         $client = Client::where('id', $client_id)->get();
 
-        $movements = Movement::where('client_id', $client_id)->select()->orderBy('created_at', 'DESC')->orderBy('id', 'DESC');
+        $movements = Movement::where('client_id', $client_id)
+                        ->join('categories', 'movements.category_id', '=', 'categories.id')
+                        ->join('brands', 'movements.brand_id', '=', 'brands.id')
+                        ->join('sizes', 'movements.size_id', '=', 'sizes.id')
+                        ->select('movements.created_at', 'movements.description', 'movements.receipt_type', 
+                        'movements.due', 'movements.paid', 'movements.balance', 'categories.name as category_name', 
+                        'brands.name as brand_name', 'sizes.name as size_name')
+                        ->orderBy('movements.created_at', 'DESC')
+                        ->orderBy('movements.id', 'DESC');
 
         if (count($movements->get()) == 0)
         {
@@ -90,7 +98,6 @@ class MovementController extends Controller
             return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
         }
 
-        // add this logic/checking in the frontend
         if (($request->client_name != null || $request->client_last_name != null) and $request->client_id != null)
         {   
             return $this->index()->withMessage('No se puede seleccionar un cliente y cargar un cliente a la vez.');
