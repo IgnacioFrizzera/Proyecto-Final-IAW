@@ -19,7 +19,11 @@ class MovementController extends Controller
         $categories = Category::all();
         $sizes = Size::all();
 
-        $clients = Client::select()->orderBy('name', 'ASC')->get();
+        $clients = Client::all()->sortBy([
+            'last_name', 'ASC',
+            'name', 'ASC'
+        ]);
+        
         if (count($clients) > 0)
         {
             return view('movements-dashboard', compact('clients', 'brands', 'categories', 'sizes'));

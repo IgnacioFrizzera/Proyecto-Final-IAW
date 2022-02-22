@@ -12,7 +12,10 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::select()->orderBy('current_balance', 'DESC')->get();
+        $clients = Client::all()->sortBy([
+            'last_name', 'ASC',
+            'name', 'ASC'
+        ]);
         
         if(count($clients) == 0)
         {
