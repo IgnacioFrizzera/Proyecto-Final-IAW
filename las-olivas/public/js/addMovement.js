@@ -23,3 +23,29 @@ function disabledOnReceiptType(valueType) {
         setBackgroundAndDisable(due, paid);
     }
 }
+
+function disableClientCreationOnClientSelect(valueType) {
+    const clientName = document.getElementById("client_name");
+    const clientLastName = document.getElementById("client_last_name");
+    if (valueType == "") {
+        clientName.disabled = false;
+        clientLastName.disabled = false;
+    }
+    else {
+        clientName.disabled = true;
+        clientLastName.disabled = true;
+    }
+}
+
+function disableClientSelectionOnClientCreation() {
+    const clientName = document.getElementById("client_name");
+    const clientLastName = document.getElementById("client_last_name");
+    const clientSelect = document.getElementById("client_id");
+
+    if (clientName.value == "" & clientLastName.value == "") {
+        clientSelect.disabled = false;
+    }
+    else {
+        clientSelect.disabled = true;
+    }
+}
