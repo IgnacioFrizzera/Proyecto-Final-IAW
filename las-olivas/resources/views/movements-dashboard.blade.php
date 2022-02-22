@@ -149,8 +149,8 @@
                                     <th><input class="form-control" required type="number" name="paid" id="paid_input" step=".01" value="0" readonly="readonly" style="background-color:#566573;"></th>
                                     <th>
                                         <select class="form-select" aria-label="Default select example" name="promotion" id="promotion">
-                                            <option value="true">Si</option>
                                             <option value="false">No</option>
+                                            <option value="true">Si</option>
                                         </select>
                                     </th>
                                 </tr>   
