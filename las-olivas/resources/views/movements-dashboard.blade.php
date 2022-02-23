@@ -94,6 +94,7 @@
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Marca</th>
                                     <th scope="col">Talle</th>
+                                    <th scope="col" id="delete_labels"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,6 +126,7 @@
                                             @endforeach
                                         </select>
                                     </th>
+                                    <th>-</th>
                                 </tr>
                             </tbody>
                         </table>

@@ -1,6 +1,11 @@
 var categoryItemsHTML = null;
+var categoryItemsIndex = 1;
+
 var brandItemsHTML = null;
+var brandItemsIndex = 1;
+
 var sizeItemsHTML = null;
+var sizeItemsIndex = 1;
 
 function setBackgroundAndDisable(disableElement, enableElement) {
     disableElement.readOnly = true;
@@ -64,35 +69,42 @@ function createItemsHTML(items) {
     return html;
 }
 
+function createSelect(nameAndId, itemsHTML) {
+    var html = `<select class="form-select" aria-label="Default select example" name="` + nameAndId + '" id="' + nameAndId  + '">';
+    html += itemsHTML + '</select>';
+    return html
+}
+
 function createCategoryHTML() {
     if (categoryItemsHTML == null) {
-        console.log('Here');
         categoryItemsHTML = createItemsHTML(ChartNamespace.categories);
     }
-    var categoryHTML = `<select class="form-select" aria-label="Default select example" name="category" id="category">`;
-    categoryHTML += categoryItemsHTML + '</select>';
-    return categoryHTML
+    nameAndId = "category" + categoryItemsIndex.toString();
+    categoryItemsIndex += 1;
+    return createSelect(nameAndId, categoryItemsHTML);
 }
 
 function createBrandHTML() {
     if (brandItemsHTML == null) {
         brandItemsHTML = createItemsHTML(ChartNamespace.brands);
     }
-    var brandHTML = `<select class="form-select" aria-label="Default select example" name="brand" id="brand">`;
-    brandHTML += brandItemsHTML + '</select>';
-    return brandHTML;
+    nameAndId = "brand" + brandItemsIndex.toString();
+    brandItemsIndex += 1;
+    return createSelect(nameAndId, brandItemsHTML);
 }
 
 function createSizeHTML() {
     if (sizeItemsHTML == null) {
         sizeItemsHTML = createItemsHTML(ChartNamespace.sizes);
     }
-    var sizeHTML = `<select class="form-select" aria-label="Default select example" name="size" id="size">`;
-    sizeHTML += sizeItemsHTML + '</select>';
-    return sizeHTML;
+    nameAndId = "size" + sizeItemsIndex.toString();
+    sizeItemsIndex += 1;
+    return createSelect(nameAndId, sizeItemsHTML);
 }
 
 function appendNewItem() {
+    document.getElementById("delete_labels").innerHTML = "Eliminar";
+
     const itemsTable = document.getElementById("items_table");
     const newRow = itemsTable.insertRow();
 
