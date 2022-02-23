@@ -1,3 +1,7 @@
+var categoryItemsHTML = null;
+var brandItemsHTML = null;
+var sizeItemsHTML = null;
+
 function setBackgroundAndDisable(disableElement, enableElement) {
     disableElement.readOnly = true;
     disableElement.style.backgroundColor = "#566573";
@@ -48,4 +52,59 @@ function disableClientSelectionOnClientCreation() {
     else {
         clientSelect.disabled = true;
     }
+}
+
+function createItemsHTML(items) {
+    var html = '';
+    for (let item of items) {
+        html += `<option value="` + item.id + '">';
+        html += item.name;
+        html += '</option>';
+    }
+    return html;
+}
+
+function createCategoryHTML() {
+    if (categoryItemsHTML == null) {
+        console.log('Here');
+        categoryItemsHTML = createItemsHTML(ChartNamespace.categories);
+    }
+    var categoryHTML = `<select class="form-select" aria-label="Default select example" name="category" id="category">`;
+    categoryHTML += categoryItemsHTML + '</select>';
+    return categoryHTML
+}
+
+function createBrandHTML() {
+    if (brandItemsHTML == null) {
+        brandItemsHTML = createItemsHTML(ChartNamespace.brands);
+    }
+    var brandHTML = `<select class="form-select" aria-label="Default select example" name="brand" id="brand">`;
+    brandHTML += brandItemsHTML + '</select>';
+    return brandHTML;
+}
+
+function createSizeHTML() {
+    if (sizeItemsHTML == null) {
+        sizeItemsHTML = createItemsHTML(ChartNamespace.sizes);
+    }
+    var sizeHTML = `<select class="form-select" aria-label="Default select example" name="size" id="size">`;
+    sizeHTML += sizeItemsHTML + '</select>';
+    return sizeHTML;
+}
+
+function appendNewItem() {
+    const itemsTable = document.getElementById("items_table");
+    const newRow = itemsTable.insertRow();
+
+    const categoryCell = newRow.insertCell();
+    categoryCell.innerHTML = createCategoryHTML();
+    
+    const brandCell = newRow.insertCell();
+    brandCell.innerHTML = createBrandHTML();
+    
+    const sizeCell = newRow.insertCell();
+    sizeCell.innerHTML = createSizeHTML();
+    
+    const deleteButton = newRow.insertCell();
+    deleteButton.innerHTML = 'Delete';
 }

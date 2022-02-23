@@ -1,3 +1,6 @@
+<!-- Font Awesome Brand Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@include ('jsvars')
 <script src="{{ asset('js/addMovement.js') }}"></script>
 <x-app-layout>
     <x-slot name="header">
@@ -80,11 +83,12 @@
                                     <th>
                                         <textarea class="form-control" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
-                                </tr>   
+                                </tr>
                             </tbody>
                         </table>
                         <h4>Información de etiquetas</h4>
-                        <table class="table table-bordered table-striped text-center">
+                        <button title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
+                        <table class="table table-bordered table-striped text-center" id="items_table">
                             <thead>
                                 <tr>
                                     <th scope="col">Categoría</th>
