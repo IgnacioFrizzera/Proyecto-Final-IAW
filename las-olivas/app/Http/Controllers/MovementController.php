@@ -26,6 +26,7 @@ class MovementController extends Controller
         ]);
         
         JavaScript::put([
+            'clients' => $clients,
             'brands' => $brands,
             'categories' => $categories,
             'sizes' => $sizes,

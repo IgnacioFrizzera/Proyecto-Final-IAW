@@ -36,13 +36,23 @@ function disabledOnReceiptType(valueType) {
 function disableClientCreationOnClientSelect(valueType) {
     const clientName = document.getElementById("client_name");
     const clientLastName = document.getElementById("client_last_name");
+    const clientBalanceHeader = document.getElementById("client_balance");
+
     if (valueType == "") {
         clientName.disabled = false;
         clientLastName.disabled = false;
+        clientBalanceHeader.innerHTML = "";
     }
     else {
         clientName.disabled = true;
         clientLastName.disabled = true;
+        const clientId = document.getElementById("client_id").value;
+        for(let client of ChartNamespace.clients) {
+            if (client.id == clientId) {
+                clientBalanceHeader.innerHTML = "Saldo: $" + client.current_balance;
+                break;
+            }
+        }
     }
 }
 
@@ -103,7 +113,14 @@ function createSizeHTML() {
 }
 
 function deleteItemsTableRow(index) {
-    document.getElementById("items_table").deleteRow(index);
+    const itemsTable = document.getElementById("items_table");
+    itemsTable.deleteRow(index);
+
+    /**
+     * Hay que eliminar en orden para que funcione :(
+     * Caso de 4 filas, si elimino por ej. la tercera, el index de la cuarta queda desactualizado/mal
+     */
+
     if (index - 1 == 1) {
         document.getElementById("delete_labels").innerHTML = "";
     }

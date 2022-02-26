@@ -34,7 +34,7 @@
                             @if(isset($clients))
                                 <div class="col-1">
                                     <h3>Cliente: </h3>
-                                </div>  
+                                </div>
                                 <div class="col-3">
                                     <select class="form-select" aria-label="Default select example" name="client_id" id="client_id" onchange="disableClientCreationOnClientSelect(this.value)">
                                         <option value="" selected disabled hidden>Elija un cliente</option>
@@ -57,6 +57,9 @@
                                             <input type="string" class="form-control" name="client_last_name" id="client_last_name" placeholder="Apellido" maxlength="100" onchange="disableClientSelectionOnClientCreation()">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-4">
+                                    <h3 id="client_balance"></h3>
                                 </div>
                             @else
                                 <div class="col-6">
