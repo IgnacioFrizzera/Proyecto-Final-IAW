@@ -102,6 +102,13 @@ function createSizeHTML() {
     return createSelect(nameAndId, sizeItemsHTML);
 }
 
+function deleteItemsTableRow(index) {
+    document.getElementById("items_table").deleteRow(index);
+    if (index - 1 == 1) {
+        document.getElementById("delete_labels").innerHTML = "";
+    }
+}
+
 function appendNewItem() {
     document.getElementById("delete_labels").innerHTML = "Eliminar";
 
@@ -118,5 +125,5 @@ function appendNewItem() {
     sizeCell.innerHTML = createSizeHTML();
     
     const deleteButton = newRow.insertCell();
-    deleteButton.innerHTML = 'Delete';
+    deleteButton.innerHTML = '<button type="button" title="Eliminar item" onclick="deleteItemsTableRow('+newRow.rowIndex+')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button>'
 }
