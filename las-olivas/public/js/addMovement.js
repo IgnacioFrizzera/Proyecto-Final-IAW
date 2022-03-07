@@ -108,17 +108,15 @@ function createSizeHTML() {
 
 function deleteItemsTableRow(index) {
     const itemsTable = document.getElementById("items_table");
-    itemsTable.deleteRow(index);
 
-    // var totalRowCount = table.rows.length; // 5
-    // var tbodyRowCount = table.tBodies[0].rows.length; // 3
+    for (let i = 0; i < itemsTable.rows.length; i++) {
+        if (itemsTable.rows[i].id == index) {
+            itemsTable.deleteRow(i);
+            break;
+        }
+    }
 
-    /**
-     * Hay que eliminar en orden para que funcione :(
-     * Caso de 4 filas, si elimino por ej. la tercera, el index de la cuarta queda desactualizado/mal
-     */
-
-    if (index - 1 == 1) {
+    if (itemsTable.rows.length == 2) {
         document.getElementById("delete_labels").innerHTML = "";
     }
 }
@@ -128,6 +126,7 @@ function appendNewItem() {
 
     const itemsTable = document.getElementById("items_table");
     const newRow = itemsTable.insertRow();
+    newRow.id = newRow.rowIndex;
 
     const categoryCell = newRow.insertCell();
     categoryCell.innerHTML = createCategoryHTML();
