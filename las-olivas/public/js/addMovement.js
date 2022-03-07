@@ -1,11 +1,8 @@
 var categoryItemsHTML = null;
-var categoryItemsIndex = 1;
-
 var brandItemsHTML = null;
-var brandItemsIndex = 1;
-
 var sizeItemsHTML = null;
-var sizeItemsIndex = 1;
+
+var totalItemsIndex = 1;
 
 function setBackgroundAndDisable(disableElement, enableElement) {
     disableElement.readOnly = true;
@@ -89,8 +86,7 @@ function createCategoryHTML() {
     if (categoryItemsHTML == null) {
         categoryItemsHTML = createItemsHTML(ChartNamespace.categories);
     }
-    nameAndId = "category" + categoryItemsIndex.toString();
-    categoryItemsIndex += 1;
+    nameAndId = "category" + totalItemsIndex.toString();
     return createSelect(nameAndId, categoryItemsHTML);
 }
 
@@ -98,8 +94,7 @@ function createBrandHTML() {
     if (brandItemsHTML == null) {
         brandItemsHTML = createItemsHTML(ChartNamespace.brands);
     }
-    nameAndId = "brand" + brandItemsIndex.toString();
-    brandItemsIndex += 1;
+    nameAndId = "brand" + totalItemsIndex.toString();
     return createSelect(nameAndId, brandItemsHTML);
 }
 
@@ -107,14 +102,16 @@ function createSizeHTML() {
     if (sizeItemsHTML == null) {
         sizeItemsHTML = createItemsHTML(ChartNamespace.sizes);
     }
-    nameAndId = "size" + sizeItemsIndex.toString();
-    sizeItemsIndex += 1;
+    nameAndId = "size" + totalItemsIndex.toString();
     return createSelect(nameAndId, sizeItemsHTML);
 }
 
 function deleteItemsTableRow(index) {
     const itemsTable = document.getElementById("items_table");
     itemsTable.deleteRow(index);
+
+    // var totalRowCount = table.rows.length; // 5
+    // var tbodyRowCount = table.tBodies[0].rows.length; // 3
 
     /**
      * Hay que eliminar en orden para que funcione :(
@@ -143,4 +140,6 @@ function appendNewItem() {
     
     const deleteButton = newRow.insertCell();
     deleteButton.innerHTML = '<button type="button" title="Eliminar item" onclick="deleteItemsTableRow('+newRow.rowIndex+')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button>'
+
+    totalItemsIndex += 1;
 }
