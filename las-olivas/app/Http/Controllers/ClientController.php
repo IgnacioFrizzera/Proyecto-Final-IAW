@@ -13,8 +13,8 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::all()->sortBy([
-            'last_name', 'ASC',
-            'name', 'ASC'
+            'name', 'ASC',
+            'last_name', 'ASC'
         ]);
         
         if(count($clients) == 0)
