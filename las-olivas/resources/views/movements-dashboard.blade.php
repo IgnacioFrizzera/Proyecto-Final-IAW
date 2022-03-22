@@ -1,3 +1,6 @@
+<!-- Font Awesome Brand Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@include ('jsvars')
 <script src="{{ asset('js/addMovement.js') }}"></script>
 <x-app-layout>
     <x-slot name="header">
@@ -31,7 +34,7 @@
                             @if(isset($clients))
                                 <div class="col-1">
                                     <h3>Cliente: </h3>
-                                </div>  
+                                </div>
                                 <div class="col-3">
                                     <select class="form-select" aria-label="Default select example" name="client_id" id="client_id" onchange="disableClientCreationOnClientSelect(this.value)">
                                         <option value="" selected disabled hidden>Elija un cliente</option>
@@ -54,6 +57,9 @@
                                             <input type="string" class="form-control" name="client_last_name" id="client_last_name" placeholder="Apellido" maxlength="100" onchange="disableClientSelectionOnClientCreation()">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-4">
+                                    <h3 id="client_balance"></h3>
                                 </div>
                             @else
                                 <div class="col-6">
@@ -80,16 +86,18 @@
                                     <th>
                                         <textarea class="form-control" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
-                                </tr>   
+                                </tr>
                             </tbody>
                         </table>
                         <h4>Información de etiquetas</h4>
-                        <table class="table table-bordered table-striped text-center">
+                        <button hidden title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
+                        <table class="table table-bordered table-striped text-center" id="items_table">
                             <thead>
                                 <tr>
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Marca</th>
                                     <th scope="col">Talle</th>
+                                    <th scope="col" id="delete_labels"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,6 +129,7 @@
                                             @endforeach
                                         </select>
                                     </th>
+                                    <th>-</th>
                                 </tr>
                             </tbody>
                         </table>

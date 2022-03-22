@@ -1,3 +1,9 @@
+var categoryItemsHTML = null;
+var brandItemsHTML = null;
+var sizeItemsHTML = null;
+
+var totalItemsIndex = 1;
+
 function setBackgroundAndDisable(disableElement, enableElement) {
     disableElement.readOnly = true;
     disableElement.style.backgroundColor = "#566573";
@@ -27,13 +33,23 @@ function disabledOnReceiptType(valueType) {
 function disableClientCreationOnClientSelect(valueType) {
     const clientName = document.getElementById("client_name");
     const clientLastName = document.getElementById("client_last_name");
+    const clientBalanceHeader = document.getElementById("client_balance");
+
     if (valueType == "") {
         clientName.disabled = false;
         clientLastName.disabled = false;
+        clientBalanceHeader.innerHTML = "";
     }
     else {
         clientName.disabled = true;
         clientLastName.disabled = true;
+        const clientId = document.getElementById("client_id").value;
+        for(let client of ChartNamespace.clients) {
+            if (client.id == clientId) {
+                clientBalanceHeader.innerHTML = "Saldo: $" + client.current_balance;
+                break;
+            }
+        }
     }
 }
 
@@ -48,4 +64,81 @@ function disableClientSelectionOnClientCreation() {
     else {
         clientSelect.disabled = true;
     }
+}
+
+function createItemsHTML(items) {
+    var html = '';
+    for (let item of items) {
+        html += `<option value="` + item.id + '">';
+        html += item.name;
+        html += '</option>';
+    }
+    return html;
+}
+
+function createSelect(nameAndId, itemsHTML) {
+    var html = `<select class="form-select" aria-label="Default select example" name="` + nameAndId + '" id="' + nameAndId  + '">';
+    html += itemsHTML + '</select>';
+    return html
+}
+
+function createCategoryHTML() {
+    if (categoryItemsHTML == null) {
+        categoryItemsHTML = createItemsHTML(ChartNamespace.categories);
+    }
+    nameAndId = "category" + totalItemsIndex.toString();
+    return createSelect(nameAndId, categoryItemsHTML);
+}
+
+function createBrandHTML() {
+    if (brandItemsHTML == null) {
+        brandItemsHTML = createItemsHTML(ChartNamespace.brands);
+    }
+    nameAndId = "brand" + totalItemsIndex.toString();
+    return createSelect(nameAndId, brandItemsHTML);
+}
+
+function createSizeHTML() {
+    if (sizeItemsHTML == null) {
+        sizeItemsHTML = createItemsHTML(ChartNamespace.sizes);
+    }
+    nameAndId = "size" + totalItemsIndex.toString();
+    return createSelect(nameAndId, sizeItemsHTML);
+}
+
+function deleteItemsTableRow(index) {
+    const itemsTable = document.getElementById("items_table");
+
+    for (let i = 0; i < itemsTable.rows.length; i++) {
+        if (itemsTable.rows[i].id == index) {
+            itemsTable.deleteRow(i);
+            break;
+        }
+    }
+
+    if (itemsTable.rows.length == 2) {
+        document.getElementById("delete_labels").innerHTML = "";
+    }
+}
+
+function appendNewItem() {
+    document.getElementById("delete_labels").innerHTML = "Eliminar";
+
+    const itemsTable = document.getElementById("items_table");
+    const newRow = itemsTable.insertRow();
+    newRow.id = newRow.rowIndex;
+
+    const categoryCell = newRow.insertCell();
+    categoryCell.innerHTML = createCategoryHTML();
+    
+    const brandCell = newRow.insertCell();
+    brandCell.innerHTML = createBrandHTML();
+    
+    const sizeCell = newRow.insertCell();
+    sizeCell.innerHTML = createSizeHTML();
+    
+    const deleteButton = newRow.insertCell();
+    deleteButton.innerHTML = '<button type="button" title="Eliminar item" onclick="deleteItemsTableRow('+newRow.rowIndex+')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button>'
+
+    totalItemsIndex += 1;
 }
