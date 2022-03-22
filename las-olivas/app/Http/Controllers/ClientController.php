@@ -64,8 +64,8 @@ class ClientController extends Controller
         }
 
         Client::create([
-            'name' => $request->client_name,
-            'last_name' => $request->client_last_name,
+            'name' => strtoupper($request->client_name),
+            'last_name' => strtoupper($request->client_last_name),
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'birthday' => $request->client_birthday,
@@ -94,8 +94,8 @@ class ClientController extends Controller
         try 
         {
             Client::where('id', $request->id)->update([
-                'name' => $request->client_name,
-                'last_name' => $request->client_last_name,
+                'name' => strtoupper($request->client_name),
+                'last_name' => strtoupper($request->client_last_name),
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'birthday' => $request->client_birthday,
