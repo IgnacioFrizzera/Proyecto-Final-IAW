@@ -21,8 +21,8 @@ class MovementController extends Controller
         $sizes = Size::select()->orderBy('name', 'ASC')->get();
 
         $clients = Client::all()->sortBy([
-            'last_name', 'ASC',
-            'name', 'ASC'
+            'name', 'ASC',
+            'last_name', 'ASC'
         ]);
         
         JavaScript::put([
