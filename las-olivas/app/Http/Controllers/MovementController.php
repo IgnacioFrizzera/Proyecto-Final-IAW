@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use JavaScript;
 
 class MovementController extends Controller
 {
@@ -20,10 +21,17 @@ class MovementController extends Controller
         $sizes = Size::select()->orderBy('name', 'ASC')->get();
 
         $clients = Client::all()->sortBy([
-            'last_name', 'ASC',
-            'name', 'ASC'
+            'name', 'ASC',
+            'last_name', 'ASC'
         ]);
         
+        JavaScript::put([
+            'clients' => $clients,
+            'brands' => $brands,
+            'categories' => $categories,
+            'sizes' => $sizes,
+        ]);
+
         if (count($clients) > 0)
         {
             return view('movements-dashboard', compact('clients', 'brands', 'categories', 'sizes'));
