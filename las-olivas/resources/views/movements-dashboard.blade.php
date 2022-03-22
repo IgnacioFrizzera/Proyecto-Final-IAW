@@ -90,7 +90,7 @@
                             </tbody>
                         </table>
                         <h4>Información de etiquetas</h4>
-                        <button title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
+                        <button hidden title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
                         <table class="table table-bordered table-striped text-center" id="items_table">
                             <thead>
                                 <tr>
