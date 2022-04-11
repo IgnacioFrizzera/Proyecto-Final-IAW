@@ -68,7 +68,16 @@
                             @endif
                         </div>
                         <hr>
-                        <h4>Información general</h4>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <h4>Información general</h4>
+                                </div>
+                                <div class="col-6">
+                                    <h4 title="Cliente entrega dinero">Es entrega <input type="checkbox" onchange="markMovementAsPayment(event)"></h4>
+                                </div>
+                            </div>
+                        </div>
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                                 <tr>
@@ -81,10 +90,10 @@
                                 <tr>
                                     <th><input type="date" class="form-control" name="date" required value="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d');?>"></th>
                                     <th>
-                                        <textarea class="form-control" required name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
+                                        <textarea class="form-control" required id="description" name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
                                     <th>
-                                        <textarea class="form-control" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
+                                        <textarea class="form-control" id="extra_comentary" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
                                 </tr>
                             </tbody>
