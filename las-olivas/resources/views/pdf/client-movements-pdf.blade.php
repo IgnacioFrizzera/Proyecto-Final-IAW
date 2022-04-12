@@ -26,7 +26,7 @@
             <thead>
                 <tr>
                     <th scope="col">Fecha</th>
-                    <th scope="col">Descripción</th>
+                    <th scope="col">Categoría</th>
                     <th scope="col">Tipo de comprobante</th>
                     <th scope="col">Debe</th>
                     <th scope="col">Haber</th>
@@ -49,7 +49,7 @@
                 @foreach ($client_movements as $movement)
                     <tr>
                         <td> {{ $movement->created_at->format('d/m/Y') }} </td>
-                        <td> {{ $movement->description }} </td>
+                        <td> {{ $movement->name }} </td>
                         <td> {{ $movement->receipt_type }} </td>
                         <td> {{ $movement->due }} </td>
                         <td> {{ $movement->paid }} </td>

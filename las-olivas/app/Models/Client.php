@@ -61,16 +61,31 @@ class Client extends Model
         return $this->movements()
                     ->whereMonth('created_at', $month)
                     ->whereYear('created_at', $year)
+                    ->join('categories', 'movements.category_id', '=', 'categories.id')
                     ->get();
     }
 
     public function get_between_movements(string $from, string $to)
     {
-        return $this->movements()->whereBetween('created_at', [$from, $to])->get();
+        return $this->movements()
+                    ->whereBetween('created_at', [$from, $to])
+                    ->join('categories', 'movements.category_id', '=', 'categories.id')
+                    ->get();
     }
 
     public function delete_movements()
     {
         $this->movements()->delete();
+    }
+
+    public function recalculate_balance(Movement $movement)
+    {
+        /**
+         * Movement 1: due: 1, paid: 1,  balance: 0
+         * Movement 2: due: 2, paid: 0, balance: 2
+         * Movement 3: due: 0, paid: 1, balance: 1
+         */
+        
+        // you only care about the previous movement and all the movements that come after
     }
 }
