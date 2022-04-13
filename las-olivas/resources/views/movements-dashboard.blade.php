@@ -83,7 +83,6 @@
                                 <tr>
                                     <th scope="col">Fecha</th>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col">Comentario interno</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,14 +91,11 @@
                                     <th>
                                         <textarea class="form-control" required id="description" name="description" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
                                     </th>
-                                    <th>
-                                        <textarea class="form-control" id="extra_comentary" name="extra_comentary" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' maxlength="200"></textarea>
-                                    </th>
                                 </tr>
                             </tbody>
                         </table>
                         <h4>Información de etiquetas</h4>
-                        <button hidden title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
+                        <button title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
                         <table class="table table-bordered table-striped text-center" id="items_table">
                             <thead>
                                 <tr>
@@ -174,16 +170,24 @@
                                 </tr>   
                             </tbody>
                         </table>
-                        <h4>Método de pago (solo en caso de facturas)</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    Método de pago (solo en caso de facturas)
+                                </h4>
+                            </div>
+                            <div class="col-6" style="text-align: right;">
+                                <button type="sumbit" class="btn btn-dark">
+                                    Cargar movimiento
+                                </button>
+                            </div>
+                        </div>
                         <select class="form-select" aria-label="Default select example" name="payment_type" id="payment_type">
                             <option value="EF">EFECTIVO</option>
                             <option value="TC">TARJETA C</option>
                             <option value="TD">TARJETA D</option>
                         </select>
                         <br><br>
-                        <button type="sumbit" class="btn btn-dark">
-                            Cargar movimiento
-                        </button>
                     </form>
                 </div>
             </div>
