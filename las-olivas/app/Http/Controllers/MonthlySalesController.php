@@ -10,7 +10,7 @@ class MonthlySalesController extends Controller
 
     public function index()
     {
-        $sales = MonthlySale::all();
+        $sales = MonthlySale::select()->orderBy('year', 'DESC')->orderBy('month', 'DESC')->get();
         if (count($sales) > 0)
         {
             return view('add-previous-monthly-sale')->withSales($sales);
