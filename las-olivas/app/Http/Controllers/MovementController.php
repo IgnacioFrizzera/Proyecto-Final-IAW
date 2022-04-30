@@ -113,6 +113,15 @@ class MovementController extends Controller
 
         if ($request->client_name != null and $request->client_last_name != null)
         {
+            $client_with_same_name_lastname = 
+                Client::where('name', strtoupper($request->client_name))
+                        ->where('last_name', strtoupper($request->client_last_name))->get();
+            
+            if (count($client_with_same_name_lastname) != 0)
+            {
+                return $this->index()->withMessage('Ya existe un cliente con ese nombre y apellido.');
+            }
+
             $client = Client::create([
                 'name' => $request->client_name,
                 'last_name' => $request->client_last_name
