@@ -13,7 +13,6 @@
                     <h2 style="text-align:center;">
                         Venta diaria
                     </h2>
-                    <hr>
                     @if(isset($invalidDate))
                         <h4 style="color:red; text-decoration:underline">
                             {{$invalidDate}}
@@ -26,17 +25,44 @@
                         </h4>
                         <hr>
                     @endif
-                    @if(isset($dailySales))
+                    @if(isset($movements))
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th scope="col">Factura</th>
+                                    <th scope="col">Factura CC</th>
+                                    <th scope="col">Efectivo</th>
+                                    <th scope="col">Tarjeta C</th>
+                                    <th scope="col">Tarjeta D</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th></th>
+                                    @foreach ($daily_sales as $sale_type)
+                                        <th>{{$sale_type}}</th>
+                                    @endforeach
                                 </tr>
+                            </tbody>
+                            </thead>
+                        </table>
+                        <hr>
+                        <h2 style="text-align:center;">Detalle de movimientos</h2>
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Movimiento</th>
+                                    <th scope="col">Debe</th>
+                                    <th scope="col">Haber</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($movements as $movement)
+                                    <tr>
+                                        <th>{{$movement->description}}</th>
+                                        <th>{{$movement->due}}</th>
+                                        <th>{{$movement->paid}}</th>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     @else
