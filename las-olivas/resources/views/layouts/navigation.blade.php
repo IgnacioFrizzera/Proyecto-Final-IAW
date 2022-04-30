@@ -22,6 +22,11 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('daily-sales')" :active="request()->routeIs('daily-sales')">
+                        {{ __('Ventas diarias') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('monthly-sales-index')" :active="request()->routeIs('monthly-sales-index')">
                         {{ __('Ventas históricas') }}
                     </x-nav-link>

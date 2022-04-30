@@ -4,6 +4,18 @@ var sizeItemsHTML = null;
 
 var totalItemsIndex = 1;
 
+function markMovementAsPayment(event) {
+    descriptionItem = document.getElementById("description");
+    descriptionItem.disabled = !descriptionItem.disabled;
+    if (event.target.checked) {
+        descriptionItem.innerHTML = "ENTREGA";
+        extraComentaryItem.innerHTML = "ENTREGA";
+    } else {
+        descriptionItem.innerHTML = "";
+        extraComentaryItem.innerHTML = "";
+    }
+}
+
 function setBackgroundAndDisable(disableElement, enableElement) {
     disableElement.readOnly = true;
     disableElement.style.backgroundColor = "#566573";

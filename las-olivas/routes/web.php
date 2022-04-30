@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'] , function () {
     Route::get('/movements-dashboard', 'App\Http\Controllers\MovementController@index')->name('movements-dashboard');
     Route::post('/movements-by-client', 'App\Http\Controllers\MovementController@list_client_movements')->name('movements-client-list');
     Route::post('/movements-add', 'App\Http\Controllers\MovementController@add_movement')->name('movements-add');
+    Route::post('/movements-delete', 'App\Http\Controllers\MovementController@delete_movement')->name('movements-delete');
 });
 
 // PDF routes
@@ -40,7 +41,12 @@ Route::group(['middleware' => 'auth'] , function () {
     Route::post('/download-client-movements', 'App\Http\Controllers\PDFController@download_pdf')->name('download-client-movements');
 });
 
-// Sales routes
+// Daily sales routes
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/daily-sales', 'App\Http\Controllers\DailySalesController@index')->name('daily-sales');
+});
+
+// Monthly sales routes
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/add-previous-monthly-sale', 'App\Http\Controllers\MonthlySalesController@index')->name('monthly-sales-index');
     Route::post('/monthly-sales-add', 'App\Http\Controllers\MonthlySalesController@add_monthly_sale')->name('monthly-sales-add');

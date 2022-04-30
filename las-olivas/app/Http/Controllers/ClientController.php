@@ -50,6 +50,14 @@ class ClientController extends Controller
 
     public function add_client(Request $request)
     {
+        $client_with_same_name_lastname = Client::where('name', strtoupper($request->client_name))
+                                            ->where('last_name', strtoupper($request->client_last_name))->get();
+        
+        if (count($client_with_same_name_lastname) != 0)
+        {
+            return $this->index_add_client()->withFailedToCreateMessage('Ya existe un cliente con ese nombre y apellido.');
+        }
+
         $personal_info_validation = $this->validate_client_personal_info($request);
         $contact_info_validation = $this->validate_client_contact_info($request);
         

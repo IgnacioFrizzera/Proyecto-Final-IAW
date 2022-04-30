@@ -59,9 +59,8 @@ class SalesController extends Controller
         return $this->sum_paid($filtered_movements);
     }
 
-    public function calculate_monthly_sales(string $month, string $year)
+    private function calculate_sales($movements)
     {
-        $movements = Movement::whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
         return [
             'fc' => $this->calculate_monthly_fc($movements),
             'fcc' => $this->calculate_monthly_fcc($movements),
@@ -69,5 +68,16 @@ class SalesController extends Controller
             'tc' => $this->calculate_monthly_tc($movements),
             'td' => $this->calculate_monthly_td($movements)
         ];
+    }
+
+    public function calculate_monthly_sales(string $month, string $year)
+    {
+        $movements = Movement::whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
+        return $this->calculate_sales($movements);
+    }
+
+    public function calculate_daily_sales($movements)
+    {
+        return $this->calculate_sales($movements);
     }
 }

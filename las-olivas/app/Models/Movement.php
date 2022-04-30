@@ -23,9 +23,14 @@ class Movement extends Model
         'category_id',
         'brand_id',
         'size_id',
-        'extra_comentary',
         'paid_with_promotion',
         'created_at'
     ];
 
+    public function recalculate_balance(Movement $previous_movement)
+    {
+        $new_balance = $previous_movement->balance + $this->due - $this->paid;
+        $this->balance = $new_balance;
+        $this->save();
+    }
 }

@@ -70,7 +70,7 @@ class PDFController extends Controller
 
     public function create_filtered_movements_pdf(Client $client, string $from, string $to)
     {
-        $movements = $client->get_between_movements($from, $to);        
+        $movements = $client->get_between_movements($from, $to);
         $previous_balance = 0;
         $current_balance = $movements->sortByDesc('id')->first()->balance;
 
