@@ -6,9 +6,7 @@ var totalItemsIndex = 1;
 
 function markMovementAsPayment(event) {
     descriptionItem = document.getElementById("description");
-    extraComentaryItem = document.getElementById("extra_comentary");
     descriptionItem.disabled = !descriptionItem.disabled;
-    extraComentaryItem.disabled = !extraComentaryItem.disabled;
     if (event.target.checked) {
         descriptionItem.innerHTML = "ENTREGA";
         extraComentaryItem.innerHTML = "ENTREGA";
@@ -17,7 +15,6 @@ function markMovementAsPayment(event) {
         extraComentaryItem.innerHTML = "";
     }
 }
-
 
 function setBackgroundAndDisable(disableElement, enableElement) {
     disableElement.readOnly = true;

@@ -27,4 +27,10 @@ class Movement extends Model
         'created_at'
     ];
 
+    public function recalculate_balance(Movement $previous_movement)
+    {
+        $new_balance = $previous_movement->balance + $this->due - $this->paid;
+        $this->balance = $new_balance;
+        $this->save();
+    }
 }

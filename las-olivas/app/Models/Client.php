@@ -80,12 +80,13 @@ class Client extends Model
 
     public function recalculate_balance(Movement $movement)
     {
-        /**
-         * Movement 1: due: 1, paid: 1,  balance: 0
-         * Movement 2: due: 2, paid: 0, balance: 2
-         * Movement 3: due: 0, paid: 1, balance: 1
-         */
-        
-        // you only care about the previous movement and all the movements that come after
+        $previous_movement = $this->movements()->where('id', '<', $movement->id)->get()->last();
+        $later_movements = $this->movements()->where('id', '>', $movement->id)->get();
+        foreach ($later_movements as $later_movement)
+        {
+            $later_movement->recalculate_balance($previous_movement);
+            $previous_movement = $later_movement;
+        }
+        $this->current_balance = $previous_movement->balance;      
     }
 }

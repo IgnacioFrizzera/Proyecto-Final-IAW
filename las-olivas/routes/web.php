@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'] , function () {
     Route::get('/movements-dashboard', 'App\Http\Controllers\MovementController@index')->name('movements-dashboard');
     Route::post('/movements-by-client', 'App\Http\Controllers\MovementController@list_client_movements')->name('movements-client-list');
     Route::post('/movements-add', 'App\Http\Controllers\MovementController@add_movement')->name('movements-add');
+    Route::post('/movements-delete', 'App\Http\Controllers\MovementController@delete_movement')->name('movements-delete');
 });
 
 // PDF routes

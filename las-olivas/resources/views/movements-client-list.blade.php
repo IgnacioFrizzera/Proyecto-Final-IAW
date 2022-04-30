@@ -70,6 +70,7 @@
                                         <th scope="col">Debe</th>
                                         <th scope="col">Haber</th>
                                         <th scope="col">Saldo</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,6 +85,14 @@
                                             <td>{{ $movement->due }}</td>
                                             <td>{{ $movement->paid }}</td>
                                             <td>{{ $movement->balance }}</td>
+                                            <form action="{{route('movements-delete')}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="movement_id" value="{{ $movement->id }}">
+                                                @foreach ($client as $client_data)
+                                                    <input type="hidden" name="client_id" value="{{ $client_data->id }}">
+                                                @endforeach
+                                                <td><button type="sumbit" title="Eliminar Movimiento" onclick="return confirm('¿Estas seguro que deseas eliminar el movimiento? Esto afectará al saldo del cliente.')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button></td>
+                                            </form>
                                         </tr>
                                     @endforeach
                                 </tbody>
