@@ -94,14 +94,23 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <h4>Información de etiquetas</h4>
-                        <button title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
+                        <div class="row">
+                            <div class="col-3" style="text-align: left;">
+                                <h4>
+                                    Información de etiquetas
+                                </h4>
+                            </div>
+                            <div class="col-1" style="text-align: left;">
+                                <button title="Agregar item" type="button" onClick="appendNewItem()"><i class="fa fa-plus" aria-hidden="true" style="font-size:28px"></i></button>
+                            </div>
+                        </div>
                         <table class="table table-bordered table-striped text-center" id="items_table">
                             <thead>
                                 <tr>
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Marca</th>
                                     <th scope="col">Talle</th>
+                                    <th scope="col" id="item_price"></th>
                                     <th scope="col" id="delete_labels"></th>
                                 </tr>
                             </thead>
@@ -135,9 +144,20 @@
                                         </select>
                                     </th>
                                     <th>-</th>
+                                    <th>-</th>
                                 </tr>
                             </tbody>
                         </table>
+                        <hr>
+                        <div class="row">
+                            <div class="col-8">
+                                <h4 id="total_sum_title"></h4>
+                            </div>
+                            <div class="col-4" style="text-align: center;">
+                                <h4 id="total_sum_value"></h4>
+                            </div>
+                        </div>
+                        <hr>
                         <h4>Información de pago</h4>
                         <table class="table table-bordered table-striped text-center">
                             <thead>
