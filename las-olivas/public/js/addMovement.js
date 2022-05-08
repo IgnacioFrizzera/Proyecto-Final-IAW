@@ -9,10 +9,8 @@ function markMovementAsPayment(event) {
     descriptionItem.disabled = !descriptionItem.disabled;
     if (event.target.checked) {
         descriptionItem.innerHTML = "ENTREGA";
-        extraComentaryItem.innerHTML = "ENTREGA";
     } else {
         descriptionItem.innerHTML = "";
-        extraComentaryItem.innerHTML = "";
     }
 }
 
@@ -27,6 +25,8 @@ function setBackgroundAndDisable(disableElement, enableElement) {
 function disabledOnReceiptType(valueType) {
     const paid = document.getElementById("paid_input");
     const due = document.getElementById("due_input");
+    due.value = 0;
+    paid.value = 0;
     if (valueType == "FC" || valueType == "FCC") {
         setBackgroundAndDisable(paid, due);
         if (valueType == "FC") {
@@ -121,9 +121,6 @@ function createSizeHTML() {
 function deleteItemsTableRow(index) {
     const itemsTable = document.getElementById("items_table");
 
-    const currentId = 'priceItem' + index.toString();
-    const currentPrice = document.getElementById(currentId).value;
-
     for (let i = 0; i < itemsTable.rows.length; i++) {
         if (itemsTable.rows[i].id == index) {
             itemsTable.deleteRow(i);
@@ -131,29 +128,28 @@ function deleteItemsTableRow(index) {
         }
     }
 
-    updateTotalSum(-currentPrice);
+    recalculateSum();
 
     if (itemsTable.rows.length == 2) {
         document.getElementById("delete_labels").innerHTML = "";
-        document.getElementById("item_price").innerHTML = "";
-        document.getElementById("total_sum_value").innerHTML = "";
-        document.getElementById("total_sum_title").innerHTML = "";
     }
 }
 
-function updateTotalSum(value) {
-    value = parseFloat(value);
-    const totalSumValueElement = document.getElementById("total_sum_value");
-    if (totalSumValueElement.innerHTML != '') {
-        value += parseFloat(totalSumValueElement.innerHTML);
+function recalculateSum() {
+    var newSum = 0;
+    for (let i = 0; i < totalItemsIndex + 1; i++) {
+        let currentIndex = 'priceItem' + i.toString();
+        let currentElement = document.getElementById(currentIndex);
+        if (currentElement != null) {
+            newSum += parseFloat(currentElement.value);
+        }
     }
-    totalSumValueElement.innerHTML = value;
+    const totalSumValueElement = document.getElementById("total_sum_value");
+    totalSumValueElement.innerHTML = '$' + newSum;
 }
 
 function appendNewItem() {
     document.getElementById("delete_labels").innerHTML = "Eliminar";
-    document.getElementById("item_price").innerHTML = "Valor";
-    document.getElementById("total_sum_title").innerHTML = "Monto total:";
 
     const itemsTable = document.getElementById("items_table");
     const newRow = itemsTable.insertRow();
@@ -170,7 +166,7 @@ function appendNewItem() {
     
     const priceBox = newRow.insertCell();
     const priceNameAndId = 'priceItem' + newRow.rowIndex.toString();
-    priceBox.innerHTML = '<input class="form-control"required type="number" name="'+priceNameAndId+'" id="'+priceNameAndId+'" onchange="updateTotalSum(this.value)" step=".01" value="0" min="0">';
+    priceBox.innerHTML = '<input class="form-control"required type="number" name="'+priceNameAndId+'" id="'+priceNameAndId+'" onchange="recalculateSum()" step=".01" value="0" min="0" style="text-align:right;">';
 
     const deleteButton = newRow.insertCell();
     deleteButton.innerHTML = '<button type="button" title="Eliminar item" onclick="deleteItemsTableRow('+newRow.rowIndex+')"><i class="fa fa-minus-circle" style="font-size:24px"></i></button>';

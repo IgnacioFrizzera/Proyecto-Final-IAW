@@ -110,7 +110,7 @@
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Marca</th>
                                     <th scope="col">Talle</th>
-                                    <th scope="col" id="item_price"></th>
+                                    <th scope="col">Valor</th>
                                     <th scope="col" id="delete_labels"></th>
                                 </tr>
                             </thead>
@@ -143,7 +143,9 @@
                                             @endforeach
                                         </select>
                                     </th>
-                                    <th>-</th>
+                                    <th>
+                                        <input class="form-control"required type="number" name="priceItem0" id="priceItem0" onchange="recalculateSum()" step=".01" value="0" min="0" style="text-align:right;">
+                                    </th>
                                     <th>-</th>
                                 </tr>
                             </tbody>
@@ -151,7 +153,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-8">
-                                <h4 id="total_sum_title"></h4>
+                                <h4 id="total_sum_title">Monto total:</h4>
                             </div>
                             <div class="col-4" style="text-align: center;">
                                 <h4 id="total_sum_value"></h4>
