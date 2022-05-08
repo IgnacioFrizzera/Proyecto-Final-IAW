@@ -29,6 +29,11 @@ class Movement extends Model
 
     public function recalculate_balance(Movement $previous_movement)
     {
+        /**
+         * due: 150, paid: 0, balance: 150 -> previous_movement
+         * due: 0, paid: 150, balance: 0   -> debería ser -150 balance
+         */
+
         $new_balance = $previous_movement->balance + $this->due - $this->paid;
         $this->balance = $new_balance;
         $this->save();

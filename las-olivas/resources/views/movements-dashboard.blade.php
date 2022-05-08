@@ -117,7 +117,7 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        <select class="form-select" aria-label="Default select example" name="category" id="category">
+                                        <select class="form-select" aria-label="Default select example" name="category0" id="category0">
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}">
                                                     {{ $category->name }}
@@ -126,7 +126,7 @@
                                         </select>
                                     </th>
                                     <th>
-                                        <select class="form-select" aria-label="Default select example" name="brand" id="brand">
+                                        <select class="form-select" aria-label="Default select example" name="brand0" id="brand0">
                                             @foreach($brands as $brand)
                                                 <option value="{{ $brand->id }}">
                                                     {{ $brand->name }}
@@ -135,7 +135,7 @@
                                         </select>
                                     </th>
                                     <th>
-                                        <select class="form-select" aria-label="Default select example" name="size" id="size">
+                                        <select class="form-select" aria-label="Default select example" name="size0" id="size0">
                                             @foreach($sizes as $size)
                                                 <option value="{{ $size->id }}">
                                                     {{ $size->name }}

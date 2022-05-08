@@ -84,9 +84,17 @@ class Client extends Model
         $later_movements = $this->movements()->where('id', '>', $movement->id)->get();
         foreach ($later_movements as $later_movement)
         {
-            $later_movement->recalculate_balance($previous_movement);
+            if ($previous_movement != null) {
+                $later_movement->recalculate_balance($previous_movement);
+            }
             $previous_movement = $later_movement;
         }
-        $this->current_balance = $previous_movement->balance;      
+
+        if ($previous_movement != null) {
+            $this->current_balance = $previous_movement->balance;
+        }
+        else {
+            $this->current_balance = 0;
+        }
     }
 }

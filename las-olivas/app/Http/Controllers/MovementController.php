@@ -81,31 +81,8 @@ class MovementController extends Controller
         return view('movements-client-list')->withClient($client)->withMovements($movements);        
     }
 
-    private function validate_new_movement(Request $request)
-    {
-        return Validator::make($request->all(), [
-            'client_id' => ['bail', 'exists:clients,id'],
-            'description' => ['required', 'string', 'max:200'],
-            'receipt_type' => ['required', 'string', 'max:50', 'regex:/^([^0-9]*)$/'],
-            'date' => ['required'],
-            'due' => ['required', 'numeric'],
-            'paid' => ['required', 'numeric'],
-            'category' => ['required', 'exists:categories,id'],
-            'brand' => ['required', 'exists:brands,id'],
-            'size' => ['required', 'exists:sizes,id'],
-            'promotion' => ['required', 'string']
-        ]);
-    }
-
     public function add_movement(Request $request)
-    {
-        $movement_validation = $this->validate_new_movement($request);
-
-        if ($movement_validation->fails())
-        {
-            return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
-        }
-
+    {        
         if (($request->client_name != null || $request->client_last_name != null) and $request->client_id != null)
         {   
             return $this->index()->withMessage('No se puede seleccionar un cliente y cargar un cliente a la vez.');
@@ -136,42 +113,59 @@ class MovementController extends Controller
             return $this->index()->withMessage('Algún dato que se deseó cargar fue incorrecto.');
         }
 
-        $client->calculate_new_balance($request->due, $request->paid);
-        $client->save();
+        $description = $request->description;
+        $receipt_type = $request->receipt_type;
+        $client_id = $client->id;
+        $paid_with_promotion = $request->promotion;
+        $creation_date = $request->date;
+        $payment_type = $request->payment_type;
 
-        Movement::create([
-            'description' => $request->description,
-            'receipt_type' => $request->receipt_type,
-            'due' => $request->due,
-            'paid' => $request->paid,
-            'balance' =>  $client->current_balance,
-            'client_id' => $client->id,
-            'category_id' => $request->category,
-            'brand_id' => $request->brand,
-            'size_id' => $request->size,
-            'paid_with_promotion' => $request->promotion,
-            'created_at' => $request->date
-        ]);
-
-        if ($request->receipt_type == 'FC')
+        $index = 0;
+        while ($request->input('category'.$index) != null)
         {
-            // Creates the instant payment movement for the 'FC' movement.
-            $client->calculate_new_balance($request->paid, $request->due);
+            $category_id = $request->input('category'.$index);
+            $brand_id = $request->input('brand'.$index);
+            $size_id = $request->input('size'.$index);
+            $price_item = $request->input('priceItem'.$index);
+
+            $client->calculate_new_balance($price_item, 0);
             $client->save();
-            
+
             Movement::create([
-                'description' => $request->description,
-                'receipt_type' => $request->payment_type,
-                'due' => $request->paid,
-                'paid' => $request->due,
-                'balance' =>  $client->current_balance,
-                'client_id' => $client->id,
-                'category_id' => $request->category,
-                'brand_id' => $request->brand,
-                'size_id' => $request->size,
-                'paid_with_promotion' => $request->promotion,
-                'created_at' => $request->date
+                'client_id' => $client_id,
+                'description' => $description,
+                'receipt_type' => $receipt_type,
+                'due' => $price_item,
+                'paid' => 0,
+                'balance' => $client->current_balance,
+                'category_id' => $category_id,
+                'brand_id' => $brand_id,
+                'size_id' => $size_id,
+                'paid_with_promotion' => $paid_with_promotion,
+                'created_at' => $creation_date
             ]);
+
+            if ($receipt_type == "FC")
+            {
+                $client->calculate_new_balance(0, $price_item);
+                $client->save();
+
+                Movement::create([
+                    'client_id' => $client_id,
+                    'description' => $description.' - Pago',
+                    'receipt_type' => $payment_type,
+                    'due' => 0,
+                    'paid' => $price_item,
+                    'balance' => $client->current_balance,
+                    'category_id' => $category_id,
+                    'brand_id' => $brand_id,
+                    'size_id' => $size_id,
+                    'paid_with_promotion' => $paid_with_promotion,
+                    'created_at' => $creation_date
+                ]);
+            }
+
+            $index += 1;
         }
 
         return $this->index()->withSuccessMessage('El movimiento se cargó correctamente.');

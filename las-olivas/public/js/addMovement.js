@@ -165,7 +165,7 @@ function appendNewItem() {
     sizeCell.innerHTML = createSizeHTML();
     
     const priceBox = newRow.insertCell();
-    const priceNameAndId = 'priceItem' + newRow.rowIndex.toString();
+    const priceNameAndId = 'priceItem' + totalItemsIndex.toString();
     priceBox.innerHTML = '<input class="form-control"required type="number" name="'+priceNameAndId+'" id="'+priceNameAndId+'" onchange="recalculateSum()" step=".01" value="0" min="0" style="text-align:right;">';
 
     const deleteButton = newRow.insertCell();
